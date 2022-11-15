@@ -1,0 +1,1 @@
+# Sistema de sensoriamento em física experimental - desktop
