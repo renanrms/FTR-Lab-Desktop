@@ -1,4 +1,4 @@
-import './theme/styles/theme.css'
+import './styles/global.css'
 
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './theme/muiTheme'
@@ -9,7 +9,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="w-screen h-screen bg-sky-500">
+      <div className="w-screen h-screen bg-background">
         Olá mundo!
         <Header></Header>
       </div>

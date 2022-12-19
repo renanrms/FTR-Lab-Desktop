@@ -1,0 +1,10 @@
+@import url('../theme/styles/theme.css');
+
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+
+html {
+  overflow: hidden;
+}
