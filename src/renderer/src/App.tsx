@@ -1,5 +1,18 @@
 import './theme/styles/theme.css'
 
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './theme/muiTheme'
+import CssBaseline from '@mui/material/CssBaseline'
+import { Header } from './components/Header'
+
 export function App() {
-  return <div></div>
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="w-screen h-screen bg-sky-500">
+        Olá mundo!
+        <Header></Header>
+      </div>
+    </ThemeProvider>
+  )
 }

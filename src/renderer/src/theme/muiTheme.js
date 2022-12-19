@@ -4,19 +4,13 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: getComputedStyle(document.body).getPropertyValue(
-        '--md-sys-color-primary',
-      ),
+      main: '#006c51',
     },
     secondary: {
-      main: getComputedStyle(document.body).getPropertyValue(
-        '--md-sys-color-secondary',
-      ),
+      main: '#4c6359',
     },
     background: {
-      default: getComputedStyle(document.body).getPropertyValue(
-        '--md-sys-color-background',
-      ),
+      default: '#fbfdf9',
     },
   },
 })
