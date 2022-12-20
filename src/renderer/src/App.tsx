@@ -10,7 +10,7 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="w-screen h-screen bg-background">
+      <div className="w-screen h-screen">
         <Header></Header>
         <Sidebar></Sidebar>
       </div>
