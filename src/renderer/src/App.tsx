@@ -10,7 +10,6 @@ export function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="w-screen h-screen bg-background">
-        Olá mundo!
         <Header></Header>
       </div>
     </ThemeProvider>
