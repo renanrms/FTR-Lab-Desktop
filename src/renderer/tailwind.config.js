@@ -175,6 +175,31 @@ module.exports = {
           DEFAULT: 'var(--md-sys-color-surface)',
           light: 'var(--md-sys-color-surface-light)',
           dark: 'var(--md-sys-color-surface-dark)',
+          l1: {
+            DEFAULT: 'var(--md-sys-color-surface-l1)',
+            light: 'var(--md-sys-color-surface-l1-light)',
+            dark: 'var(--md-sys-color-surface-l1-dark)',
+          },
+          l2: {
+            DEFAULT: 'var(--md-sys-color-surface-l2)',
+            light: 'var(--md-sys-color-surface-l2-light)',
+            dark: 'var(--md-sys-color-surface-l2-dark)',
+          },
+          l3: {
+            DEFAULT: 'var(--md-sys-color-surface-l3)',
+            light: 'var(--md-sys-color-surface-l3-light)',
+            dark: 'var(--md-sys-color-surface-l3-dark)',
+          },
+          l4: {
+            DEFAULT: 'var(--md-sys-color-surface-l4)',
+            light: 'var(--md-sys-color-surface-l4-light)',
+            dark: 'var(--md-sys-color-surface-l4-dark)',
+          },
+          l5: {
+            DEFAULT: 'var(--md-sys-color-surface-l5)',
+            light: 'var(--md-sys-color-surface-l5-light)',
+            dark: 'var(--md-sys-color-surface-l5-dark)',
+          },
         },
         'on-surface': {
           DEFAULT: 'var(--md-sys-color-on-surface)',

@@ -18,6 +18,11 @@
  --md-sys-color-background: var(--md-sys-color-background-light);
  --md-sys-color-on-background: var(--md-sys-color-on-background-light);
  --md-sys-color-surface: var(--md-sys-color-surface-light);
+ --md-sys-color-surface-l1: var(--md-sys-color-surface-l1-light);
+ --md-sys-color-surface-l2: var(--md-sys-color-surface-l2-light);
+ --md-sys-color-surface-l3: var(--md-sys-color-surface-l3-light);
+ --md-sys-color-surface-l4: var(--md-sys-color-surface-l4-light);
+ --md-sys-color-surface-l5: var(--md-sys-color-surface-l5-light);
  --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
  --md-sys-color-surface-variant: var(--md-sys-color-surface-variant-light);
  --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
