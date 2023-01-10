@@ -51,9 +51,10 @@ const series = [
 export function ChartsArea() {
   return (
     <Container>
-      <div className="w-full py-4 h-full flex justify-between flex-wrap">
+      <div className="w-full h-full py-4 flex justify-between flex-wrap">
         {series.map((serie, index) => (
           <Chart
+            className="w-[250px] sm:w-[280px] md:w-[420px] h-[250px] m-2 bg-tertiary-70"
             XAxis={serie.XAxis}
             YAxis={serie.YAxis}
             data={serie.data}
