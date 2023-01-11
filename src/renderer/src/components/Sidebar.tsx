@@ -19,7 +19,7 @@ export function Sidebar() {
   ]
 
   return (
-    <div className="w-72 p-4 bg-neutral-95 dark:bg-neutral-20 flex shrink-0 flex-col items-center">
+    <div className="w-72 p-4 bg-neutral-95 dark:bg-neutral-20 flex shrink-0 flex-col items-center overflow-y-auto">
       {devices.map((device, index) => (
         <DeviceCard device={device} key={index}></DeviceCard>
       ))}

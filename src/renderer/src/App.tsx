@@ -13,7 +13,7 @@ export function App() {
       <CssBaseline />
       <div className="w-screen h-screen bg-background flex flex-col">
         <Header></Header>
-        <div className="w-full h-full flex">
+        <div className="w-screen h-screen flex">
           <Sidebar></Sidebar>
           <ChartsArea></ChartsArea>
         </div>

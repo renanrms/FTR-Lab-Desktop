@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+// import { Container } from '@mui/material'
 import { Chart } from './Chart'
 
 const series = [
@@ -50,11 +50,11 @@ const series = [
 
 export function ChartsArea() {
   return (
-    <Container>
-      <div className="w-full h-full py-4 flex justify-between flex-wrap">
+    <div className="w-full h-full flex justify-center overflow-auto">
+      <div className="max-w-7xl flex justify-between flex-wrap">
         {series.map((serie, index) => (
           <Chart
-            className="w-[250px] sm:w-[280px] md:w-[420px] h-[250px] m-2 bg-tertiary-70"
+            className="w-[280px] md:w-[420px] h-[300px] lg:w-[550px] lg:h-[350px] m-4"
             XAxis={serie.XAxis}
             YAxis={serie.YAxis}
             data={serie.data}
@@ -62,6 +62,6 @@ export function ChartsArea() {
           ></Chart>
         ))}
       </div>
-    </Container>
+    </div>
   )
 }
