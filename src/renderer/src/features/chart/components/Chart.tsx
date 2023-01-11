@@ -26,12 +26,12 @@ export function Chart(props: ChartPropType) {
   return (
     <div
       className={[
-        'p-4 pb-16 shadow border-2 border-secondary-90 bg-surface rounded-lg',
+        'p-4 pb-16 shadow border-2 border-secondary-90 bg-neutral-100 rounded-lg',
         props.className,
       ].join(' ')}
     >
       <div className="mb-2 ml-[68px] flex items-center">
-        <div className="rounded-full bg-neutral-95 flex items-center mr-4">
+        <div className="rounded-full bg-surface-l1-light flex items-center mr-4">
           <IconButton>
             <VerticalAlignBottomRoundedIcon
               sx={{
@@ -50,7 +50,7 @@ export function Chart(props: ChartPropType) {
             ></ExpandRoundedIcon>
           </IconButton>
         </div>
-        <div className="rounded-full bg-neutral-95 flex items-center">
+        <div className="rounded-full bg-surface-l1-light flex items-center">
           <IconButton>
             <ScatterPlotRoundedIcon
               sx={{ fontSize: '22px' }}
