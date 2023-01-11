@@ -53,7 +53,7 @@ export function ChartsArea() {
       <div className="max-w-7xl flex justify-between flex-wrap">
         {series.map((serie, index) => (
           <Chart
-            className="w-[280px] md:w-[420px] h-[300px] lg:w-[550px] lg:h-[350px] mt-4 ml-4"
+            className="w-[280px] md:w-[420px] h-[300px] lg:w-[550px] lg:h-[350px] mt-4 mx-4"
             XAxis={serie.XAxis}
             YAxis={serie.YAxis}
             data={serie.data}

@@ -5,6 +5,7 @@ import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
 import IconButton from '@mui/material/IconButton'
 
 import {
+  Label,
   LineChart,
   Line,
   XAxis,
@@ -25,11 +26,11 @@ export function Chart(props: ChartPropType) {
   return (
     <div
       className={[
-        'p-4 pb-12 shadow border-2 border-secondary-90 bg-surface rounded-lg',
+        'p-4 pb-16 shadow border-2 border-secondary-90 bg-surface rounded-lg',
         props.className,
       ].join(' ')}
     >
-      <div className="mb-2 ml-[5%] pl-8 flex items-center">
+      <div className="mb-2 ml-[68px] flex items-center">
         <div className="rounded-full bg-neutral-95 flex items-center mr-4">
           <IconButton>
             <VerticalAlignBottomRoundedIcon
@@ -64,10 +65,23 @@ export function Chart(props: ChartPropType) {
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%" debounce={20}>
-        <LineChart width={200} height={200}>
+        <LineChart
+          width={200}
+          height={200}
+          margin={{ top: 5, right: 5, left: 9, bottom: 15 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={props.XAxis.key} type="number" />
-          <YAxis dataKey={props.YAxis.key} />
+          <XAxis dataKey={props.XAxis.key} type="number">
+            <Label value={props.XAxis.name} offset={0} position="bottom" />
+          </XAxis>
+          <YAxis dataKey={props.YAxis.key}>
+            <Label
+              value={props.YAxis.name}
+              angle={-90}
+              offset={0}
+              position="left"
+            />
+          </YAxis>
           <Tooltip />
           <Line
             dataKey={props.YAxis.key}
