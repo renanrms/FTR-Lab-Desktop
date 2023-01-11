@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 
 export function Header() {
   return (
-    <div className="w-screen h-12 bg-primary text-on-primary flex items-center justify-between">
+    <div className="col-span-2 h-12 bg-primary-40 text-on-primary flex shrink-0 items-center justify-between">
       <div className="mx-4 h-10 flex items-center justify-center">
         <IconButton style={{ color: 'var(--md-sys-color-on-primary)' }}>
           <DeviceHubOutlinedIcon></DeviceHubOutlinedIcon>
