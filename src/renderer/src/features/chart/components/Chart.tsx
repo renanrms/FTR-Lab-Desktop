@@ -2,6 +2,7 @@ import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
+import IconButton from '@mui/material/IconButton'
 
 import {
   LineChart,
@@ -29,43 +30,37 @@ export function Chart(props: ChartPropType) {
       ].join(' ')}
     >
       <div className="mb-2 ml-[5%] pl-8 flex items-center">
-        <div className="py-[2px] px-2 rounded-full bg-neutral-95 flex items-center mr-4">
-          <div
-            onClick={() => {}}
-            className="w-[28px] h-[28px] hover:bg-neutral-90 rounded-full flex justify-between items-center"
-          >
+        <div className="rounded-full bg-neutral-95 flex items-center mr-4">
+          <IconButton>
             <VerticalAlignBottomRoundedIcon
               sx={{
-                fontSize: '20px',
+                fontSize: '22px',
                 transform: 'rotate(-90deg)',
-                margin: 'auto',
               }}
             ></VerticalAlignBottomRoundedIcon>
-          </div>
-          <div
-            onClick={() => {}}
-            className="w-[28px] h-[28px] hover:bg-neutral-90 rounded-full flex justify-between items-center"
-          >
+          </IconButton>
+
+          <IconButton>
             <ExpandRoundedIcon
               sx={{
-                fontSize: '20px',
+                fontSize: '22px',
                 transform: 'rotate(90deg)',
-                margin: 'auto',
               }}
             ></ExpandRoundedIcon>
-          </div>
+          </IconButton>
         </div>
-        <div className="py-[2px] px-2 rounded-full bg-neutral-95 flex items-center">
-          <div className="w-[28px] h-[28px] hover:bg-neutral-90 rounded-full flex justify-between items-center">
+        <div className="rounded-full bg-neutral-95 flex items-center">
+          <IconButton>
             <ScatterPlotRoundedIcon
-              sx={{ fontSize: '20px', margin: 'auto' }}
+              sx={{ fontSize: '22px' }}
             ></ScatterPlotRoundedIcon>
-          </div>
-          <div className="w-[28px] h-[28px] hover:bg-neutral-90 rounded-full flex justify-between items-center">
+          </IconButton>
+
+          <IconButton>
             <ShowChartRoundedIcon
-              sx={{ fontSize: '20px', margin: 'auto' }}
+              sx={{ fontSize: '22px' }}
             ></ShowChartRoundedIcon>
-          </div>
+          </IconButton>
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%" debounce={20}>
