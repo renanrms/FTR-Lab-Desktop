@@ -16,20 +16,28 @@ export function DeviceCard(props: DeviceCardPropType) {
   const { device } = props
 
   return (
-    <div className="w-full min-h-[180px] border border-neutral-90 dark:border-neutral-30 rounded-md p-4 mb-4 flex flex-col justify-between bg-background text-on-background">
+    <div className="w-full min-h-[180px] border border-neutral-90 dark:border-neutral-30 rounded-md p-4 mb-4 flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
       <div className="h-8 flex items-center">
         <div className="grow text-lg">{device.name}</div>
         <IconButton
           size="small"
-          style={{ color: 'var(--md-sys-color-on-background)' }}
+          style={{ color: 'var(--md-sys-color-on-surface-variant' }}
         >
-          <SettingsIcon></SettingsIcon>
+          <SettingsIcon
+            sx={{
+              fontSize: '24px',
+            }}
+          ></SettingsIcon>
         </IconButton>
         <IconButton
           size="small"
-          style={{ color: 'var(--md-sys-color-on-background)' }}
+          style={{ color: 'var(--md-sys-color-on-surface-variant' }}
         >
-          <Battery90Icon></Battery90Icon>
+          <Battery90Icon
+            sx={{
+              fontSize: '24px',
+            }}
+          ></Battery90Icon>
         </IconButton>
       </div>
       <div className="my-4 grow">
