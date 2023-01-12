@@ -11,12 +11,17 @@ export function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="w-screen h-screen bg-background flex flex-col">
+      <div
+        className="w-screen h-screen bg-background"
+        style={{
+          display: 'grid',
+          gridTemplateAreas: '"header header" "aside main"',
+          gridTemplateRows: '48px auto',
+        }}
+      >
         <Header></Header>
-        <div className="w-screen h-screen flex">
-          <Sidebar></Sidebar>
-          <ChartsArea></ChartsArea>
-        </div>
+        <Sidebar></Sidebar>
+        <ChartsArea></ChartsArea>
       </div>
     </ThemeProvider>
   )
