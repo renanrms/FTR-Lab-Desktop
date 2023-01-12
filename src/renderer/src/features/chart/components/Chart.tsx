@@ -26,7 +26,7 @@ export function Chart(props: ChartPropType) {
   return (
     <div
       className={[
-        'p-4 pb-16 shadow border-2 border-secondary-90 bg-neutral-100 rounded-lg',
+        'p-4 pb-16 shadow border-2 border-secondary-90 dark:border-primary-50 bg-neutral-100 rounded-lg',
         props.className,
       ].join(' ')}
     >
