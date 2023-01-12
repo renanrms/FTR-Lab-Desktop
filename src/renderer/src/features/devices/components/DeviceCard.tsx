@@ -20,15 +20,11 @@ export function DeviceCard(props: DeviceCardPropType) {
       <div className="h-8 flex items-center">
         <div className="grow text-lg">{device.name}</div>
         <IconButton style={{ color: 'var(--md-sys-color-on-surface-variant' }}>
-          <SettingsIcon
-            sx={{
-              fontSize: '24px',
-            }}
-          ></SettingsIcon>
+          <SettingsIcon></SettingsIcon>
         </IconButton>
         <Battery90Icon
           sx={{
-            fontSize: '24px',
+            color: 'var(--md-sys-color-on-surface-variant)',
           }}
         ></Battery90Icon>
       </div>
