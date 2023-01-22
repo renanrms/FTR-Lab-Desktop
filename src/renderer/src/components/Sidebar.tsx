@@ -34,7 +34,7 @@ export function Sidebar() {
         <IconButton
           className="my-2"
           size="large"
-          style={{ color: 'var(--md-sys-color-on-surface-variant' }}
+          style={{ color: 'var(--md-sys-color-outline' }}
         >
           <AddIcon></AddIcon>
         </IconButton>
