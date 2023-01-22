@@ -16,7 +16,7 @@ export function DeviceCard(props: DeviceCardPropType) {
   const { device } = props
 
   return (
-    <div className="w-full min-h-[180px] border border-neutral-90 dark:border-neutral-30 rounded-md p-4 mb-4 flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
+    <div className="w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
       <div className="h-8 flex items-center">
         <div className="grow text-lg">{device.name}</div>
         <IconButton style={{ color: 'var(--md-sys-color-on-surface-variant' }}>

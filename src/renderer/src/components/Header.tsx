@@ -6,7 +6,12 @@ import IconButton from '@mui/material/IconButton'
 
 export function Header() {
   return (
-    <div className="col-span-2 h-12 bg-primary-50 flex shrink-0 items-center justify-between">
+    <header
+      className="h-12 col-span-2 bg-primary-50 flex items-center justify-between"
+      style={{
+        gridArea: 'header',
+      }}
+    >
       <div className="mx-4 h-10 flex items-center justify-center">
         <IconButton style={{ color: 'var(--md-ref-palette-primary100)' }}>
           <DeviceHubOutlinedIcon></DeviceHubOutlinedIcon>
@@ -23,6 +28,6 @@ export function Header() {
           <DeleteOutlinedIcon></DeleteOutlinedIcon>
         </IconButton>
       </div>
-    </div>
+    </header>
   )
 }

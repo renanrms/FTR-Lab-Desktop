@@ -49,18 +49,21 @@ const series = [
 
 export function ChartsArea() {
   return (
-    <div className="w-full h-full flex justify-center overflow-auto">
-      <div className="max-w-7xl flex justify-between flex-wrap">
-        {series.map((serie, index) => (
-          <Chart
-            className="w-[280px] md:w-[420px] h-[300px] lg:w-[550px] lg:h-[350px] mt-4 mx-4"
-            XAxis={serie.XAxis}
-            YAxis={serie.YAxis}
-            data={serie.data}
-            key={index}
-          ></Chart>
-        ))}
-      </div>
-    </div>
+    <main
+      className="w-full px-4 pt-4 flex justify-evenly items-start flex-wrap overflow-y-auto overflow-hidden"
+      style={{
+        gridArea: 'main',
+      }}
+    >
+      {series.map((serie, index) => (
+        <Chart
+          className="w-full h-[350px] m-2 min-[1450px]:w-[48%] min-[1450px]:h-[400px]"
+          XAxis={serie.XAxis}
+          YAxis={serie.YAxis}
+          data={serie.data}
+          key={index}
+        ></Chart>
+      ))}
+    </main>
   )
 }
