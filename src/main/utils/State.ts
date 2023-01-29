@@ -9,11 +9,11 @@ export class State<T> {
     this.state = copy(initialState)
   }
 
-  public getState() {
+  public get() {
     return copy(this.state)
   }
 
-  public setState(newState: T) {
+  public set(newState: T) {
     this.state = copy(newState)
   }
 }

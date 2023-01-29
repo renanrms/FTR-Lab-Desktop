@@ -6,13 +6,9 @@ import { createWindow } from './createWindow'
 import './ipcHandlers/configure'
 import { State } from './utils/State'
 import { DeviceInfo } from '@shared/types/ipc'
-import { search, startListener } from './devicesHandlers/configure'
+import { DevicesController } from './devices/DevicesController'
 
-const devices = new State<Array<DeviceInfo>>([])
-
-// console.log(devices.getState())
-
-devices.setState([
+const devicesState = new State<Array<DeviceInfo>>([
   {
     id: 'ff-ff-ff-ff-ff-ff',
     name: 'Mecânica',
@@ -31,11 +27,11 @@ devices.setState([
   },
 ])
 
-// console.log(devices.getState())
+const devicesController = new DevicesController(devicesState)
 
-startListener(devices)
+devicesController.startListener()
 
-search()
+devicesController.search()
 
 if (process.platform === 'darwin') {
   app.dock.setIcon(path.resolve(__dirname, 'icon.png'))
