@@ -6,7 +6,7 @@ import { createWindow } from './createWindow'
 import './ipcHandlers/configure'
 import { State } from './utils/State'
 import { DeviceInfo } from '@shared/types/ipc'
-import { DevicesController } from './devices/DevicesController'
+import { DevicesController } from './devices'
 
 const devicesState = new State<Array<DeviceInfo>>([
   {
