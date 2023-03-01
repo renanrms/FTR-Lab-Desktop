@@ -15,14 +15,14 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-interface ChartPropType {
+interface ChartProps {
   className?: string
   XAxis: { key: string; name: string }
   YAxis: { key: string; name: string }
   data: Object[]
 }
 
-export function Chart(props: ChartPropType) {
+export function Chart(props: ChartProps) {
   return (
     <div
       className={[

@@ -1,14 +1,7 @@
-export interface DeviceInfo {
-  id: string
-  name: string
-  capabilities: Array<string>
-  network: {
-    MACAddress: string
-  }
-}
+import { Device } from './Device'
 
 export interface DevicesUpdateData {
-  devices: Array<DeviceInfo>
+  devices: Array<Device>
 }
 
 export interface OpenDeviceConnectionRequest {

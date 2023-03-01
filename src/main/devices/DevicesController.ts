@@ -1,14 +1,15 @@
 import Mdns from 'multicast-dns'
+import { RemoteInfo } from 'dgram'
 
-import { DeviceInfo } from '@shared/types/ipc'
+import { Device } from '@shared/types/Device'
 import { State } from '../utils/State'
 import { handleMdnsResponse } from './handleMdnsResponse'
 
 export class DevicesController {
-  private devicesState: State<Array<DeviceInfo>>
+  private devicesState: State<Array<Device>>
   private mdns
 
-  constructor(devicesState: State<Array<DeviceInfo>>) {
+  constructor(devicesState: State<Array<Device>>) {
     this.devicesState = devicesState
     this.mdns = Mdns()
   }
@@ -31,9 +32,13 @@ export class DevicesController {
   }
 
   startListener() {
-    this.mdns.on('response', (response: Mdns.ResponsePacket) => {
-      console.log(response)
-      handleMdnsResponse(response, this.devicesState)
-    })
+    this.mdns.on(
+      'response',
+      (response: Mdns.ResponsePacket, rinfo: RemoteInfo) => {
+        console.log(response)
+        console.log(rinfo)
+        handleMdnsResponse(response, rinfo, this.devicesState)
+      },
+    )
   }
 }

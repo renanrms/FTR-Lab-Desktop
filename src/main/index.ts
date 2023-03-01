@@ -5,25 +5,29 @@ import path from 'node:path'
 import { createWindow } from './createWindow'
 import './ipcHandlers/configure'
 import { State } from './utils/State'
-import { DeviceInfo } from '@shared/types/ipc'
+import { Device } from '@shared/types/Device'
 import { DevicesController } from './devices'
 
-const devicesState = new State<Array<DeviceInfo>>([
+const devicesState = new State<Array<Device>>([
   {
     id: 'ff-ff-ff-ff-ff-ff',
     name: 'Mecânica',
     capabilities: ['Photogate', 'Distância'],
     network: {
-      MACAddress: 'ff-ff-ff-ff-ff-ff',
+      address: '192.168.0.11',
+      family: 'IPv4',
     },
+    updatedAt: new Date(),
   },
   {
     id: 'ee-ee-ee-ee-ee-ee',
     name: 'Termologia',
     capabilities: ['Temperatura', 'Pressão'],
     network: {
-      MACAddress: 'ee-ee-ee-ee-ee-ee',
+      address: '192.168.0.12',
+      family: 'IPv4',
     },
+    updatedAt: new Date(),
   },
 ])
 
