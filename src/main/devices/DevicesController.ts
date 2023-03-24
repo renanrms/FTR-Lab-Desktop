@@ -35,8 +35,6 @@ export class DevicesController {
     this.mdns.on(
       'response',
       (response: Mdns.ResponsePacket, rinfo: RemoteInfo) => {
-        console.log(response)
-        console.log(rinfo)
         handleMdnsResponse(response, rinfo, this.devicesState)
       },
     )

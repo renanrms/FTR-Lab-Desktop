@@ -12,43 +12,47 @@ export function handleMdnsResponse(
   devicesState: State<Array<Device>>,
 ) {
   console.log(response.answers)
+  console.log(rinfo)
 
-  const matchingDevices = response.answers
-    .filter((answer) => !!answer.name.match(/^.*\.ftr-lab.local$/))
-    .map((answer) => {
-      const device: Device = {
-        id: answer.name.split('.ftr-lab.local')[0],
-        network: {
-          address: rinfo.address,
-          family: rinfo.family,
-        },
-        updatedAt: new Date(),
-      }
-      return device
-    })
-
-  const currentDevices = devicesState.get()
-  const currentDevicesUpdated = currentDevices.map((device) => {
-    const newDeviceData = matchingDevices.find(
-      (matchingDevice) => matchingDevice.id === device.id,
-    )
-    return {
-      ...device,
-      ...newDeviceData,
-    }
-  })
-  const newMatchingDevices = matchingDevices.filter((matchingDevice) =>
-    currentDevices.every(
-      (currentDevice) => currentDevice.id !== matchingDevice.id,
-    ),
+  const srvAnswer = response.answers.find(
+    (answer) =>
+      !!answer.name.match(/^.*\._ftr-lab._tcp.local$/) && answer.type === 'SRV',
   )
 
-  const devices = [...currentDevicesUpdated, ...newMatchingDevices]
+  if (!srvAnswer) return undefined
+
+  const matchingDevice: Device = {
+    id: srvAnswer.name.split('._ftr-lab._tcp.local')[0],
+    network: {
+      address: rinfo.address,
+      family: rinfo.family,
+    },
+    updatedAt: new Date(),
+  }
+
+  let devices = devicesState.get()
+
+  if (devices.some((device) => device.id === matchingDevice.id)) {
+    devices = devices.map((device) => {
+      if (device.id === matchingDevice.id) {
+        return {
+          ...device,
+          ...matchingDevice,
+        }
+      } else {
+        return device
+      }
+    })
+  } else {
+    devices.push(matchingDevice)
+  }
 
   devicesState.set(devices)
 
   const mainWindow = BrowserWindow.getAllWindows()[0]
   if (mainWindow) {
-    mainWindow.webContents.send(CHANNELS.DEVICES.INFO.UPDATE, { devices })
+    mainWindow.webContents.send(CHANNELS.DEVICES.INFO.UPDATE, {
+      devices: devicesState.get(),
+    })
   }
 }
