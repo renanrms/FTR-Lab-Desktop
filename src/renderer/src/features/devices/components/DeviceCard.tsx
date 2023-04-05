@@ -22,9 +22,9 @@ export function DeviceCard(props: DeviceCardProps) {
         ></Battery90Icon>
       </div>
       <div className="my-4 grow">
-        {props.device.capabilities?.map((capability, index) => (
+        {props.device.sensors?.map((sensor, index) => (
           <p className="text-sm" key={index}>
-            {capability}
+            {sensor.quantity}
           </p>
         ))}
       </div>

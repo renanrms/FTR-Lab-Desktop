@@ -8,28 +8,7 @@ import { State } from './utils/State'
 import { Device } from '@shared/types/Device'
 import { DevicesController } from './devices'
 
-const devicesState = new State<Array<Device>>([
-  {
-    id: 'ff-ff-ff-ff-ff-ff',
-    name: 'Mecânica',
-    capabilities: ['Photogate', 'Distância'],
-    network: {
-      address: '192.168.0.11',
-      family: 'IPv4',
-    },
-    updatedAt: new Date(),
-  },
-  {
-    id: 'ee-ee-ee-ee-ee-ee',
-    name: 'Termologia',
-    capabilities: ['Temperatura', 'Pressão'],
-    network: {
-      address: '192.168.0.12',
-      family: 'IPv4',
-    },
-    updatedAt: new Date(),
-  },
-])
+const devicesState = new State<Array<Device>>([])
 
 const devicesController = new DevicesController(devicesState)
 

@@ -1,34 +1,50 @@
 import { BrowserWindow } from 'electron'
 import Mdns from 'multicast-dns'
 import { RemoteInfo } from 'dgram'
+import { SrvAnswer, TxtAnswer } from 'dns-packet'
 
 import { CHANNELS } from '@shared/constants/channels'
 import { Device } from '@shared/types/Device'
-import { State } from '../utils/State'
+import { State } from '@main/utils/State'
+import { getTxtAnswerData } from '@main/utils/mdns/getTxtAnswerData'
 
 export function handleMdnsResponse(
   response: Mdns.ResponsePacket,
   rinfo: RemoteInfo,
   devicesState: State<Array<Device>>,
 ) {
-  console.log(response.answers)
-  console.log(rinfo)
-
   const srvAnswer = response.answers.find(
     (answer) =>
       !!answer.name.match(/^.*\._ftr-lab._tcp.local$/) && answer.type === 'SRV',
-  )
+  ) as SrvAnswer
 
   if (!srvAnswer) return undefined
 
+  // console.log(response.answers)
+  // console.log(rinfo)
+
+  const txtAnswer = response.answers.find(
+    (answer) =>
+      !!answer.name.match(/^.*\._ftr-lab._tcp.local$/) && answer.type === 'TXT',
+  ) as TxtAnswer
+
+  const txtAnswerData = txtAnswer ? getTxtAnswerData(txtAnswer) : {}
+
   const matchingDevice: Device = {
     id: srvAnswer.name.split('._ftr-lab._tcp.local')[0],
+    name: txtAnswerData.name,
+    battery: txtAnswerData.battery,
+    available: txtAnswerData.available,
     network: {
       address: rinfo.address,
       family: rinfo.family,
+      port: srvAnswer.data.port,
     },
+    sensors: txtAnswerData.sensors,
     updatedAt: new Date(),
   }
+
+  console.log(matchingDevice)
 
   let devices = devicesState.get()
 
