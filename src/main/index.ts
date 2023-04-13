@@ -14,7 +14,7 @@ const devicesController = new DevicesController(devicesState)
 
 devicesController.startListener()
 
-devicesController.search()
+devicesController.startSearch()
 
 if (process.platform === 'darwin') {
   app.dock.setIcon(path.resolve(__dirname, 'icon.png'))
