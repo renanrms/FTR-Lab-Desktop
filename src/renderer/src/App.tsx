@@ -6,8 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar'
 import { ChartsArea } from './features/chart/components/ChartsArea'
+import { useDevices } from './features/devices/hooks/useDevices'
 
 export function App() {
+  const devices = useDevices()
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -20,7 +23,7 @@ export function App() {
         }}
       >
         <Header></Header>
-        <Sidebar></Sidebar>
+        <Sidebar devices={devices}></Sidebar>
         <ChartsArea></ChartsArea>
       </div>
     </ThemeProvider>

@@ -1,24 +1,17 @@
 import SettingsIcon from '@mui/icons-material/Settings'
 import Battery90Icon from '@mui/icons-material/Battery90'
 import { IconButton } from '@mui/material'
+import { Device } from '~/src/shared/types/Device'
 
-interface DeviceCardPropType {
-  device: {
-    name: string
-    capabilities: string[]
-    network: {
-      MACAddress: string
-    }
-  }
+interface DeviceCardProps {
+  device: Device
 }
 
-export function DeviceCard(props: DeviceCardPropType) {
-  const { device } = props
-
+export function DeviceCard(props: DeviceCardProps) {
   return (
     <div className="w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
       <div className="h-8 flex items-center">
-        <div className="grow text-lg">{device.name}</div>
+        <div className="grow text-lg">{props.device.name}</div>
         <IconButton style={{ color: 'var(--md-sys-color-on-surface-variant' }}>
           <SettingsIcon></SettingsIcon>
         </IconButton>
@@ -29,14 +22,14 @@ export function DeviceCard(props: DeviceCardPropType) {
         ></Battery90Icon>
       </div>
       <div className="my-4 grow">
-        {device.capabilities.map((capability, index) => (
+        {props.device.sensors?.map((sensor, index) => (
           <p className="text-sm" key={index}>
-            {capability}
+            {sensor.quantity}
           </p>
         ))}
       </div>
       <div className="h-8 flex justify-center items-center">
-        <p className="font-mono uppercase">{device.network.MACAddress}</p>
+        <p className="font-mono uppercase">{props.device.id}</p>
       </div>
     </div>
   )

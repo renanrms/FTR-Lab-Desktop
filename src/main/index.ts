@@ -4,6 +4,17 @@ import path from 'node:path'
 
 import { createWindow } from './createWindow'
 import './ipcHandlers/configure'
+import { State } from './utils/State'
+import { Device } from '@shared/types/Device'
+import { DevicesController } from './devices'
+
+const devicesState = new State<Array<Device>>([])
+
+const devicesController = new DevicesController(devicesState)
+
+devicesController.startListener()
+
+devicesController.startSearch()
 
 if (process.platform === 'darwin') {
   app.dock.setIcon(path.resolve(__dirname, 'icon.png'))

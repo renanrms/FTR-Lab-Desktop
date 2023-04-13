@@ -1,8 +1,9 @@
-import { ipcRenderer } from 'electron'
+import { IpcRendererEvent, ipcRenderer } from 'electron'
 
 import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
+  DevicesUpdateData,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
 } from '@shared/types/ipc'
@@ -10,6 +11,15 @@ import {
 // Custom APIs for renderer
 export const api = {
   devices: {
+    onUpdate(
+      callback: (event: IpcRendererEvent, params: DevicesUpdateData) => void,
+    ) {
+      ipcRenderer.on(CHANNELS.DEVICES.INFO.UPDATE, callback)
+
+      return () => {
+        ipcRenderer.removeListener(CHANNELS.DEVICES.INFO.UPDATE, callback)
+      }
+    },
     requestInfo() {
       ipcRenderer.invoke(CHANNELS.DEVICES.INFO.REQUEST)
     },
