@@ -15,6 +15,10 @@
  --md-sys-color-error-container: var(--md-sys-color-error-container-dark);
  --md-sys-color-on-error: var(--md-sys-color-on-error-dark);
  --md-sys-color-on-error-container: var(--md-sys-color-on-error-container-dark);
+ --md-sys-color-warning: var(--md-sys-color-warning-dark);
+ --md-sys-color-on-warning: var(--md-sys-color-on-warning-dark);
+ --md-sys-color-warning-container: var(--md-sys-color-warning-container-dark);
+ --md-sys-color-on-warning-container: var(--md-sys-color-on-warning-container-dark);
  --md-sys-color-background: var(--md-sys-color-background-dark);
  --md-sys-color-on-background: var(--md-sys-color-on-background-dark);
  --md-sys-color-surface: var(--md-sys-color-surface-dark);
