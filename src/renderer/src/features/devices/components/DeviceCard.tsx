@@ -1,5 +1,5 @@
 import SettingsIcon from '@mui/icons-material/Settings'
-import Battery90Icon from '@mui/icons-material/Battery90'
+import { BatteryIndicator } from './BatteryIndicator'
 import { IconButton } from '@mui/material'
 import { Device } from '~/src/shared/types/Device'
 
@@ -15,11 +15,7 @@ export function DeviceCard(props: DeviceCardProps) {
         <IconButton style={{ color: 'var(--md-sys-color-on-surface-variant' }}>
           <SettingsIcon></SettingsIcon>
         </IconButton>
-        <Battery90Icon
-          sx={{
-            color: 'var(--md-sys-color-on-surface-variant)',
-          }}
-        ></Battery90Icon>
+        {props.device.battery && <BatteryIndicator {...props.device.battery} />}
       </div>
       <div className="my-4 grow">
         {props.device.sensors?.map((sensor, index) => (
