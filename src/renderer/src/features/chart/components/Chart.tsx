@@ -1,18 +1,17 @@
 import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
-import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
+import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
 import IconButton from '@mui/material/IconButton'
-
 import {
+  CartesianGrid,
   Label,
-  LineChart,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from 'recharts'
 
 interface ChartProps {

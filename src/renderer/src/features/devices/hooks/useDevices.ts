@@ -1,5 +1,5 @@
-// import { ipcRenderer } from 'electron'
 import { useEffect, useState } from 'react'
+
 import { Device } from '@shared/types/Device'
 
 export function useDevices() {

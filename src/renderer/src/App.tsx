@@ -1,12 +1,13 @@
-import './styles/global.css'
-
-import { ThemeProvider } from '@mui/material/styles'
-import theme from './theme/muiTheme'
 import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+
 import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar'
 import { ChartsArea } from './features/chart/components/ChartsArea'
 import { useDevices } from './features/devices/hooks/useDevices'
+import theme from './theme/muiTheme'
+
+import './styles/global.css'
 
 export function App() {
   const devices = useDevices()

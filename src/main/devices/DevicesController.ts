@@ -1,8 +1,9 @@
-import Mdns from 'multicast-dns'
 import { RemoteInfo } from 'dgram'
+import Mdns from 'multicast-dns'
 
-import { Device } from '@shared/types/Device'
 import { State } from '@main/utils/State'
+import { Device } from '@shared/types/Device'
+
 import { handleMdnsResponse } from './handleMdnsResponse'
 
 export class DevicesController {

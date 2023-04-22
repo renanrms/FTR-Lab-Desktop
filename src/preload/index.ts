@@ -1,5 +1,6 @@
 import { electronAPI } from '@electron-toolkit/preload'
 import { contextBridge } from 'electron'
+
 import { api } from './api'
 
 declare global {

@@ -1,6 +1,8 @@
 import AddIcon from '@mui/icons-material/Add'
 import { IconButton } from '@mui/material'
+
 import { Device } from '@shared/types/Device'
+
 import { DeviceCard } from '../features/devices/components/DeviceCard'
 
 interface SidebarProps {

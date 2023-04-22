@@ -1,7 +1,9 @@
 import SettingsIcon from '@mui/icons-material/Settings'
-import { BatteryIndicator } from './BatteryIndicator'
 import { IconButton } from '@mui/material'
-import { Device } from '~/src/shared/types/Device'
+
+import { Device } from '@shared/types/Device'
+
+import { BatteryIndicator } from './BatteryIndicator'
 
 interface DeviceCardProps {
   device: Device
