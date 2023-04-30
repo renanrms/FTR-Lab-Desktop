@@ -1,9 +1,8 @@
 import { ipcMain } from 'electron'
 
+import { DevicesController } from '@main/devices'
 import { CHANNELS } from '@shared/constants/channels'
 import { OpenDeviceConnectionRequest } from '@shared/types/ipc'
-
-import { DevicesController } from '../devices'
 
 export function configureIpcHandlers(devicesController: DevicesController) {
   ipcMain.handle(CHANNELS.DEVICES.INFO.REQUEST, async () => {

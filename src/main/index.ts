@@ -6,7 +6,7 @@ import { Device } from '@shared/types/Device'
 
 import { createWindow } from './createWindow'
 import { DevicesController } from './devices'
-import { configureIpcHandlers } from './ipcHandlers/configure'
+import { configureIpcHandlers } from './ipc/handlers/configure'
 import { State } from './utils/State'
 
 const devicesState = new State<Array<Device>>([])

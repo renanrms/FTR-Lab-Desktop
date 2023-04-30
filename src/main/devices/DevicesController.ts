@@ -1,10 +1,10 @@
 import { RemoteInfo } from 'dgram'
-import { BrowserWindow } from 'electron'
 import Mdns from 'multicast-dns'
 import { Socket } from 'node:net'
 
+import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
+import { sendDevicesMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
 import { State } from '@main/utils/State'
-import { CHANNELS } from '@shared/constants/channels'
 import { Device } from '@shared/types/Device'
 
 import { handleMdnsResponse } from './handleMdnsResponse'
@@ -86,7 +86,8 @@ export class DevicesController {
             throw error
           })
           device.connection.socket = socket
-          console.log('connect')
+          console.log(device)
+          console.log(this.devicesState.get())
           resolve(socket)
         },
       )
@@ -95,34 +96,19 @@ export class DevicesController {
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.
     const connection = await connectionPromise
 
-    return connection
+    sendDevicesInfoUpdate({ devices: this.devicesState.get() })
 
-    // socket.connect({ port: device.network.port, host: device.network.address })
-    // socket.on('data', handleData)
-    // socket.on('connect', () => {
-    //   device.connection.socket = socket
-    //   console.log('connected')
-    //   // console.log(socket)
-    //   // socket.write('Hello, ESP32!!')
-    // })
+    return connection
   }
 
   handleDeviceMessage(message: string, deviceId: string) {
     try {
       const json = JSON.parse(message)
       if (json.measurements) {
-        const appMessage = {
+        sendDevicesMeasurementUpdate({
           deviceId,
           measurements: json.measurements,
-        }
-        const mainWindow = BrowserWindow.getAllWindows()[0]
-        if (mainWindow) {
-          mainWindow.webContents.send(
-            CHANNELS.DEVICES.MEASUREMENTS.UPDATE,
-            appMessage,
-          )
-          console.log(`\nmessage sent:\n${appMessage}`)
-        }
+        })
       }
     } catch (error) {
       console.log(error)

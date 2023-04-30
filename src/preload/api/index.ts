@@ -3,7 +3,7 @@ import { IpcRendererEvent, ipcRenderer } from 'electron'
 import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
-  DevicesUpdateData,
+  DevicesInfoUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
 } from '@shared/types/ipc'
@@ -12,7 +12,10 @@ import {
 export const api = {
   devices: {
     onUpdate(
-      callback: (event: IpcRendererEvent, params: DevicesUpdateData) => void,
+      callback: (
+        event: IpcRendererEvent,
+        params: DevicesInfoUpdateMessage,
+      ) => void,
     ) {
       ipcRenderer.on(CHANNELS.DEVICES.INFO.UPDATE, callback)
 

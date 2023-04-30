@@ -1,11 +1,10 @@
 import { RemoteInfo } from 'dgram'
 import { SrvAnswer, TxtAnswer } from 'dns-packet'
-import { BrowserWindow } from 'electron'
 import Mdns from 'multicast-dns'
 
+import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { getTxtAnswerData } from '@main/utils/mdns/getTxtAnswerData'
 import { State } from '@main/utils/State'
-import { CHANNELS } from '@shared/constants/channels'
 import { Device } from '@shared/types/Device'
 
 export function handleMdnsResponse(
@@ -66,10 +65,5 @@ export function handleMdnsResponse(
 
   devicesState.set(devices)
 
-  const mainWindow = BrowserWindow.getAllWindows()[0]
-  if (mainWindow) {
-    mainWindow.webContents.send(CHANNELS.DEVICES.INFO.UPDATE, {
-      devices: devicesState.get(),
-    })
-  }
+  sendDevicesInfoUpdate({ devices: devicesState.get() })
 }

@@ -17,6 +17,7 @@ function toggleConnection(device: Device) {
 }
 
 export function DeviceCard(props: DeviceCardProps) {
+  console.log(props.device)
   return (
     <div className="w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
       <div className="h-8 flex items-center">
