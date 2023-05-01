@@ -39,7 +39,6 @@ export function handleMdnsResponse(
       family: rinfo.family,
       port: srvAnswer.data.port,
     },
-    connection: {},
     sensors: txtAnswerData.sensors,
     updatedAt: new Date(),
   }

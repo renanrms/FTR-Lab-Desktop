@@ -80,12 +80,20 @@ export class DevicesController {
         () => {
           socket.removeAllListeners() // Para remover o error handler vinculado
           socket.on('data', handleData)
-          socket.on('error', (error) => {
+          socket.on('close', () => {
             // TODO: Fazer tratamento de erro. Acredito que seria bom destruir o socket e removê-lo.
-            console.log(error)
-            throw error
+            device.connected = false
+            // TODO: Remover essa gambiarra do timeout e gerenciar melhor a lista de dispositivos.
+            setTimeout(() => {
+              sendDevicesInfoUpdate({ devices: this.devicesState.get() })
+            }, 100)
+            console.log('closed')
           })
-          device.connection.socket = socket
+          socket.on('error', (error) => {
+            console.log(error.message)
+          })
+          socket.setKeepAlive(true, 3000)
+          device.connected = true
           console.log(device)
           console.log(this.devicesState.get())
           resolve(socket)
@@ -94,11 +102,11 @@ export class DevicesController {
     })
 
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.
-    const connection = await connectionPromise
+    await connectionPromise
 
     sendDevicesInfoUpdate({ devices: this.devicesState.get() })
 
-    return connection
+    // return connection
   }
 
   handleDeviceMessage(message: string, deviceId: string) {

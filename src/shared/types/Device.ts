@@ -1,9 +1,8 @@
-import { Socket } from 'node:net'
-
 export interface Device {
   id: string
   name?: string
   available?: boolean
+  connected?: boolean
   battery?: {
     level: number
     charging: boolean
@@ -13,9 +12,6 @@ export interface Device {
     address: string
     family: 'IPv4' | 'IPv6'
     port: number
-  }
-  connection: {
-    socket?: Socket
   }
   updatedAt: Date
 }
