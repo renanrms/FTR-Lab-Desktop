@@ -6,6 +6,11 @@ export function createHandleData(
   handleDeviceMessage: (message: string, id: string) => void,
 ) {
   return (data: Buffer) => {
+    /**
+     * TODO: Resolver problema de concorrência. Quando a frequência de envio é muito alta,
+     * fica mais de uma instância desta função na memória e o buffer compartilhado gera um
+     * problema de concorrência.
+     */
     console.log(`<< ${id} | Data${data}`)
 
     connection.buffer += data.toString('utf-8')
