@@ -12,7 +12,9 @@ export function configureIpcHandlers(devicesController: DevicesController) {
   ipcMain.handle(
     CHANNELS.DEVICES.CONNECTION.OPEN,
     async (event, request: OpenDeviceConnectionRequest) => {
-      console.log(CHANNELS.DEVICES.CONNECTION.OPEN)
+      console.log(
+        `<= ${CHANNELS.DEVICES.CONNECTION.OPEN}\n${JSON.stringify(request)}`,
+      )
       return {
         message: 'Conexão estabelecida',
         connection: await devicesController.openConnection(request.deviceId),

@@ -5,6 +5,6 @@ export function sendIpcMessage(channel: string, message: any) {
 
   if (mainWindow) {
     mainWindow.webContents.send(channel, message)
-    console.log(`\nMessage sent on ${channel}\n${message}`)
+    console.log(`=> ${channel}\n${JSON.stringify(message)}`)
   }
 }

@@ -4,18 +4,22 @@ import { Socket } from 'node:net'
 
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendDevicesMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
-import { State } from '@main/utils/State'
+import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { Device } from '@shared/types/Device'
 
 import { handleMdnsResponse } from './handleMdnsResponse'
 
 export class DevicesController {
-  private devicesState: State<Array<Device>>
+  private devicesState: KeyObjectState<Device>
   // private connections: [{deviceId: string, socket: Socket, buffer:}]
   private mdns
 
-  constructor(devicesState: State<Array<Device>>) {
-    this.devicesState = devicesState
+  constructor() {
+    this.devicesState = new KeyObjectState<Device>({
+      onChange: (devices) => {
+        sendDevicesInfoUpdate({ devices })
+      },
+    })
     this.mdns = Mdns()
   }
 
@@ -47,12 +51,13 @@ export class DevicesController {
   }
 
   async openConnection(id: string) {
-    const device = this.devicesState.get().find((device) => device.id === id)
+    const device = this.devicesState.get(id)
     const that = this
 
     if (!device) throw Error('Dispositivo não encontrado.')
 
     function handleData(this: { buffer: string }, data: Buffer): void {
+      console.log(`<< ${id} | Data${data}`)
       this.buffer = this.buffer || ''
       this.buffer += data.toString('utf-8')
       const messages = this.buffer.split(/\n{1,2}/)
@@ -64,7 +69,6 @@ export class DevicesController {
           this.buffer = message
         }
       })
-      console.log(messages)
     }
 
     const connectionPromise = new Promise((resolve, reject) => {
@@ -79,23 +83,17 @@ export class DevicesController {
         },
         () => {
           socket.removeAllListeners() // Para remover o error handler vinculado
+          socket.setKeepAlive(true, 3000)
           socket.on('data', handleData)
           socket.on('close', () => {
             // TODO: Fazer tratamento de erro. Acredito que seria bom destruir o socket e removê-lo.
-            device.connected = false
-            // TODO: Remover essa gambiarra do timeout e gerenciar melhor a lista de dispositivos.
-            setTimeout(() => {
-              sendDevicesInfoUpdate({ devices: this.devicesState.get() })
-            }, 100)
+            this.devicesState.updateObject(id, { connected: false })
             console.log('closed')
           })
           socket.on('error', (error) => {
             console.log(error.message)
           })
-          socket.setKeepAlive(true, 3000)
-          device.connected = true
-          console.log(device)
-          console.log(this.devicesState.get())
+          this.devicesState.updateObject(id, { connected: true })
           resolve(socket)
         },
       )
@@ -103,8 +101,6 @@ export class DevicesController {
 
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.
     await connectionPromise
-
-    sendDevicesInfoUpdate({ devices: this.devicesState.get() })
 
     // return connection
   }

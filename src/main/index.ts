@@ -2,15 +2,11 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
-import { Device } from '@shared/types/Device'
-
 import { createWindow } from './createWindow'
 import { DevicesController } from './devices'
 import { configureIpcHandlers } from './ipc/handlers/configure'
-import { State } from './utils/State'
 
-const devicesState = new State<Array<Device>>([])
-const devicesController = new DevicesController(devicesState)
+const devicesController = new DevicesController()
 devicesController.startListener()
 devicesController.startSearch()
 configureIpcHandlers(devicesController)
