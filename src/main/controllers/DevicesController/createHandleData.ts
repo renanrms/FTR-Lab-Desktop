@@ -1,4 +1,4 @@
-import { ConnectionData } from '../../shared/types/ConnectionData'
+import { ConnectionData } from '@shared/types/ConnectionData'
 
 export function createHandleData(
   id: string,

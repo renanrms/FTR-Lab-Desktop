@@ -2,8 +2,8 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
+import { DevicesController } from './controllers/DevicesController'
 import { createWindow } from './createWindow'
-import { DevicesController } from './devices'
 import { configureIpcHandlers } from './ipc/handlers/configure'
 
 const devicesController = new DevicesController()

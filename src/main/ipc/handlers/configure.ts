@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 
-import { DevicesController } from '@main/devices'
+import { DevicesController } from '@main/controllers/DevicesController'
 import { CHANNELS } from '@shared/constants/channels'
 import { OpenDeviceConnectionRequest } from '@shared/types/ipc'
 

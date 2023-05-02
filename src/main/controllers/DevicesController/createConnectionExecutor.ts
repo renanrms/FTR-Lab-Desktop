@@ -1,9 +1,9 @@
 import { Socket } from 'node:net'
 
 import { KeyObjectState } from '@main/utils/KeyObjectState'
+import { ConnectionData } from '@shared/types/ConnectionData'
 import { Device } from '@shared/types/Device'
 
-import { ConnectionData } from '../../shared/types/ConnectionData'
 import { createHandleData } from './createHandleData'
 
 type PromiseExecutor = (
