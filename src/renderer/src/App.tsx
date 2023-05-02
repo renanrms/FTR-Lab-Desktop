@@ -1,24 +1,18 @@
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import './styles/global.css'
 
 import { Header } from './components/Header'
+import { ReactQueryProvider } from './components/providers/ReactQueryProvider'
+import { ThemeProvider } from './components/providers/ThemeProvider'
 import { Sidebar } from './components/Sidebar'
 import { ChartsArea } from './features/chart/components/ChartsArea'
 import { useDevices } from './features/devices/hooks/useDevices'
-import theme from './theme/muiTheme'
-
-import './styles/global.css'
-
-const queryClient = new QueryClient()
 
 export function App() {
   const devices = useDevices()
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ReactQueryProvider>
+      <ThemeProvider>
         <div
           className="w-screen h-screen bg-background"
           style={{
@@ -32,6 +26,6 @@ export function App() {
           <ChartsArea></ChartsArea>
         </div>
       </ThemeProvider>
-    </QueryClientProvider>
+    </ReactQueryProvider>
   )
 }
