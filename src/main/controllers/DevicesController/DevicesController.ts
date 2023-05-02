@@ -70,6 +70,10 @@ export class DevicesController {
     // return connection
   }
 
+  async closeConnection(id: string) {
+    this.connections[id].socket.destroy()
+  }
+
   handleDeviceMessage(message: string, deviceId: string) {
     try {
       const json = JSON.parse(message)

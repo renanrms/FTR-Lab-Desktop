@@ -26,33 +26,32 @@ export function createConnectionExecutor(
       throw Error('Dispositivo não encontrado.')
     }
 
-    if (!connections[id]) {
-      connections[id] = { socket: new Socket(), buffer: '' }
-    }
+    connections[id] = { socket: new Socket(), buffer: '' }
     const connection = connections[id]
-    const socket = new Socket()
-    socket.once('error', (error) => {
+
+    connection.socket.once('error', (error) => {
       reject(error)
     })
-    socket.connect(
+    connection.socket.connect(
       {
         port: device.network.port,
         host: device.network.address,
       },
       () => {
-        socket.removeAllListeners() // Para remover o error handler vinculado
-        socket.setKeepAlive(true, 3000)
-        socket.on('data', createHandleData(id, connection, handleDeviceMessage))
-        socket.on('close', () => {
-          // TODO: Fazer tratamento de erro. Acredito que seria bom destruir o socket e removê-lo.
+        connection.socket.removeAllListeners() // Para remover o error handler vinculado
+        connection.socket.setKeepAlive(true, 3000)
+        connection.socket.on(
+          'data',
+          createHandleData(id, connection, handleDeviceMessage),
+        )
+        connection.socket.on('close', () => {
           devices.updateObject(id, { connected: false })
-          console.log('closed')
         })
-        socket.on('error', (error) => {
+        connection.socket.on('error', (error) => {
           console.log(error.message)
         })
         devices.updateObject(id, { connected: true })
-        resolve(socket)
+        resolve(connection.socket)
       },
     )
   }
