@@ -48,7 +48,9 @@ export function createConnectionExecutor(
           devices.updateObject(id, { connected: false })
         })
         connection.socket.on('error', (error) => {
-          console.log(error.message)
+          console.log(
+            `-- ${id} | Erro na conexão: ${error.message}\n(a conexão será encerrada)`,
+          )
         })
         devices.updateObject(id, { connected: true })
         resolve(connection.socket)
