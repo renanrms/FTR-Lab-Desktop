@@ -9,7 +9,7 @@ import { Device } from '@shared/types/Device'
 export function handleMdnsResponse(
   response: Mdns.ResponsePacket,
   rinfo: RemoteInfo,
-  devicesState: KeyObjectState<Device>,
+  devices: KeyObjectState<Device>,
 ) {
   const srvAnswer = response.answers.find(
     (answer) =>
@@ -41,5 +41,5 @@ export function handleMdnsResponse(
 
   console.log(`<< ${matchingDevice.id} | MDNS Response`)
 
-  devicesState.setObject(matchingDevice.id, matchingDevice)
+  devices.setObject(matchingDevice.id, matchingDevice)
 }

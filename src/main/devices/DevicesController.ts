@@ -10,16 +10,20 @@ import { Device } from '@shared/types/Device'
 import { handleMdnsResponse } from './handleMdnsResponse'
 
 export class DevicesController {
-  private devicesState: KeyObjectState<Device>
-  // private connections: [{deviceId: string, socket: Socket, buffer:}]
+  private devices: KeyObjectState<Device>
+  private connections: {
+    [deviceId: string]: { socket: Socket; buffer: string }
+  }
+
   private mdns
 
   constructor() {
-    this.devicesState = new KeyObjectState<Device>({
+    this.devices = new KeyObjectState<Device>({
       onChange: (devices) => {
         sendDevicesInfoUpdate({ devices })
       },
     })
+    this.connections = {}
     this.mdns = Mdns()
   }
 
@@ -45,28 +49,31 @@ export class DevicesController {
     this.mdns.on(
       'response',
       (response: Mdns.ResponsePacket, rinfo: RemoteInfo) => {
-        handleMdnsResponse(response, rinfo, this.devicesState)
+        handleMdnsResponse(response, rinfo, this.devices)
       },
     )
   }
 
   async openConnection(id: string) {
-    const device = this.devicesState.get(id)
-    const that = this
+    const device = this.devices.get(id)
 
     if (!device) throw Error('Dispositivo não encontrado.')
 
-    function handleData(this: { buffer: string }, data: Buffer): void {
+    if (!this.connections[id]) {
+      this.connections[id] = { socket: new Socket(), buffer: '' }
+    }
+    const connection = this.connections[id]
+
+    const handleData = (data: Buffer) => {
       console.log(`<< ${id} | Data${data}`)
-      this.buffer = this.buffer || ''
-      this.buffer += data.toString('utf-8')
-      const messages = this.buffer.split(/\n{1,2}/)
-      this.buffer = ''
+      connection.buffer += data.toString('utf-8')
+      const messages = connection.buffer.split(/\n{1,2}/)
+      connection.buffer = ''
       messages.forEach((message, index, array) => {
         if (index < array.length) {
-          if (message) that.handleDeviceMessage(message, id)
+          if (message) this.handleDeviceMessage(message, id)
         } else {
-          this.buffer = message
+          connection.buffer = message
         }
       })
     }
@@ -87,13 +94,13 @@ export class DevicesController {
           socket.on('data', handleData)
           socket.on('close', () => {
             // TODO: Fazer tratamento de erro. Acredito que seria bom destruir o socket e removê-lo.
-            this.devicesState.updateObject(id, { connected: false })
+            this.devices.updateObject(id, { connected: false })
             console.log('closed')
           })
           socket.on('error', (error) => {
             console.log(error.message)
           })
-          this.devicesState.updateObject(id, { connected: true })
+          this.devices.updateObject(id, { connected: true })
           resolve(socket)
         },
       )
