@@ -1,6 +1,3 @@
-import AddIcon from '@mui/icons-material/Add'
-import { IconButton } from '@mui/material'
-
 import { Device } from '@shared/types/Device'
 
 import { DeviceCard } from '../features/devices/components/DeviceCard'
@@ -20,13 +17,6 @@ export function Sidebar(props: SidebarProps) {
       {props.devices.map((device, index) => (
         <DeviceCard device={device} key={index}></DeviceCard>
       ))}
-      <IconButton
-        className="my-2"
-        size="large"
-        style={{ color: 'var(--md-sys-color-outline' }}
-      >
-        <AddIcon></AddIcon>
-      </IconButton>
     </aside>
   )
 }
