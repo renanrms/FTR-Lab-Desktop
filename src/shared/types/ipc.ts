@@ -7,9 +7,9 @@ export interface DevicesInfoUpdateMessage {
   devices: Device[]
 }
 
-export interface DevicesMeasurementUpdateMessage {
-  deviceId: string
+export interface MeasurementUpdateMessage {
   measurements: Measurement[]
+  deviceId: string
 }
 
 // Comunicação partindo do processo Renderer

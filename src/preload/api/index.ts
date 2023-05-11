@@ -4,6 +4,7 @@ import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
+  MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
 } from '@shared/types/ipc'
@@ -11,7 +12,7 @@ import {
 // Custom APIs for renderer
 export const api = {
   devices: {
-    onUpdate(
+    onDevicesInfoUpdate(
       callback: (
         event: IpcRendererEvent,
         params: DevicesInfoUpdateMessage,
@@ -21,6 +22,18 @@ export const api = {
 
       return () => {
         ipcRenderer.removeListener(CHANNELS.DEVICES.INFO.UPDATE, callback)
+      }
+    },
+    onMeasurementsUpdate(
+      callback: (
+        event: IpcRendererEvent,
+        params: MeasurementUpdateMessage,
+      ) => void,
+    ) {
+      ipcRenderer.on(CHANNELS.MEASUREMENTS.UPDATE, callback)
+
+      return () => {
+        ipcRenderer.removeListener(CHANNELS.MEASUREMENTS.UPDATE, callback)
       }
     },
     requestInfo() {

@@ -1,3 +1,5 @@
+export type SensorId = string
+
 export interface Device {
   id: string
   name?: string

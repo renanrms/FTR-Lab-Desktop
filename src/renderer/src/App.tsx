@@ -6,9 +6,12 @@ import { ThemeProvider } from './components/providers/ThemeProvider'
 import { Sidebar } from './components/Sidebar'
 import { ChartsArea } from './features/chart/components/ChartsArea'
 import { useDevices } from './features/devices/hooks/useDevices'
+import { useMeasurements } from './features/devices/hooks/useMeasurements'
 
 export function App() {
   const devices = useDevices()
+  const measurementRanges = useMeasurements()
+  console.log(measurementRanges)
 
   return (
     <ReactQueryProvider>

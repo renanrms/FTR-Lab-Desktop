@@ -6,10 +6,12 @@ export function useDevices() {
   const [devices, setDevices] = useState<Array<Device>>([])
 
   useEffect(() => {
-    const removeListener = window.api.devices.onUpdate((event, params) => {
-      console.log(params.devices)
-      setDevices(params.devices)
-    })
+    const removeListener = window.api.devices.onDevicesInfoUpdate(
+      (event, params) => {
+        console.log(params.devices)
+        setDevices(params.devices)
+      },
+    )
 
     return removeListener
   }, [])
