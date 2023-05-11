@@ -8,9 +8,9 @@ export const CHANNELS = {
       OPEN: 'devices:connection:open',
       CLOSE: 'devices:connection:close',
     },
-    MEASUREMENTS: {
-      UPDATE: 'measurements:update',
-    },
     UPDATE_SETTINGS: 'devices:update-settings',
+  },
+  MEASUREMENTS: {
+    UPDATE: 'measurements:update',
   },
 }

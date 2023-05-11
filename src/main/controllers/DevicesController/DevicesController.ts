@@ -2,10 +2,11 @@ import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
 
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
-import { sendDevicesMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
+import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
 import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { ConnectionData } from '@shared/types/ConnectionData'
 import { Device } from '@shared/types/Device'
+import { DeviceMeasurement } from '@shared/types/Measurement'
 
 import { createConnectionExecutor } from './createConnectionExecutor'
 import { handleMdnsResponse } from './handleMdnsResponse'
@@ -76,11 +77,23 @@ export class DevicesController {
 
   handleDeviceMessage(message: string, deviceId: string) {
     try {
-      const json = JSON.parse(message)
-      if (json.measurements) {
-        sendDevicesMeasurementUpdate({
+      const { measurements }: { measurements: DeviceMeasurement[] } =
+        JSON.parse(message)
+
+      if (measurements) {
+        const records = measurements.map((measurement) => ({
+          ...measurement,
           deviceId,
-          measurements: json.measurements,
+          sensorId: `${deviceId}:${measurement.sensorIndex}`,
+        }))
+        // const measurementsBySensor = groupBy(records, (record) => record.sensor)
+        // sendMeasurementUpdate({
+        //   measurements: measurementsBySensor,
+        //   deviceId,
+        // })
+        sendMeasurementUpdate({
+          measurements: records,
+          deviceId,
         })
       }
     } catch (error) {

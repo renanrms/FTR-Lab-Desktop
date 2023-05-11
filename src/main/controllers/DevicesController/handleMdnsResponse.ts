@@ -18,6 +18,8 @@ export function handleMdnsResponse(
 
   if (!srvAnswer) return undefined
 
+  const deviceId = srvAnswer.name.split('._ftr-lab._tcp.local')[0]
+
   const txtAnswer = response.answers.find(
     (answer) =>
       !!answer.name.match(/^.*\._ftr-lab._tcp.local$/) && answer.type === 'TXT',
@@ -26,7 +28,7 @@ export function handleMdnsResponse(
   const txtAnswerData = txtAnswer ? getTxtAnswerData(txtAnswer) : {}
 
   const matchingDevice: Device = {
-    id: srvAnswer.name.split('._ftr-lab._tcp.local')[0],
+    id: deviceId,
     name: txtAnswerData.name,
     battery: txtAnswerData.battery,
     available: txtAnswerData.available,
@@ -35,7 +37,10 @@ export function handleMdnsResponse(
       family: rinfo.family,
       port: srvAnswer.data.port,
     },
-    sensors: txtAnswerData.sensors,
+    sensors: txtAnswerData.sensors.map((sensor: any) => ({
+      ...sensor,
+      id: `${deviceId}:${sensor.index}`,
+    })),
     updatedAt: new Date(),
   }
 
