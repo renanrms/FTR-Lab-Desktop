@@ -10,8 +10,8 @@ import { useMeasurements } from './features/devices/hooks/useMeasurements'
 
 export function App() {
   const devices = useDevices()
-  const measurementRanges = useMeasurements()
-  console.log(measurementRanges)
+  const storedRanges = useMeasurements()
+  console.log(storedRanges)
 
   return (
     <ReactQueryProvider>
@@ -26,7 +26,10 @@ export function App() {
         >
           <Header></Header>
           <Sidebar devices={devices}></Sidebar>
-          <ChartsArea></ChartsArea>
+          <ChartsArea
+            devices={devices}
+            storedRanges={storedRanges}
+          ></ChartsArea>
         </div>
       </ThemeProvider>
     </ReactQueryProvider>

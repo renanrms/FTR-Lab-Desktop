@@ -1,3 +1,5 @@
+import React from 'react'
+
 import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
@@ -14,11 +16,15 @@ import {
   YAxis,
 } from 'recharts'
 
+import { Boundaries } from '@shared/types/Measurement'
+
 interface ChartProps {
   className?: string
   XAxis: { key: string; name: string }
   YAxis: { key: string; name: string }
   data: Object[]
+  setTargetRange: React.Dispatch<React.SetStateAction<Boundaries>>
+  storedRange: Boundaries
 }
 
 export function Chart(props: ChartProps) {
@@ -70,7 +76,11 @@ export function Chart(props: ChartProps) {
           margin={{ top: 5, right: 5, left: 9, bottom: 15 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={props.XAxis.key} type="number">
+          <XAxis
+            dataKey={props.XAxis.key}
+            type="number"
+            domain={['dataMin - 1', 'dataMax + 1']}
+          >
             <Label value={props.XAxis.name} offset={0} position="bottom" />
           </XAxis>
           <YAxis dataKey={props.YAxis.key}>
@@ -86,6 +96,7 @@ export function Chart(props: ChartProps) {
             dataKey={props.YAxis.key}
             data={props.data}
             name={props.YAxis.name}
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>

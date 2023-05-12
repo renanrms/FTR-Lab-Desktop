@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { db } from '@renderer/constants/db'
-import { SensorId } from '@shared/types/Device'
-import { Boundaries } from '@shared/types/Measurement'
+import { SensorBoundaries } from '@shared/types/Measurement'
 
 import { mergeBoundaries } from '../utils/mergeBoundaries'
-
-type SensorBoundaries = Record<SensorId, Boundaries | undefined>
 
 export function useMeasurements() {
   const [timeRanges, setTimeRanges] = useState<SensorBoundaries>({})
@@ -45,6 +42,8 @@ export function useMeasurements() {
         await Promise.all(
           params.measurements.map((measurement) => store.put(measurement)),
         )
+
+        await tx.done
       },
     )
 
