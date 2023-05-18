@@ -1,0 +1,61 @@
+{
+  "name": "ftr-lab",
+  "productName": "FTR Lab",
+  "version": "1.0.0",
+  "description": "Uma aplicação desktop para um sistema de aquisição de dados em física experimental",
+  "main": "./out/main/index.js",
+  "author": {
+    "name": "Renan Passos",
+    "email": "renanvmsp@gmail.com",
+    "url": "https://github.com/renanrms"
+  },
+  "homepage": "https://github.com/renanrms/FTR-Lab-Desktop",
+  "license": "UNLICENSED",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "typecheck": "tsc --noEmit -p tsconfig.json --composite false",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev --watch",
+    "build": "npm run typecheck && electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:win": "npm run build && electron-builder --win --config",
+    "build:mac": "electron-vite build && electron-builder --mac --config",
+    "build:linux": "electron-vite build && electron-builder --linux --config"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^1.0.2",
+    "@electron-toolkit/utils": "^1.0.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.0",
+    "@tanstack/react-query": "^4.22.4",
+    "eslint-plugin-import-helpers": "^1.3.1",
+    "idb": "^7.1.1",
+    "multicast-dns": "^7.2.5",
+    "recharts": "^2.2.0"
+  },
+  "devDependencies": {
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@rocketseat/eslint-config": "^1.1.3",
+    "@types/multicast-dns": "^7.2.1",
+    "@types/node": "16.11.22",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "autoprefixer": "^10.4.13",
+    "electron": "^20.3.2",
+    "electron-builder": "^23.6.0",
+    "electron-notarize": "^1.2.1",
+    "electron-vite": "^1.0.11",
+    "eslint": "^8.25.0",
+    "postcss": "^8.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.8.4",
+    "vite": "^3.1.8",
+    "vite-tsconfig-paths": "^4.0.5"
+  }
+}

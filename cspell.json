@@ -1,0 +1,20 @@
+{
+    "version": "0.2",
+    "ignorePaths": [
+        "tsconfig.json",
+        "yarn.lock"
+    ],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "Addchart",
+        "mdns",
+        "photogate",
+        "rocketseat",
+        "tailwindcss",
+        "tanstack",
+        "typecheck"
+    ],
+    "ignoreWords": [],
+    "import": []
+}
