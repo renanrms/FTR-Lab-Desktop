@@ -4,8 +4,13 @@
   "version": "1.0.0",
   "description": "Uma aplicação desktop para um sistema de aquisição de dados em física experimental",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://www.electronjs.org",
+  "author": {
+    "name": "Renan Passos",
+    "email": "renanvmsp@gmail.com",
+    "url": "https://github.com/renanrms"
+  },
+  "homepage": "https://github.com/renanrms/FTR-Lab-Desktop",
+  "license": "UNLICENSED",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -26,6 +31,8 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@tanstack/react-query": "^4.22.4",
+    "eslint-plugin-import-helpers": "^1.3.1",
+    "idb": "^7.1.1",
     "multicast-dns": "^7.2.5",
     "recharts": "^2.2.0"
   },

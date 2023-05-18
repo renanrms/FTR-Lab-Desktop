@@ -2,19 +2,14 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
+import { DevicesController } from './controllers/DevicesController'
 import { createWindow } from './createWindow'
-import './ipcHandlers/configure'
-import { State } from './utils/State'
-import { Device } from '@shared/types/Device'
-import { DevicesController } from './devices'
+import { configureIpcHandlers } from './ipc/handlers/configure'
 
-const devicesState = new State<Array<Device>>([])
-
-const devicesController = new DevicesController(devicesState)
-
+const devicesController = new DevicesController()
 devicesController.startListener()
-
 devicesController.startSearch()
+configureIpcHandlers(devicesController)
 
 if (process.platform === 'darwin') {
   app.dock.setIcon(path.resolve(__dirname, 'icon.png'))

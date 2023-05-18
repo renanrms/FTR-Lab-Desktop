@@ -1,25 +1,30 @@
-import SettingsIcon from '@mui/icons-material/Settings'
-import Battery90Icon from '@mui/icons-material/Battery90'
-import { IconButton } from '@mui/material'
-import { Device } from '~/src/shared/types/Device'
+import Switch from '@mui/material/Switch'
+import { useMutation } from '@tanstack/react-query'
+
+import { Device } from '@shared/types/Device'
+
+import { toggleConnection } from '../services/toggleConnection'
+import { BatteryIndicator } from './BatteryIndicator'
 
 interface DeviceCardProps {
   device: Device
 }
 
 export function DeviceCard(props: DeviceCardProps) {
+  const connectionMutation = useMutation({ mutationFn: toggleConnection })
+
   return (
     <div className="w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background">
       <div className="h-8 flex items-center">
         <div className="grow text-lg">{props.device.name}</div>
-        <IconButton style={{ color: 'var(--md-sys-color-on-surface-variant' }}>
-          <SettingsIcon></SettingsIcon>
-        </IconButton>
-        <Battery90Icon
-          sx={{
-            color: 'var(--md-sys-color-on-surface-variant)',
+        <Switch
+          onClick={() => {
+            connectionMutation.mutate(props.device)
           }}
-        ></Battery90Icon>
+          checked={!!props.device.connected}
+          disabled={connectionMutation.isLoading}
+        />
+        {props.device.battery && <BatteryIndicator {...props.device.battery} />}
       </div>
       <div className="my-4 grow">
         {props.device.sensors?.map((sensor, index) => (

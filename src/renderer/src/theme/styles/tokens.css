@@ -102,6 +102,23 @@
   --md-ref-palette-error98: #fff8f7;
   --md-ref-palette-error99: #fffbff;
   --md-ref-palette-error100: #ffffff;
+  /* warning */
+  --md-ref-palette-warning0: #000000;
+  --md-ref-palette-warning10: #291800;
+  --md-ref-palette-warning20: #452b00;
+  --md-ref-palette-warning25: #533500;
+  --md-ref-palette-warning30: #624000;
+  --md-ref-palette-warning35: #724a00;
+  --md-ref-palette-warning40: #825500;
+  --md-ref-palette-warning50: #a26c00;
+  --md-ref-palette-warning60: #c48300;
+  --md-ref-palette-warning70: #e89c00;
+  --md-ref-palette-warning80: #ffb94e;
+  --md-ref-palette-warning90: #ffddb2;
+  --md-ref-palette-warning95: #ffeedc;
+  --md-ref-palette-warning98: #fff8f4;
+  --md-ref-palette-warning99: #fffbff;
+  --md-ref-palette-warning100: #ffffff;
   /* light */
   --md-sys-color-primary-light: #006c51;
   --md-sys-color-on-primary-light: #ffffff;
@@ -119,6 +136,10 @@
   --md-sys-color-error-container-light: #ffdad6;
   --md-sys-color-on-error-light: #ffffff;
   --md-sys-color-on-error-container-light: #410002;
+  --md-sys-color-warning-light: #825500;
+  --md-sys-color-on-warning-light: #ffffff;
+  --md-sys-color-warning-container-light: #ffddb2;
+  --md-sys-color-on-warning-container-light: #291800;
   --md-sys-color-background-light: #fbfdf9;
   --md-sys-color-on-background-light: #191c1a;
   --md-sys-color-surface-light: #fbfdf9;
@@ -155,6 +176,10 @@
   --md-sys-color-error-container-dark: #93000a;
   --md-sys-color-on-error-dark: #690005;
   --md-sys-color-on-error-container-dark: #ffdad6;
+  --md-sys-color-warning-dark: #ffb94e;
+  --md-sys-color-on-warning-dark: #452b00;
+  --md-sys-color-warning-container-dark: #624000;
+  --md-sys-color-on-warning-container-dark: #ffddb2;
   --md-sys-color-background-dark: #191c1a;
   --md-sys-color-on-background-dark: #e1e3e0;
   --md-sys-color-surface-dark: #191c1a;
