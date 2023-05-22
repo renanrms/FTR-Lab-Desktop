@@ -10,6 +10,27 @@ export function useMeasurements() {
 
   useEffect(() => {
     // TODO: inicializar estado ranges ou apagar dados do banco.
+    const initialRx = db.transaction('measurements', 'readwrite')
+    const store = initialRx.objectStore('measurements')
+
+    store
+      .getAll()
+      .then(async (measurements) => {
+        const storedRanges: SensorBoundaries = {}
+        measurements.forEach((measurement) => {
+          storedRanges[measurement.sensorId] = mergeBoundaries(
+            storedRanges[measurement.sensorId],
+            {
+              min: measurement.timestamp,
+              max: measurement.timestamp,
+            },
+          )
+        })
+        return storedRanges
+      })
+      .then((storedRanges) => {
+        setTimeRanges(storedRanges)
+      })
 
     const removeListener = window.api.devices.onMeasurementsUpdate(
       async (event, params) => {

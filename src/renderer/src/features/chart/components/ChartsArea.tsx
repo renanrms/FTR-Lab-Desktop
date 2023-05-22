@@ -21,7 +21,7 @@ export function ChartsArea(props: ChartsAreaProps) {
           if (!sensorBoundaries) return undefined
           const deviceId = sensorId.split(':')[0]
           const device = props.devices.find((device) => device.id === deviceId)
-          if (!device) return undefined
+          if (!device || !device.connected) return undefined
           const sensor = device.sensors.find((s) => s.id === sensorId)
           if (!sensor) return undefined
 
