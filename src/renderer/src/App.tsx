@@ -10,8 +10,7 @@ import { useMeasurements } from './features/devices/hooks/useMeasurements'
 
 export function App() {
   const devices = useDevices()
-  const storedRanges = useMeasurements()
-  console.log(storedRanges)
+  const { storedRanges, clearMeasurements } = useMeasurements()
 
   return (
     <ReactQueryProvider>
@@ -24,7 +23,7 @@ export function App() {
             gridTemplateRows: '48px auto',
           }}
         >
-          <Header></Header>
+          <Header clearMeasurements={clearMeasurements}></Header>
           <Sidebar devices={devices}></Sidebar>
           <ChartsArea
             devices={devices}

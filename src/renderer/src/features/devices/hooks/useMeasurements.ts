@@ -6,10 +6,25 @@ import { SensorBoundaries } from '@shared/types/Measurement'
 import { mergeBoundaries } from '../utils/mergeBoundaries'
 
 export function useMeasurements() {
-  const [timeRanges, setTimeRanges] = useState<SensorBoundaries>({})
+  const [storedRanges, setStoredRanges] = useState<SensorBoundaries>({})
 
   useEffect(() => {
-    // TODO: inicializar estado ranges ou apagar dados do banco.
+    const initialRx = db.transaction('measurements', 'readwrite')
+    const store = initialRx.objectStore('measurements')
+
+    store.getAll().then(async (measurements) => {
+      const initiallyStoredRanges: SensorBoundaries = {}
+      measurements.forEach((measurement) => {
+        initiallyStoredRanges[measurement.sensorId] = mergeBoundaries(
+          initiallyStoredRanges[measurement.sensorId],
+          {
+            min: measurement.timestamp,
+            max: measurement.timestamp,
+          },
+        )
+      })
+      setStoredRanges(initiallyStoredRanges)
+    })
 
     const removeListener = window.api.devices.onMeasurementsUpdate(
       async (event, params) => {
@@ -25,7 +40,7 @@ export function useMeasurements() {
           )
         })
 
-        setTimeRanges((state) => {
+        setStoredRanges((state) => {
           const newState = { ...state }
           Object.keys(receivedRanges).forEach((sensor) => {
             newState[sensor] = mergeBoundaries(
@@ -50,5 +65,13 @@ export function useMeasurements() {
     return removeListener
   }, [])
 
-  return timeRanges
+  const clearMeasurements = async () => {
+    const tx = db.transaction('measurements', 'readwrite')
+    const store = tx.objectStore('measurements')
+    store.clear()
+    setStoredRanges({})
+    return await tx.done
+  }
+
+  return { storedRanges, clearMeasurements }
 }

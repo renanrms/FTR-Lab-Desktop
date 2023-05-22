@@ -27,7 +27,6 @@ export function ChartContainer(props: ChartContainerProps) {
     YAxis: { key: 'value', name: props.sensor.quantity },
     data: loadedMeasurements,
   }
-  console.log(serie)
 
   return (
     <Chart

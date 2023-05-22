@@ -30,7 +30,6 @@ export function useSensorMeasurements(
         result.filter((measurement) => measurement.sensorId === sensorId),
       )
       .then((result) => {
-        console.log(result)
         setLoadedMeasurements(result)
         const timestamps = result.map((measurement) => measurement.timestamp)
         setLoadedRange({
