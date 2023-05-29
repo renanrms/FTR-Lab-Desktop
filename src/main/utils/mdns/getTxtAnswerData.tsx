@@ -5,21 +5,21 @@ export function getTxtAnswerData(txtAnswer: TxtAnswer) {
     (entry) => {
       const [key, value] = entry.toString().split('=')
       try {
-        return { [key]: JSON.parse(value) }
+        return { key, value: JSON.parse(value) }
       } catch (error) {
-        return { [key]: value }
+        return { key, value }
       }
     },
   )
 
   let txtAnswerData: any = { sensors: [] }
   for (const item of txtAnswerItems) {
-    if (item.sensor) {
-      txtAnswerData.sensors = [...(txtAnswerData.sensors || []), item.sensor]
+    if (item.key.match(/^sensor\[.*\]$/)) {
+      txtAnswerData.sensors = [...(txtAnswerData.sensors || []), item.value]
     } else {
       txtAnswerData = {
         ...txtAnswerData,
-        ...item,
+        ...{ [item.key]: item.value },
       }
     }
   }
