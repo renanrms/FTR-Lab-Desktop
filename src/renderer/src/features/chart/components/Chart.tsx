@@ -79,7 +79,12 @@ export function Chart(props: ChartProps) {
           <XAxis
             dataKey={props.XAxis.key}
             type="number"
-            domain={['dataMin - 1', 'dataMax + 1']}
+            tickCount={10}
+            domain={([dataMin, dataMax]) => {
+              const absMin = Math.floor(dataMin)
+              const absMax = Math.ceil(dataMax)
+              return [absMin, absMax]
+            }}
           >
             <Label value={props.XAxis.name} offset={0} position="bottom" />
           </XAxis>
