@@ -2,8 +2,8 @@ import { RemoteInfo } from 'dgram'
 import { SrvAnswer, TxtAnswer } from 'dns-packet'
 import Mdns from 'multicast-dns'
 
-import { models } from '@main/database/db'
-import { findAllDevices } from '@main/database/findAllDevices'
+import { DeviceModel, SensorModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { getTxtAnswerData } from '@main/utils/mdns/getTxtAnswerData'
@@ -50,9 +50,9 @@ export async function handleMdnsResponse(
 
   console.log(`<< ${matchingDevice.id} | MDNS Response`)
 
-  models.Device.upsert({ ...matchingDevice })
+  DeviceModel.upsert({ ...matchingDevice })
   matchingDevice.sensors.forEach((sensor) => {
-    models.Sensor.upsert({ ...sensor })
+    SensorModel.upsert({ ...sensor })
   })
 
   sendDevicesInfoUpdate({

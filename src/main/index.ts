@@ -4,12 +4,17 @@ import path from 'node:path'
 
 import { DevicesController } from './controllers/DevicesController'
 import { createWindow } from './createWindow'
+import { syncDatabase } from './database/syncDatabase'
 import { configureIpcHandlers } from './ipc/handlers/configure'
 
 const devicesController = new DevicesController()
-devicesController.startListener()
-devicesController.startSearch()
-configureIpcHandlers(devicesController)
+
+// TODO: Habilitar top-level await pra usar await com a função syncDatabase.
+syncDatabase().then(() => {
+  devicesController.startListener()
+  devicesController.startSearch()
+  configureIpcHandlers(devicesController)
+})
 
 if (process.platform === 'darwin') {
   app.dock.setIcon(path.resolve(__dirname, 'icon.png'))

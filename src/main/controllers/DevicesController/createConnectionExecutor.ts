@@ -1,7 +1,7 @@
 import { Socket } from 'node:net'
 
-import { models } from '@main/database/db'
-import { findAllDevices } from '@main/database/findAllDevices'
+import { DeviceModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { ConnectionData } from '@shared/types/ConnectionData'
@@ -23,7 +23,7 @@ export function createConnectionExecutor(
   handleDeviceMessage: (message: string, id: string) => void,
 ): PromiseExecutor {
   return async (resolve, reject) => {
-    const device = await models.Device.findByPk(id, { include: 'sensors' })
+    const device = await DeviceModel.findByPk(id, { include: 'sensors' })
 
     if (!device) {
       throw Error('Dispositivo não encontrado.')
