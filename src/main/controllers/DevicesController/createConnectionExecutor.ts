@@ -48,7 +48,7 @@ export function createConnectionExecutor(
           createHandleData(id, connection, handleDeviceMessage),
         )
         connection.socket.on('close', async () => {
-          device.update({ connected: false }, { where: { id } })
+          device.update({ connected: false })
           sendDevicesInfoUpdate({
             devices: await findAllDevices(),
           })
@@ -58,7 +58,7 @@ export function createConnectionExecutor(
             `-- ${id} | Erro na conexão: ${error.message}\n(a conexão será encerrada)`,
           )
         })
-        device.update({ connected: true }, { where: { id } })
+        device.update({ connected: true })
         sendDevicesInfoUpdate({
           devices: await findAllDevices(),
         })
