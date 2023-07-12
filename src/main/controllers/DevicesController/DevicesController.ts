@@ -67,8 +67,6 @@ export class DevicesController {
 
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.
     await connectionPromise
-
-    // return connection
   }
 
   async closeConnection(id: string) {
@@ -77,8 +75,7 @@ export class DevicesController {
 
   handleDeviceMessage(message: string, deviceId: string) {
     try {
-      const { measurements }: { measurements: DeviceMeasurement[] } =
-        JSON.parse(message)
+      const measurements: DeviceMeasurement[] = JSON.parse(message).measurements
 
       if (measurements) {
         const records = measurements.map((measurement) => ({
@@ -86,11 +83,6 @@ export class DevicesController {
           deviceId,
           sensorId: `${deviceId}:${measurement.sensorIndex}`,
         }))
-        // const measurementsBySensor = groupBy(records, (record) => record.sensor)
-        // sendMeasurementUpdate({
-        //   measurements: measurementsBySensor,
-        //   deviceId,
-        // })
         sendMeasurementUpdate({
           measurements: records,
           deviceId,

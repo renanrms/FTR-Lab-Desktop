@@ -4,6 +4,8 @@ export interface Sensor {
   id: SensorId
   index: string
   quantity: string
+  method: string
+  deviceId: string
 }
 
 export interface Device {
