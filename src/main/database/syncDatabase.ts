@@ -11,7 +11,7 @@ import './models'
  */
 export async function syncDatabase() {
   await sequelize
-    .sync({ alter: { drop: true }, logging: false })
+    .sync({ alter: { drop: false }, logging: false })
     .catch((error) => {
       console.error(error)
     })
