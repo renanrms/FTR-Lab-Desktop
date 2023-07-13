@@ -3,7 +3,7 @@ import { DataTypes } from 'sequelize'
 import { sequelize } from '../db'
 
 export const DeviceModel = sequelize.define(
-  'Device',
+  'device',
   {
     id: {
       type: DataTypes.STRING,
@@ -32,12 +32,12 @@ export const DeviceModel = sequelize.define(
     },
   },
   {
-    tableName: 'Devices',
+    tableName: 'devices',
   },
 )
 
 export const SensorModel = sequelize.define(
-  'Sensor',
+  'sensor',
   {
     id: {
       type: DataTypes.STRING,
@@ -54,17 +54,19 @@ export const SensorModel = sequelize.define(
     },
   },
   {
-    tableName: 'Sensors',
+    tableName: 'sensors',
     timestamps: false,
   },
 )
 
 export const MeasurementModel = sequelize.define(
-  'Measurement',
+  'measurement',
   {
-    sensorId: {
-      type: DataTypes.STRING,
-      allowNull: false,
+    // Não sei se é necessário o ID
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     timestamp: {
       type: DataTypes.DATE,
@@ -76,13 +78,13 @@ export const MeasurementModel = sequelize.define(
     },
   },
   {
-    tableName: 'Measurements',
+    tableName: 'measurements',
     timestamps: false,
   },
 )
 
-DeviceModel.hasMany(SensorModel, { as: 'sensors', foreignKey: 'deviceId' })
-SensorModel.hasMany(MeasurementModel, {
-  as: 'measurements',
-  foreignKey: 'sensorId',
-})
+DeviceModel.hasMany(SensorModel)
+SensorModel.belongsTo(DeviceModel)
+
+SensorModel.hasMany(MeasurementModel)
+MeasurementModel.belongsTo(SensorModel)

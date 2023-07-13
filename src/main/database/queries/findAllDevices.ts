@@ -1,12 +1,10 @@
-import { DeviceModel } from '../models'
+import { DeviceModel, SensorModel } from '../models'
 
 export async function findAllDevices() {
-  return (await DeviceModel.findAll({ include: 'sensors' }))
-    .map((deviceM) => ({
-      ...deviceM.dataValues,
-    }))
-    .map((sensorM) => ({
-      ...sensorM,
-      sensors: sensorM.sensors.map((sensor: any) => sensor.dataValues),
+  return (await DeviceModel.findAll({ include: SensorModel }))
+    .map((deviceM) => deviceM.dataValues)
+    .map((device) => ({
+      ...device,
+      sensors: device.sensors.map((sensor: any) => sensor.dataValues),
     }))
 }

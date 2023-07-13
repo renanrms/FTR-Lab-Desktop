@@ -1,9 +1,10 @@
+import { Op } from 'sequelize'
+
 import { DeviceModel } from './models'
 
 export async function resetAllDevicesStates() {
-  DeviceModel.findAll().then((devices) => {
-    devices.forEach((device) => {
-      device.update({ connected: false, available: false })
-    })
-  })
+  DeviceModel.update(
+    { connected: false, available: false },
+    { where: { [Op.or]: [{ connected: true }, { available: true }] } },
+  )
 }
