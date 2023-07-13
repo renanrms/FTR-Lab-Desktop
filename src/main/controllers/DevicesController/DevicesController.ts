@@ -1,17 +1,13 @@
 import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
 
-import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
-import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { ConnectionData } from '@shared/types/ConnectionData'
-import { Device } from '@shared/types/Device'
 import { DeviceMeasurement } from '@shared/types/Measurement'
 
 import { createConnectionExecutor } from './createConnectionExecutor'
 import { handleMdnsResponse } from './handleMdnsResponse'
 export class DevicesController {
-  private devices: KeyObjectState<Device>
   private connections: {
     [deviceId: string]: ConnectionData
   }
@@ -19,11 +15,9 @@ export class DevicesController {
   private mdns
 
   constructor() {
-    this.devices = new KeyObjectState<Device>({
-      onChange: (devices) => {
-        sendDevicesInfoUpdate({ devices })
-      },
-    })
+    /*
+      TODO: Tentar usar um hook do sequelize para enviar os dispositivos ao renderer sempre que houver uma alteração testa tabela do banco. Isso vai garantir melhor a atualização.
+    */
     this.connections = {}
     this.mdns = Mdns()
   }
@@ -50,19 +44,14 @@ export class DevicesController {
     this.mdns.on(
       'response',
       (response: Mdns.ResponsePacket, rinfo: RemoteInfo) => {
-        handleMdnsResponse(response, rinfo, this.devices)
+        handleMdnsResponse(response, rinfo)
       },
     )
   }
 
   async openConnection(id: string) {
     const connectionPromise = new Promise(
-      createConnectionExecutor(
-        this.devices,
-        this.connections,
-        id,
-        this.handleDeviceMessage,
-      ),
+      createConnectionExecutor(this.connections, id, this.handleDeviceMessage),
     )
 
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.

@@ -5,14 +5,12 @@ import Mdns from 'multicast-dns'
 import { DeviceModel, SensorModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
-import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { getTxtAnswerData } from '@main/utils/mdns/getTxtAnswerData'
 import { Device } from '@shared/types/Device'
 
 export async function handleMdnsResponse(
   response: Mdns.ResponsePacket,
   rinfo: RemoteInfo,
-  devices: KeyObjectState<Device>,
 ) {
   const srvAnswer = response.answers.find(
     (answer) =>

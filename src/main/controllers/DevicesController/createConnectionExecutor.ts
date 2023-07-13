@@ -3,9 +3,7 @@ import { Socket } from 'node:net'
 import { DeviceModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
-import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { ConnectionData } from '@shared/types/ConnectionData'
-import { Device } from '@shared/types/Device'
 
 import { createHandleData } from './createHandleData'
 
@@ -15,7 +13,6 @@ type PromiseExecutor = (
 ) => void
 
 export function createConnectionExecutor(
-  devices: KeyObjectState<Device>,
   connections: {
     [deviceId: string]: ConnectionData
   },
