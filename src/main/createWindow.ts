@@ -4,10 +4,10 @@ import path from 'node:path'
 
 export function createWindow(): void {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 670,
-    minWidth: 613,
-    minHeight: 393,
+    width: 900,
+    height: 800,
+    minWidth: 640,
+    minHeight: 434,
     show: false,
     autoHideMenuBar: true,
     backgroundColor: '#FBFDF9',
