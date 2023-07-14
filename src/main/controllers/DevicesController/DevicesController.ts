@@ -1,17 +1,17 @@
 import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
+import { Op } from 'sequelize'
 
+import { DeviceModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
-import { KeyObjectState } from '@main/utils/KeyObjectState'
 import { ConnectionData } from '@shared/types/ConnectionData'
-import { Device } from '@shared/types/Device'
 import { DeviceMeasurement } from '@shared/types/Measurement'
 
 import { createConnectionExecutor } from './createConnectionExecutor'
 import { handleMdnsResponse } from './handleMdnsResponse'
 export class DevicesController {
-  private devices: KeyObjectState<Device>
   private connections: {
     [deviceId: string]: ConnectionData
   }
@@ -19,11 +19,9 @@ export class DevicesController {
   private mdns
 
   constructor() {
-    this.devices = new KeyObjectState<Device>({
-      onChange: (devices) => {
-        sendDevicesInfoUpdate({ devices })
-      },
-    })
+    /*
+      TODO: Tentar usar um hook do sequelize para enviar os dispositivos ao renderer sempre que houver uma alteração testa tabela do banco. Isso vai garantir melhor a atualização.
+    */
     this.connections = {}
     this.mdns = Mdns()
   }
@@ -50,25 +48,46 @@ export class DevicesController {
     this.mdns.on(
       'response',
       (response: Mdns.ResponsePacket, rinfo: RemoteInfo) => {
-        handleMdnsResponse(response, rinfo, this.devices)
+        handleMdnsResponse(response, rinfo)
       },
     )
   }
 
+  startUpdateDevicesAvailability(interval: number = 30) {
+    setInterval(this.updateDevicesAvailability, interval * 1000)
+  }
+
+  /**
+   * Verifica os dispositivos inativos e altera o estado available.
+   * @param tolerance numero de segundos sem respostas do dispositivo para considerá-lo indisponível.
+   */
+  async updateDevicesAvailability(tolerance: number = 120) {
+    const [affectedCount] = await DeviceModel.update(
+      { available: false },
+      {
+        where: {
+          available: true,
+          updatedAt: {
+            [Op.lt]: new Date(Date.now() - tolerance * 1000),
+          },
+        },
+      },
+    )
+    if (affectedCount > 0) {
+      console.log(`-- Inactive devices set to unavailable`)
+      sendDevicesInfoUpdate({
+        devices: await findAllDevices(),
+      })
+    }
+  }
+
   async openConnection(id: string) {
     const connectionPromise = new Promise(
-      createConnectionExecutor(
-        this.devices,
-        this.connections,
-        id,
-        this.handleDeviceMessage,
-      ),
+      createConnectionExecutor(this.connections, id, this.handleDeviceMessage),
     )
 
     // TODO: Fazer um loop de tentativas de conexão porque muitas vezes não vai de primeira.
     await connectionPromise
-
-    // return connection
   }
 
   async closeConnection(id: string) {
@@ -77,8 +96,7 @@ export class DevicesController {
 
   handleDeviceMessage(message: string, deviceId: string) {
     try {
-      const { measurements }: { measurements: DeviceMeasurement[] } =
-        JSON.parse(message)
+      const measurements: DeviceMeasurement[] = JSON.parse(message).measurements
 
       if (measurements) {
         const records = measurements.map((measurement) => ({
@@ -86,11 +104,6 @@ export class DevicesController {
           deviceId,
           sensorId: `${deviceId}:${measurement.sensorIndex}`,
         }))
-        // const measurementsBySensor = groupBy(records, (record) => record.sensor)
-        // sendMeasurementUpdate({
-        //   measurements: measurementsBySensor,
-        //   deviceId,
-        // })
         sendMeasurementUpdate({
           measurements: records,
           deviceId,

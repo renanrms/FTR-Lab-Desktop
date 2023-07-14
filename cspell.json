@@ -8,9 +8,12 @@
     "dictionaries": [],
     "words": [
         "Addchart",
+        "ftrlab",
         "mdns",
         "photogate",
         "rocketseat",
+        "sequelize",
+        "sqlite",
         "tailwindcss",
         "tanstack",
         "typecheck"

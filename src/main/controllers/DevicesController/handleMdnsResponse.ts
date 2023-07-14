@@ -2,14 +2,15 @@ import { RemoteInfo } from 'dgram'
 import { SrvAnswer, TxtAnswer } from 'dns-packet'
 import Mdns from 'multicast-dns'
 
-import { KeyObjectState } from '@main/utils/KeyObjectState'
+import { DeviceModel, SensorModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
+import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { getTxtAnswerData } from '@main/utils/mdns/getTxtAnswerData'
 import { Device } from '@shared/types/Device'
 
-export function handleMdnsResponse(
+export async function handleMdnsResponse(
   response: Mdns.ResponsePacket,
   rinfo: RemoteInfo,
-  devices: KeyObjectState<Device>,
 ) {
   const srvAnswer = response.answers.find(
     (answer) =>
@@ -40,11 +41,19 @@ export function handleMdnsResponse(
     sensors: txtAnswerData.sensors.map((sensor: any) => ({
       ...sensor,
       id: `${deviceId}:${sensor.index}`,
+      deviceId,
     })),
     updatedAt: new Date(),
   }
 
   console.log(`<< ${matchingDevice.id} | MDNS Response`)
 
-  devices.setObject(matchingDevice.id, matchingDevice)
+  DeviceModel.upsert({ ...matchingDevice })
+  matchingDevice.sensors.forEach((sensor) => {
+    SensorModel.upsert({ ...sensor })
+  })
+
+  sendDevicesInfoUpdate({
+    devices: await findAllDevices(),
+  })
 }
