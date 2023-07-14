@@ -35,7 +35,8 @@
     "multicast-dns": "^7.2.5",
     "recharts": "^2.2.0",
     "sequelize": "^6.32.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "tailwind-merge": "^1.13.2"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
