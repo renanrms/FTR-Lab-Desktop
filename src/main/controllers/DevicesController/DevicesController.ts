@@ -1,6 +1,10 @@
 import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
+import { Op } from 'sequelize'
 
+import { DeviceModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
+import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
 import { ConnectionData } from '@shared/types/ConnectionData'
 import { DeviceMeasurement } from '@shared/types/Measurement'
@@ -47,6 +51,34 @@ export class DevicesController {
         handleMdnsResponse(response, rinfo)
       },
     )
+  }
+
+  startUpdateDevicesAvailability(interval: number = 30) {
+    setInterval(this.updateDevicesAvailability, interval * 1000)
+  }
+
+  /**
+   * Verifica os dispositivos inativos e altera o estado available.
+   * @param tolerance numero de segundos sem respostas do dispositivo para considerá-lo indisponível.
+   */
+  async updateDevicesAvailability(tolerance: number = 120) {
+    const [affectedCount] = await DeviceModel.update(
+      { available: false },
+      {
+        where: {
+          available: true,
+          updatedAt: {
+            [Op.lt]: new Date(Date.now() - tolerance * 1000),
+          },
+        },
+      },
+    )
+    if (affectedCount > 0) {
+      console.log(`-- Inactive devices set to unavailable`)
+      sendDevicesInfoUpdate({
+        devices: await findAllDevices(),
+      })
+    }
   }
 
   async openConnection(id: string) {

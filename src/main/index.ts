@@ -16,6 +16,7 @@ const devicesController = new DevicesController()
 syncDatabase()
   .then(resetAllDevicesStates)
   .then(() => {
+    devicesController.startUpdateDevicesAvailability()
     devicesController.startListener()
     devicesController.startSearch()
     configureIpcHandlers(devicesController)
