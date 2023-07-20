@@ -25,7 +25,33 @@ export const api = {
         ipcRenderer.removeListener(CHANNELS.DEVICES.INFO.UPDATE, callback)
       }
     },
-    onMeasurementsUpdate(
+
+    requestInfo() {
+      ipcRenderer.invoke(CHANNELS.DEVICES.INFO.REQUEST)
+    },
+
+    openConnection(request: OpenDeviceConnectionRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.OPEN, request)
+    },
+
+    closeConnection(request: CloseDeviceConnectionRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.CLOSE, request)
+    },
+
+    updateSettings(request: UpdateDeviceSettingsRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.UPDATE_SETTINGS, request)
+    },
+  },
+  measurements: {
+    async getAll(request: void): Promise<GetAllMeasurementsResponse> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
+    },
+
+    async deleteAll(request: void): Promise<void> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.DELETE_ALL, request)
+    },
+
+    onUpdate(
       callback: (
         event: IpcRendererEvent,
         params: MeasurementUpdateMessage,
@@ -36,29 +62,6 @@ export const api = {
       return () => {
         ipcRenderer.removeListener(CHANNELS.MEASUREMENTS.UPDATE, callback)
       }
-    },
-    requestInfo() {
-      ipcRenderer.invoke(CHANNELS.DEVICES.INFO.REQUEST)
-    },
-    openConnection(request: OpenDeviceConnectionRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.OPEN, request)
-    },
-    closeConnection(request: CloseDeviceConnectionRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.CLOSE, request)
-    },
-    updateSettings(request: UpdateDeviceSettingsRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.UPDATE_SETTINGS, request)
-    },
-  },
-  measurements: {
-    async getAllMeasurements(
-      request: void,
-    ): Promise<GetAllMeasurementsResponse> {
-      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
-    },
-
-    async deleteAllMeasurements(request: void): Promise<void> {
-      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.DELETE_ALL, request)
     },
   },
 }

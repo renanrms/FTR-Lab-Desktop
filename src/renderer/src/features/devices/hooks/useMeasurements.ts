@@ -7,21 +7,19 @@ export function useMeasurements() {
     useState<SensorMeasurements>({})
 
   useEffect(() => {
-    window.api.measurements
-      .getAllMeasurements()
-      .then(async ({ measurements }) => {
-        const receivedMeasurements: { [x: string]: Measurement[] } = {}
+    window.api.measurements.getAll().then(async ({ measurements }) => {
+      const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-        measurements.forEach((measurement) => {
-          receivedMeasurements[measurement.sensorId] = receivedMeasurements[
-            measurement.sensorId
-          ]?.concat([measurement]) || [measurement]
-        })
-
-        setSensorMeasurements(receivedMeasurements)
+      measurements.forEach((measurement) => {
+        receivedMeasurements[measurement.sensorId] = receivedMeasurements[
+          measurement.sensorId
+        ]?.concat([measurement]) || [measurement]
       })
 
-    const removeListener = window.api.devices.onMeasurementsUpdate(
+      setSensorMeasurements(receivedMeasurements)
+    })
+
+    const removeListener = window.api.measurements.onUpdate(
       async (event, params) => {
         const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
@@ -49,7 +47,7 @@ export function useMeasurements() {
   }, [])
 
   const clearMeasurements = async () => {
-    await window.api.measurements.deleteAllMeasurements()
+    await window.api.measurements.deleteAll()
     setSensorMeasurements({})
   }
 
