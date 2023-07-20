@@ -1,4 +1,4 @@
-import { Device, Sensor } from '@shared/types/Device'
+import { Device } from '@shared/types/Device'
 import { SensorMeasurements } from '@shared/types/Measurement'
 
 import { ChartContainer } from './ChartContainer'
@@ -9,11 +9,6 @@ interface ChartsAreaProps {
 }
 
 export function ChartsArea(props: ChartsAreaProps) {
-  let sensors: Sensor[] = []
-  props.devices.forEach((device) => {
-    sensors = sensors.concat(device.sensors)
-  })
-
   return (
     <main
       className="w-full px-4 pt-4 flex justify-evenly items-start flex-wrap overflow-y-auto overflow-hidden"
@@ -21,16 +16,19 @@ export function ChartsArea(props: ChartsAreaProps) {
         gridArea: 'main',
       }}
     >
-      {sensors.map(
-        (sensor) =>
-          props.sensorMeasurements[sensor.id] && (
-            <ChartContainer
-              sensor={sensor}
-              measurements={props.sensorMeasurements[sensor.id]!}
-              key={sensor.id}
-            ></ChartContainer>
-          ),
-      )}
+      {props.devices
+        .map((device) => device.sensors)
+        .flat()
+        .map(
+          (sensor) =>
+            props.sensorMeasurements[sensor.id] && (
+              <ChartContainer
+                sensor={sensor}
+                measurements={props.sensorMeasurements[sensor.id]!}
+                key={sensor.id}
+              ></ChartContainer>
+            ),
+        )}
     </main>
   )
 }
