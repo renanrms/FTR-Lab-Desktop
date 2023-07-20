@@ -92,7 +92,11 @@ export function Chart(props: ChartProps) {
               position="left"
             />
           </YAxis>
-          <Tooltip />
+          <Tooltip
+            labelFormatter={(label: number, payload) =>
+              `t: ${label.toFixed(6)}`
+            }
+          />
           <Line
             type="monotone"
             dataKey={props.YAxis.key}

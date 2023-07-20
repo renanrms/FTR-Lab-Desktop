@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { Measurement, SensorMeasurements } from '@shared/types/Measurement'
 
+import { transformToRelativeTime } from '../utils/transformToRelativeTime'
+
 export function useMeasurements() {
   const [sensorMeasurements, setSensorMeasurements] =
     useState<SensorMeasurements>({})
@@ -10,7 +12,7 @@ export function useMeasurements() {
     window.api.measurements.getAll().then(async ({ measurements }) => {
       const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-      measurements.forEach((measurement) => {
+      measurements.map(transformToRelativeTime).forEach((measurement) => {
         receivedMeasurements[measurement.sensorId] = receivedMeasurements[
           measurement.sensorId
         ]?.concat([measurement]) || [measurement]
@@ -23,11 +25,15 @@ export function useMeasurements() {
       async (event, params) => {
         const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-        params.measurements.forEach((measurement) => {
-          receivedMeasurements[measurement.sensorId] = receivedMeasurements[
-            measurement.sensorId
-          ]?.concat([measurement]) || [measurement]
-        })
+        params.measurements
+          .map(transformToRelativeTime)
+          .forEach((measurement) => {
+            console.log(measurement)
+
+            receivedMeasurements[measurement.sensorId] = receivedMeasurements[
+              measurement.sensorId
+            ]?.concat([measurement]) || [measurement]
+          })
 
         setSensorMeasurements((state) => {
           const newState = { ...state }
