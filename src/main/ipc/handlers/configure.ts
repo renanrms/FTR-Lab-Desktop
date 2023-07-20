@@ -47,7 +47,6 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       const measurements = (await MeasurementModel.findAll()).map(
         (model) => model.dataValues,
       )
-
       return {
         measurements,
       }
@@ -58,7 +57,7 @@ export function configureIpcHandlers(devicesController: DevicesController) {
     CHANNELS.MEASUREMENTS.DELETE_ALL,
     async (event, request: void): Promise<void> => {
       console.log(`<= ${CHANNELS.MEASUREMENTS.DELETE_ALL}`)
-      await MeasurementModel.drop()
+      await MeasurementModel.truncate()
     },
   )
 
