@@ -98,9 +98,12 @@ export function Chart(props: ChartProps) {
           </YAxis>
           <Tooltip />
           <Line
+            type="monotone"
             dataKey={props.YAxis.key}
             data={props.data}
             name={props.YAxis.name}
+            stroke="var(--md-ref-palette-primary50)"
+            fill="var(--md-ref-palette-primary70)"
             isAnimationActive={false}
           />
         </LineChart>
