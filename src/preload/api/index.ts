@@ -4,6 +4,7 @@ import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
+  GetAllMeasurementsResponse,
   MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
@@ -47,6 +48,13 @@ export const api = {
     },
     updateSettings(request: UpdateDeviceSettingsRequest) {
       return ipcRenderer.invoke(CHANNELS.DEVICES.UPDATE_SETTINGS, request)
+    },
+  },
+  measurements: {
+    async getAllMeasurements(
+      request: void,
+    ): Promise<GetAllMeasurementsResponse> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
     },
   },
 }

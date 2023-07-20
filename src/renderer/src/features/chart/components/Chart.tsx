@@ -16,15 +16,11 @@ import {
   YAxis,
 } from 'recharts'
 
-import { Boundaries } from '@shared/types/Measurement'
-
 interface ChartProps {
   className?: string
   XAxis: { key: string; name: string }
   YAxis: { key: string; name: string }
   data: Object[]
-  setTargetRange: React.Dispatch<React.SetStateAction<Boundaries>>
-  storedRange: Boundaries
 }
 
 export function Chart(props: ChartProps) {

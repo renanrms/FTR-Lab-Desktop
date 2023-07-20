@@ -2,7 +2,7 @@ import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
 import { Op } from 'sequelize'
 
-import { DeviceModel } from '@main/database/models'
+import { DeviceModel, MeasurementModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
@@ -101,9 +101,14 @@ export class DevicesController {
       if (measurements) {
         const records = measurements.map((measurement) => ({
           ...measurement,
-          deviceId,
           sensorId: `${deviceId}:${measurement.sensorIndex}`,
+          sensorIndex: undefined,
         }))
+
+        records.forEach(async (record) => {
+          await MeasurementModel.create(record)
+        })
+
         sendMeasurementUpdate({
           measurements: records,
           deviceId,

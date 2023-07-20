@@ -22,6 +22,10 @@ export interface CloseDeviceConnectionRequest {
   deviceId: string
 }
 
+export interface GetAllMeasurementsResponse {
+  measurements: Measurement[]
+}
+
 export interface UpdateDeviceSettingsRequest {
   deviceId: string
 }

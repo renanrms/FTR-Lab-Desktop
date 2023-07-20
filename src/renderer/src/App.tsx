@@ -10,7 +10,9 @@ import { useMeasurements } from './features/devices/hooks/useMeasurements'
 
 export function App() {
   const devices = useDevices()
-  const { storedRanges, clearMeasurements } = useMeasurements()
+  const { sensorMeasurements, clearMeasurements } = useMeasurements()
+
+  console.log({ sensorMeasurements })
 
   return (
     <ReactQueryProvider>
@@ -27,7 +29,7 @@ export function App() {
           <Sidebar devices={devices}></Sidebar>
           <ChartsArea
             devices={devices}
-            storedRanges={storedRanges}
+            sensorMeasurements={sensorMeasurements}
           ></ChartsArea>
         </div>
       </ThemeProvider>
