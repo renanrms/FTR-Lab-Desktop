@@ -94,7 +94,7 @@ export class DevicesController {
     this.connections[id].socket.destroy()
   }
 
-  handleDeviceMessage(message: string, deviceId: string) {
+  async handleDeviceMessage(message: string, deviceId: string) {
     try {
       const measurements: DeviceMeasurement[] = JSON.parse(message).measurements
 
@@ -105,9 +105,7 @@ export class DevicesController {
           sensorIndex: undefined,
         }))
 
-        records.forEach(async (record) => {
-          await MeasurementModel.create(record)
-        })
+        await MeasurementModel.bulkCreate(records)
 
         sendMeasurementUpdate({
           measurements: records,

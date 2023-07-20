@@ -12,8 +12,6 @@ export function App() {
   const devices = useDevices()
   const { sensorMeasurements, clearMeasurements } = useMeasurements()
 
-  console.log({ sensorMeasurements })
-
   return (
     <ReactQueryProvider>
       <ThemeProvider>
