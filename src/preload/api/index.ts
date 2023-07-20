@@ -56,5 +56,9 @@ export const api = {
     ): Promise<GetAllMeasurementsResponse> {
       return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
     },
+
+    async deleteAllMeasurements(request: void): Promise<void> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.DELETE_ALL, request)
+    },
   },
 }

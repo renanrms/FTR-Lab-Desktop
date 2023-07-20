@@ -49,7 +49,8 @@ export function useMeasurements() {
   }, [])
 
   const clearMeasurements = async () => {
-    // setSensorMeasurements({})
+    await window.api.measurements.deleteAllMeasurements()
+    setSensorMeasurements({})
   }
 
   return { sensorMeasurements, clearMeasurements }
