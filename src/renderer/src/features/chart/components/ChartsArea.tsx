@@ -1,11 +1,11 @@
 import { Device } from '@shared/types/Device'
-import { SensorMeasurements } from '@shared/types/Measurement'
+import { MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { ChartContainer } from './ChartContainer'
 
 interface ChartsAreaProps {
   devices: Device[]
-  sensorMeasurements: SensorMeasurements
+  sensorMeasurements: MeasurementsBySensor
 }
 
 export function ChartsArea(props: ChartsAreaProps) {

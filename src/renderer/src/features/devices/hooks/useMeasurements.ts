@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { Measurement, SensorMeasurements } from '@shared/types/Measurement'
+import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { transformToRelativeTime } from '../utils/transformToRelativeTime'
 
 export function useMeasurements() {
   const [sensorMeasurements, setSensorMeasurements] =
-    useState<SensorMeasurements>({})
+    useState<MeasurementsBySensor>({})
 
   useEffect(() => {
     window.api.measurements.getAll().then(async ({ measurements }) => {

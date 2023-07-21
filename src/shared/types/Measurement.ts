@@ -12,11 +12,4 @@ export interface Measurement {
   value: any
 }
 
-export type Boundaries = {
-  min: number
-  max: number
-}
-
-export type SensorBoundaries = Record<SensorId, Boundaries | undefined>
-
-export type SensorMeasurements = Record<SensorId, Measurement[] | undefined>
+export type MeasurementsBySensor = Record<SensorId, Measurement[] | undefined>
