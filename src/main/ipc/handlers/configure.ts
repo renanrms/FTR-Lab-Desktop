@@ -1,10 +1,11 @@
 import { format } from 'date-fns'
-import { BrowserWindow, dialog, ipcMain, app } from 'electron'
+import { dialog, ipcMain, app } from 'electron'
 import fs from 'fs'
 import path from 'path'
 
 import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
+import { getMainWindow } from '@main/utils/getMainWindow'
 import { CHANNELS } from '@shared/constants/channels'
 import { Sensor } from '@shared/types/Device'
 import {
@@ -98,10 +99,8 @@ export function configureIpcHandlers(devicesController: DevicesController) {
 
       const fileContent = [fileHeader, fileBody].join('\n')
 
-      const mainWindow = BrowserWindow.getAllWindows()[0]
-
       dialog
-        .showSaveDialog(mainWindow, {
+        .showSaveDialog(getMainWindow(), {
           title: 'Exportar medições',
           defaultPath: path.join(
             app.getPath('documents'),

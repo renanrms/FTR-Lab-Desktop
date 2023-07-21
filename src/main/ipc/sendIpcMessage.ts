@@ -1,7 +1,7 @@
-import { BrowserWindow } from 'electron'
+import { getMainWindow } from '@main/utils/getMainWindow'
 
 export function sendIpcMessage(channel: string, message: any) {
-  const mainWindow = BrowserWindow.getAllWindows()[0]
+  const mainWindow = getMainWindow()
 
   if (mainWindow) {
     mainWindow.webContents.send(channel, message)
