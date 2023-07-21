@@ -14,5 +14,6 @@ export const CHANNELS = {
     UPDATE: 'measurements:update',
     GET_ALL: 'measurements:get-all',
     DELETE_ALL: 'measurements:delete-all',
+    EXPORT: 'measurements:export',
   },
 }

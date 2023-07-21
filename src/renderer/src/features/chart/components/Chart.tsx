@@ -1,5 +1,6 @@
 import React from 'react'
 
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
@@ -16,11 +17,14 @@ import {
   YAxis,
 } from 'recharts'
 
+import { Sensor } from '@shared/types/Device'
+
 interface ChartProps {
   className?: string
   XAxis: { key: string; name: string }
   YAxis: { key: string; name: string }
   data: Object[]
+  sensor: Sensor
 }
 
 export function Chart(props: ChartProps) {
@@ -39,7 +43,7 @@ export function Chart(props: ChartProps) {
                 fontSize: '22px',
                 transform: 'rotate(-90deg)',
               }}
-            ></VerticalAlignBottomRoundedIcon>
+            />
           </IconButton>
 
           <IconButton>
@@ -48,20 +52,27 @@ export function Chart(props: ChartProps) {
                 fontSize: '22px',
                 transform: 'rotate(90deg)',
               }}
-            ></ExpandRoundedIcon>
+            />
           </IconButton>
         </div>
-        <div className="rounded-full bg-surface-l1-light flex items-center">
+        <div className="rounded-full bg-surface-l1-light flex items-center mr-4">
           <IconButton>
-            <ScatterPlotRoundedIcon
-              sx={{ fontSize: '22px' }}
-            ></ScatterPlotRoundedIcon>
+            <ScatterPlotRoundedIcon sx={{ fontSize: '22px' }} />
           </IconButton>
 
           <IconButton>
-            <ShowChartRoundedIcon
-              sx={{ fontSize: '22px' }}
-            ></ShowChartRoundedIcon>
+            <ShowChartRoundedIcon sx={{ fontSize: '22px' }} />
+          </IconButton>
+        </div>
+        <div className="rounded-full bg-surface-l1-light flex items-center">
+          <IconButton
+            onClick={() => {
+              window.api.measurements.export({
+                sensorId: props.sensor.id,
+              })
+            }}
+          >
+            <DownloadOutlinedIcon sx={{ fontSize: '22px' }} />
           </IconButton>
         </div>
       </div>

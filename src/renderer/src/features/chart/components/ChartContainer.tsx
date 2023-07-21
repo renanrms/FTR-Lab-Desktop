@@ -23,6 +23,7 @@ export function ChartContainer(props: ChartContainerProps) {
       XAxis={serie.XAxis}
       YAxis={serie.YAxis}
       data={serie.data}
+      sensor={props.sensor}
     ></Chart>
   )
 }

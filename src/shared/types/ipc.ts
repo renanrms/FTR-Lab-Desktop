@@ -1,4 +1,4 @@
-import { Device } from './Device'
+import { Device, SensorId } from './Device'
 import { Measurement } from './Measurement'
 
 // Comunicação partindo do processo Main
@@ -28,4 +28,8 @@ export interface GetAllMeasurementsResponse {
 
 export interface UpdateDeviceSettingsRequest {
   deviceId: string
+}
+
+export interface ExportMeasurementsRequest {
+  sensorId: SensorId
 }

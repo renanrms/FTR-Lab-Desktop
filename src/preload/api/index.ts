@@ -4,6 +4,7 @@ import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
+  ExportMeasurementsRequest,
   GetAllMeasurementsResponse,
   MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
@@ -49,6 +50,10 @@ export const api = {
 
     async deleteAll(request: void): Promise<void> {
       return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.DELETE_ALL, request)
+    },
+
+    async export(request: ExportMeasurementsRequest): Promise<void> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.EXPORT, request)
     },
 
     onUpdate(
