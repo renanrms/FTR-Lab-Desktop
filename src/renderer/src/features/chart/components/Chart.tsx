@@ -1,5 +1,3 @@
-import React from 'react'
-
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
@@ -80,7 +78,7 @@ export function Chart(props: ChartProps) {
         <LineChart
           width={200}
           height={200}
-          margin={{ top: 5, right: 5, left: 9, bottom: 15 }}
+          margin={{ top: 5, right: 5, left: 18, bottom: 15 }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
@@ -99,8 +97,8 @@ export function Chart(props: ChartProps) {
             <Label
               value={props.YAxis.name}
               angle={-90}
-              offset={0}
-              position="left"
+              offset={-5}
+              position="insideBottomLeft"
             />
           </YAxis>
           <Tooltip
