@@ -1,8 +1,8 @@
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
-import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
+// import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
-import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
+// import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
 import IconButton from '@mui/material/IconButton'
 import {
   CartesianGrid,
@@ -14,8 +14,11 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { twMerge } from 'tailwind-merge'
 
 import { Sensor } from '@shared/types/Device'
+
+import { useChartControls } from '../hooks/useChartControls'
 
 interface ChartProps {
   className?: string
@@ -26,15 +29,17 @@ interface ChartProps {
 }
 
 export function Chart(props: ChartProps) {
+  const chartControls = useChartControls()
+
   return (
     <div
-      className={[
+      className={twMerge(
         'p-4 pb-16 shadow border-2 border-secondary-90 dark:border-primary-50 bg-neutral-100 rounded-lg',
         props.className,
-      ].join(' ')}
+      )}
     >
-      <div className="mb-2 ml-[68px] flex items-center">
-        <div className="rounded-full bg-surface-l1-light flex items-center mr-4">
+      <div className="mb-2 ml-20 flex items-center">
+        {/* <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-4">
           <IconButton>
             <VerticalAlignBottomRoundedIcon
               sx={{
@@ -52,17 +57,31 @@ export function Chart(props: ChartProps) {
               }}
             />
           </IconButton>
-        </div>
-        <div className="rounded-full bg-surface-l1-light flex items-center mr-4">
-          <IconButton>
-            <ScatterPlotRoundedIcon sx={{ fontSize: '22px' }} />
+        </div> */}
+        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-6">
+          <IconButton onClick={chartControls.showPointsHandleClick}>
+            <ScatterPlotRoundedIcon
+              sx={{
+                fontSize: '22px',
+                color: chartControls.showPoints
+                  ? 'var(--md-ref-palette-primary60)'
+                  : 'currentcolor',
+              }}
+            />
           </IconButton>
 
-          <IconButton>
-            <ShowChartRoundedIcon sx={{ fontSize: '22px' }} />
+          <IconButton onClick={chartControls.showLinesHandleClick}>
+            <ShowChartRoundedIcon
+              sx={{
+                fontSize: '22px',
+                color: chartControls.showLines
+                  ? 'var(--md-ref-palette-primary60)'
+                  : 'currentcolor',
+              }}
+            />
           </IconButton>
         </div>
-        <div className="rounded-full bg-surface-l1-light flex items-center">
+        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center">
           <IconButton
             onClick={() => {
               window.api.measurements.export({
@@ -111,6 +130,8 @@ export function Chart(props: ChartProps) {
             dataKey={props.YAxis.key}
             data={props.data}
             name={props.YAxis.name}
+            dot={chartControls.showPoints}
+            strokeDasharray={chartControls.showLines ? undefined : '0 5'}
             stroke="var(--md-ref-palette-primary50)"
             fill="var(--md-ref-palette-primary70)"
             isAnimationActive={false}
