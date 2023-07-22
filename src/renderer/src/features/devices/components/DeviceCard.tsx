@@ -2,6 +2,7 @@ import Switch from '@mui/material/Switch'
 import { useMutation } from '@tanstack/react-query'
 import { twMerge } from 'tailwind-merge'
 
+import { getQuantityName } from '@renderer/utils/getQuantityName'
 import { Device } from '@shared/types/Device'
 
 import { toggleConnection } from '../services/toggleConnection'
@@ -35,7 +36,7 @@ export function DeviceCard(props: DeviceCardProps) {
       <div className="my-4 grow">
         {props.device.sensors?.map((sensor, index) => (
           <p className="text-sm" key={index}>
-            {sensor.quantity}
+            {getQuantityName(sensor.quantity, true)}
           </p>
         ))}
       </div>
