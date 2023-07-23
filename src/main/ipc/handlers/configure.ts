@@ -104,7 +104,7 @@ export function configureIpcHandlers(devicesController: DevicesController) {
           title: 'Exportar medições',
           defaultPath: path.join(
             app.getPath('documents'),
-            `${format(new Date(), 'yyyyMMdd_mmhhss')}_${sensor.quantity}.csv`,
+            `${format(new Date(), 'yyyyMMdd_HHmmss')}_${sensor.quantity}.csv`,
           ),
 
           filters: [
