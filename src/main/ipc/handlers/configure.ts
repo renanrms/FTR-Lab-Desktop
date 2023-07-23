@@ -3,6 +3,7 @@ import { dialog, ipcMain, app } from 'electron'
 import fs from 'fs'
 import path from 'path'
 
+import { appStartTime } from '@main/constants/appStartTime'
 import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
 import { getMainWindow } from '@main/utils/getMainWindow'
@@ -12,14 +13,21 @@ import {
   CloseDeviceConnectionRequest,
   ExportMeasurementsRequest,
   GetAllMeasurementsResponse,
+  GetAppStartTimeResponse,
   OpenDeviceConnectionRequest,
 } from '@shared/types/ipc'
 import { Measurement } from '@shared/types/Measurement'
 
 export function configureIpcHandlers(devicesController: DevicesController) {
-  ipcMain.handle(CHANNELS.DEVICES.INFO.REQUEST, async () => {
-    console.log(CHANNELS.DEVICES.INFO.REQUEST)
-  })
+  ipcMain.handle(
+    CHANNELS.APP.GET_START_TIME,
+    async (event, request: void): Promise<GetAppStartTimeResponse> => {
+      console.log(`<= ${CHANNELS.APP.GET_START_TIME}`)
+      return {
+        appStartTime,
+      }
+    },
+  )
 
   ipcMain.handle(
     CHANNELS.DEVICES.CONNECTION.OPEN,

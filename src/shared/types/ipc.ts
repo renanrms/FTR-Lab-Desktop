@@ -14,6 +14,10 @@ export interface MeasurementUpdateMessage {
 
 // Comunicação partindo do processo Renderer
 
+export interface GetAppStartTimeResponse {
+  appStartTime: number
+}
+
 export interface OpenDeviceConnectionRequest {
   deviceId: string
 }

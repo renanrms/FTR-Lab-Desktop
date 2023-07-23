@@ -1,7 +1,10 @@
 export const CHANNELS = {
+  APP: {
+    GET_START_TIME: 'app:get-start-time',
+  },
   DEVICES: {
     INFO: {
-      REQUEST: 'devices:info:request',
+      // REQUEST: 'devices:info:request',
       UPDATE: 'devices:info:update',
     },
     CONNECTION: {

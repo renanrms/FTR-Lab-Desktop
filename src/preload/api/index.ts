@@ -6,6 +6,7 @@ import {
   DevicesInfoUpdateMessage,
   ExportMeasurementsRequest,
   GetAllMeasurementsResponse,
+  GetAppStartTimeResponse,
   MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
@@ -13,6 +14,11 @@ import {
 
 // Custom APIs for renderer
 export const api = {
+  app: {
+    getStartTime(): Promise<GetAppStartTimeResponse> {
+      return ipcRenderer.invoke(CHANNELS.APP.GET_START_TIME)
+    },
+  },
   devices: {
     onDevicesInfoUpdate(
       callback: (
@@ -25,10 +31,6 @@ export const api = {
       return () => {
         ipcRenderer.removeListener(CHANNELS.DEVICES.INFO.UPDATE, callback)
       }
-    },
-
-    requestInfo() {
-      ipcRenderer.invoke(CHANNELS.DEVICES.INFO.REQUEST)
     },
 
     openConnection(request: OpenDeviceConnectionRequest) {
