@@ -12,7 +12,7 @@ export const MeasurementModel = sequelize.define(
       primaryKey: true,
     },
     timestamp: {
-      type: DataTypes.DATE,
+      type: DataTypes.NUMBER,
       allowNull: false,
     },
     value: {

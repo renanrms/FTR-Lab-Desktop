@@ -8,7 +8,6 @@ export function useDevices() {
   useEffect(() => {
     const removeListener = window.api.devices.onDevicesInfoUpdate(
       (event, params) => {
-        console.log(params.devices)
         setDevices(params.devices)
       },
     )

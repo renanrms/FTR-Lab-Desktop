@@ -33,6 +33,7 @@ export async function handleMdnsResponse(
     name: txtAnswerData.name,
     battery: txtAnswerData.battery,
     available: txtAnswerData.available,
+    timeSynced: txtAnswerData.timeSynced,
     network: {
       address: rinfo.address,
       family: rinfo.family,

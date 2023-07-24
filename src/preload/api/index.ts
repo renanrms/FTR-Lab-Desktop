@@ -4,6 +4,9 @@ import { CHANNELS } from '@shared/constants/channels'
 import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
+  ExportMeasurementsRequest,
+  GetAllMeasurementsResponse,
+  GetAppStartTimeResponse,
   MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
@@ -11,6 +14,11 @@ import {
 
 // Custom APIs for renderer
 export const api = {
+  app: {
+    getStartTime(): Promise<GetAppStartTimeResponse> {
+      return ipcRenderer.invoke(CHANNELS.APP.GET_START_TIME)
+    },
+  },
   devices: {
     onDevicesInfoUpdate(
       callback: (
@@ -24,7 +32,33 @@ export const api = {
         ipcRenderer.removeListener(CHANNELS.DEVICES.INFO.UPDATE, callback)
       }
     },
-    onMeasurementsUpdate(
+
+    openConnection(request: OpenDeviceConnectionRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.OPEN, request)
+    },
+
+    closeConnection(request: CloseDeviceConnectionRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.CLOSE, request)
+    },
+
+    updateSettings(request: UpdateDeviceSettingsRequest) {
+      return ipcRenderer.invoke(CHANNELS.DEVICES.UPDATE_SETTINGS, request)
+    },
+  },
+  measurements: {
+    async getAll(request: void): Promise<GetAllMeasurementsResponse> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
+    },
+
+    async deleteAll(request: void): Promise<void> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.DELETE_ALL, request)
+    },
+
+    async export(request: ExportMeasurementsRequest): Promise<void> {
+      return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.EXPORT, request)
+    },
+
+    onUpdate(
       callback: (
         event: IpcRendererEvent,
         params: MeasurementUpdateMessage,
@@ -35,18 +69,6 @@ export const api = {
       return () => {
         ipcRenderer.removeListener(CHANNELS.MEASUREMENTS.UPDATE, callback)
       }
-    },
-    requestInfo() {
-      ipcRenderer.invoke(CHANNELS.DEVICES.INFO.REQUEST)
-    },
-    openConnection(request: OpenDeviceConnectionRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.OPEN, request)
-    },
-    closeConnection(request: CloseDeviceConnectionRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.CONNECTION.CLOSE, request)
-    },
-    updateSettings(request: UpdateDeviceSettingsRequest) {
-      return ipcRenderer.invoke(CHANNELS.DEVICES.UPDATE_SETTINGS, request)
     },
   },
 }

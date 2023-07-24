@@ -94,6 +94,30 @@
 .on-error-container-text {
   color: var(--md-sys-color-on-error-container);
 }
+.warning {
+  background-color: var(--md-sys-color-warning);
+}
+.warning-text {
+  color: var(--md-sys-color-warning);
+}
+.warning-container {
+  background-color: var(--md-sys-color-warning-container);
+}
+.warning-container-text {
+  color: var(--md-sys-color-warning-container);
+}
+.on-warning {
+  background-color: var(--md-sys-color-on-warning);
+}
+.on-warning-text {
+  color: var(--md-sys-color-on-warning);
+}
+.on-warning-container {
+  background-color: var(--md-sys-color-on-warning-container);
+}
+.on-warning-container-text {
+  color: var(--md-sys-color-on-warning-container);
+}
 .background {
   background-color: var(--md-sys-color-background);
 }

@@ -1,4 +1,4 @@
-import { Device } from './Device'
+import { Device, SensorId } from './Device'
 import { Measurement } from './Measurement'
 
 // Comunicação partindo do processo Main
@@ -14,6 +14,10 @@ export interface MeasurementUpdateMessage {
 
 // Comunicação partindo do processo Renderer
 
+export interface GetAppStartTimeResponse {
+  appStartTime: number
+}
+
 export interface OpenDeviceConnectionRequest {
   deviceId: string
 }
@@ -22,6 +26,14 @@ export interface CloseDeviceConnectionRequest {
   deviceId: string
 }
 
+export interface GetAllMeasurementsResponse {
+  measurements: Measurement[]
+}
+
 export interface UpdateDeviceSettingsRequest {
   deviceId: string
+}
+
+export interface ExportMeasurementsRequest {
+  sensorId: SensorId
 }

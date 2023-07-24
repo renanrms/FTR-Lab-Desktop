@@ -13,6 +13,7 @@ export interface Device {
   name?: string
   available?: boolean
   connected?: boolean
+  timeSynced: boolean
   battery?: {
     level: number
     charging: boolean

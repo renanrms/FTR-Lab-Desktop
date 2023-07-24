@@ -1,11 +1,11 @@
 import { Device } from '@shared/types/Device'
-import { SensorBoundaries } from '@shared/types/Measurement'
+import { MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { ChartContainer } from './ChartContainer'
 
 interface ChartsAreaProps {
   devices: Device[]
-  storedRanges: SensorBoundaries
+  sensorMeasurements: MeasurementsBySensor
 }
 
 export function ChartsArea(props: ChartsAreaProps) {
@@ -16,24 +16,19 @@ export function ChartsArea(props: ChartsAreaProps) {
         gridArea: 'main',
       }}
     >
-      {Object.entries(props.storedRanges).map(
-        ([sensorId, sensorBoundaries], index) => {
-          if (!sensorBoundaries) return undefined
-          const deviceId = sensorId.split(':')[0]
-          const device = props.devices.find((device) => device.id === deviceId)
-          if (!device) return undefined
-          const sensor = device.sensors.find((s) => s.id === sensorId)
-          if (!sensor) return undefined
-
-          return (
-            <ChartContainer
-              sensor={sensor}
-              storedRange={sensorBoundaries}
-              key={index}
-            ></ChartContainer>
-          )
-        },
-      )}
+      {props.devices
+        .map((device) => device.sensors)
+        .flat()
+        .map(
+          (sensor) =>
+            props.sensorMeasurements[sensor.id] && (
+              <ChartContainer
+                sensor={sensor}
+                measurements={props.sensorMeasurements[sensor.id]!}
+                key={sensor.id}
+              ></ChartContainer>
+            ),
+        )}
     </main>
   )
 }

@@ -17,7 +17,7 @@ export function createConnectionExecutor(
     [deviceId: string]: ConnectionData
   },
   id: string,
-  handleDeviceMessage: (message: string, id: string) => void,
+  handleDeviceMessage: (message: string, id: string) => Promise<void>,
 ): PromiseExecutor {
   return async (resolve, reject) => {
     const device = await DeviceModel.findByPk(id, { include: 'sensors' })

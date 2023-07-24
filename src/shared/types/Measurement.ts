@@ -6,14 +6,10 @@ export interface DeviceMeasurement {
   value: any
 }
 
-export interface Measurement extends DeviceMeasurement {
-  deviceId: string
+export interface Measurement {
   sensorId: string
+  timestamp: number
+  value: any
 }
 
-export type Boundaries = {
-  min: number
-  max: number
-}
-
-export type SensorBoundaries = Record<SensorId, Boundaries | undefined>
+export type MeasurementsBySensor = Record<SensorId, Measurement[] | undefined>

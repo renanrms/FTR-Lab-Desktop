@@ -1,64 +1,51 @@
 import { useEffect, useState } from 'react'
 
-import { db } from '@renderer/constants/db'
-import { SensorBoundaries } from '@shared/types/Measurement'
+import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
-import { mergeBoundaries } from '../utils/mergeBoundaries'
+import { transformToRelativeTime } from '../utils/transformToRelativeTime'
 
 export function useMeasurements() {
-  const [storedRanges, setStoredRanges] = useState<SensorBoundaries>({})
+  const [sensorMeasurements, setSensorMeasurements] =
+    useState<MeasurementsBySensor>({})
 
   useEffect(() => {
-    const initialRx = db.transaction('measurements', 'readwrite')
-    const store = initialRx.objectStore('measurements')
+    window.api.measurements.getAll().then(async ({ measurements }) => {
+      const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-    store.getAll().then(async (measurements) => {
-      const initiallyStoredRanges: SensorBoundaries = {}
-      measurements.forEach((measurement) => {
-        initiallyStoredRanges[measurement.sensorId] = mergeBoundaries(
-          initiallyStoredRanges[measurement.sensorId],
-          {
-            min: measurement.timestamp,
-            max: measurement.timestamp,
-          },
-        )
+      measurements.map(transformToRelativeTime).forEach((measurement) => {
+        receivedMeasurements[measurement.sensorId] = receivedMeasurements[
+          measurement.sensorId
+        ]?.concat([measurement]) || [measurement]
       })
-      setStoredRanges(initiallyStoredRanges)
+
+      setSensorMeasurements(receivedMeasurements)
     })
 
-    const removeListener = window.api.devices.onMeasurementsUpdate(
+    const removeListener = window.api.measurements.onUpdate(
       async (event, params) => {
-        const receivedRanges: SensorBoundaries = {}
+        const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-        params.measurements.forEach((measurement) => {
-          receivedRanges[measurement.sensorId] = mergeBoundaries(
-            receivedRanges[measurement.sensorId],
-            {
-              min: measurement.timestamp,
-              max: measurement.timestamp,
-            },
-          )
-        })
+        params.measurements
+          .map(transformToRelativeTime)
+          .forEach((measurement) => {
+            console.log(measurement)
 
-        setStoredRanges((state) => {
-          const newState = { ...state }
-          Object.keys(receivedRanges).forEach((sensor) => {
-            newState[sensor] = mergeBoundaries(
-              newState[sensor],
-              receivedRanges[sensor],
-            )
+            receivedMeasurements[measurement.sensorId] = receivedMeasurements[
+              measurement.sensorId
+            ]?.concat([measurement]) || [measurement]
           })
+
+        setSensorMeasurements((state) => {
+          const newState = { ...state }
+
+          Object.keys(receivedMeasurements).forEach((sensorId) => {
+            newState[sensorId] =
+              newState[sensorId]?.concat(receivedMeasurements[sensorId]) ||
+              receivedMeasurements[sensorId]
+          })
+
           return newState
         })
-
-        const tx = db.transaction('measurements', 'readwrite')
-        const store = tx.objectStore('measurements')
-
-        await Promise.all(
-          params.measurements.map((measurement) => store.put(measurement)),
-        )
-
-        await tx.done
       },
     )
 
@@ -66,12 +53,9 @@ export function useMeasurements() {
   }, [])
 
   const clearMeasurements = async () => {
-    const tx = db.transaction('measurements', 'readwrite')
-    const store = tx.objectStore('measurements')
-    store.clear()
-    setStoredRanges({})
-    return await tx.done
+    await window.api.measurements.deleteAll()
+    setSensorMeasurements({})
   }
 
-  return { storedRanges, clearMeasurements }
+  return { sensorMeasurements, clearMeasurements }
 }
