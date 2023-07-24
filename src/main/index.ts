@@ -2,8 +2,6 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
-import { appStartTime } from '@main/constants/appStartTime'
-
 import { DevicesController } from './controllers/DevicesController'
 import { createWindow } from './createWindow'
 import { findAllDevices } from './database/queries/findAllDevices'
@@ -13,8 +11,6 @@ import { configureIpcHandlers } from './ipc/handlers/configure'
 import { sendDevicesInfoUpdate } from './ipc/services/sendDevicesInfoUpdate'
 
 const devicesController = new DevicesController()
-
-console.log(appStartTime)
 
 // TODO: Habilitar top-level await pra usar await com a função syncDatabase.
 syncDatabase()

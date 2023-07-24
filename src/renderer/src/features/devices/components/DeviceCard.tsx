@@ -1,3 +1,5 @@
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { Tooltip } from '@mui/material'
 import Switch from '@mui/material/Switch'
 import { useMutation } from '@tanstack/react-query'
 import { twMerge } from 'tailwind-merge'
@@ -23,7 +25,30 @@ export function DeviceCard(props: DeviceCardProps) {
       )}
     >
       <div className="h-8 flex items-center">
-        <div className="grow text-lg">{props.device.name}</div>
+        <p className="grow text-lg">
+          {props.device.name}
+          {!props.device.timeSynced && (
+            <Tooltip
+              title={
+                <>
+                  <p className="font-extrabold">
+                    Horário não sincronizado: Medidas absolutas de tempo serão
+                    imprecisas para o dispositivo.
+                  </p>
+                  <p>Possivelmente a rede não tem acesso à internet.</p>
+                </>
+              }
+            >
+              <AccessTimeIcon
+                className="ml-2"
+                sx={{
+                  fontSize: '22px',
+                  color: 'var(--md-sys-color-error)',
+                }}
+              />
+            </Tooltip>
+          )}
+        </p>
         <Switch
           onClick={() => {
             connectionMutation.mutate(props.device)

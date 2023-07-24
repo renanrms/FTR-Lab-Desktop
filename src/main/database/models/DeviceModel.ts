@@ -22,6 +22,10 @@ export const DeviceModel = sequelize.define(
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+    timeSynced: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
     battery: {
       type: DataTypes.JSON,
       allowNull: true,
