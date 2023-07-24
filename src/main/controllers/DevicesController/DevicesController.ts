@@ -2,11 +2,13 @@ import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
 import { Op } from 'sequelize'
 
+import { appStartTime } from '@main/constants/appStartTime'
 import { DeviceModel, MeasurementModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
 import { sendMeasurementUpdate } from '@main/ipc/services/sendDevicesMeasurementUpdate'
 import { ConnectionData } from '@shared/types/ConnectionData'
+import { Device } from '@shared/types/Device'
 import { DeviceMeasurement } from '@shared/types/Measurement'
 
 import { createConnectionExecutor } from './createConnectionExecutor'
@@ -96,6 +98,10 @@ export class DevicesController {
 
   async handleDeviceMessage(message: string, deviceId: string) {
     try {
+      const device: Device = (
+        await DeviceModel.findByPk(deviceId, { include: 'sensors' })
+      )?.dataValues
+
       const measurements: DeviceMeasurement[] = JSON.parse(message).measurements
 
       if (measurements) {
@@ -103,6 +109,9 @@ export class DevicesController {
           ...measurement,
           sensorId: `${deviceId}:${measurement.sensorIndex}`,
           sensorIndex: undefined,
+          timestamp: device.timeSynced
+            ? measurement.timestamp
+            : measurement.timestamp + appStartTime,
         }))
 
         await MeasurementModel.bulkCreate(records)
