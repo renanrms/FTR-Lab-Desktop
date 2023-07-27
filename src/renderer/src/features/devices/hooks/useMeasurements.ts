@@ -12,11 +12,14 @@ export function useMeasurements() {
     window.api.measurements.getAll().then(async ({ measurements }) => {
       const receivedMeasurements: { [x: string]: Measurement[] } = {}
 
-      measurements.map(transformToRelativeTime).forEach((measurement) => {
-        receivedMeasurements[measurement.sensorId] = receivedMeasurements[
-          measurement.sensorId
-        ]?.concat([measurement]) || [measurement]
-      })
+      measurements
+        .map(transformToRelativeTime)
+        .sort((a, b) => a.timestamp - b.timestamp)
+        .forEach((measurement) => {
+          receivedMeasurements[measurement.sensorId] = receivedMeasurements[
+            measurement.sensorId
+          ]?.concat([measurement]) || [measurement]
+        })
 
       setSensorMeasurements(receivedMeasurements)
     })
@@ -42,6 +45,7 @@ export function useMeasurements() {
             newState[sensorId] =
               newState[sensorId]?.concat(receivedMeasurements[sensorId]) ||
               receivedMeasurements[sensorId]
+            newState[sensorId]?.sort((a, b) => a.timestamp - b.timestamp)
           })
 
           return newState

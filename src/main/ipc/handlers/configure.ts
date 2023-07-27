@@ -102,7 +102,13 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       const fileHeader = `t, ${sensor.quantity}`
 
       const fileBody = measurements
-        .map((measurement) => `${measurement.timestamp}, ${measurement.value}`)
+        .sort((a, b) => a.timestamp - b.timestamp)
+        .map(
+          (measurement) =>
+            `${(measurement.timestamp - appStartTime).toFixed(6)}, ${
+              measurement.value
+            }`,
+        )
         .join('\n')
 
       const fileContent = [fileHeader, fileBody].join('\n')
