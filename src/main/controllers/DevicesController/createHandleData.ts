@@ -11,7 +11,8 @@ export function createHandleData(
      * fica mais de uma instância desta função na memória e o buffer compartilhado gera um
      * problema de concorrência.
      */
-    console.log(`<< ${id} | Data${data}`)
+    console.log(`<< ${id} | Data (${data.length} bytes)`)
+    // console.log(data)
 
     connection.buffer += data.toString('utf-8')
 
