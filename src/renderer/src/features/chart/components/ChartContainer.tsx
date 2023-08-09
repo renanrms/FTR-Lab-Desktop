@@ -23,7 +23,7 @@ export function ChartContainer(props: ChartContainerProps) {
 
   return (
     <Chart
-      className="w-full h-[350px] m-2 min-[1450px]:w-[48%] min-[1450px]:h-[400px]"
+      className="w-full h-[350px] m-2"
       XAxis={serie.XAxis}
       YAxis={serie.YAxis}
       data={serie.data}
