@@ -44,8 +44,8 @@ export function createConnectionExecutor(
           'data',
           createHandleData(id, connection, handleDeviceMessage),
         )
-        connection.socket.on('close', async () => {
-          device.update({ connected: false })
+        connection.socket.on('close', async (hadError) => {
+          await device.update({ connected: false, available: !hadError })
           sendDevicesInfoUpdate({
             devices: await findAllDevices(),
           })
