@@ -105,13 +105,10 @@ export class DevicesController {
       const measurements: DeviceMeasurement[] = JSON.parse(message).measurements
 
       if (measurements) {
-        const records = measurements.map((measurement) => ({
-          ...measurement,
-          sensorId: `${deviceId}:${measurement.sensorIndex}`,
-          sensorIndex: undefined,
-          timestamp: device.timeSynced
-            ? measurement.timestamp
-            : measurement.timestamp + appStartTime,
+        const records = measurements.map(([sensorIndex, timestamp, value]) => ({
+          sensorId: `${deviceId}:${sensorIndex}`,
+          timestamp: device.timeSynced ? timestamp : timestamp + appStartTime,
+          value,
         }))
 
         await MeasurementModel.bulkCreate(records)

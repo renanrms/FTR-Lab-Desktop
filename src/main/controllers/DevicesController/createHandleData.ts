@@ -12,7 +12,7 @@ export function createHandleData(
      * problema de concorrência.
      */
     console.log(`<< ${id} | Data (${data.length} bytes)`)
-    // console.log(data)
+    // console.log(data.toString('utf-8'))
 
     connection.buffer += data.toString('utf-8')
 
