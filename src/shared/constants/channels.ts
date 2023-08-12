@@ -4,7 +4,7 @@ export const CHANNELS = {
   },
   DEVICES: {
     INFO: {
-      // REQUEST: 'devices:info:request',
+      GET_ALL: 'devices:info:get-all',
       UPDATE: 'devices:info:update',
     },
     CONNECTION: {

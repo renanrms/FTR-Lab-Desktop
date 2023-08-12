@@ -3,6 +3,10 @@ import { Measurement } from './Measurement'
 
 // Comunicação partindo do processo Main
 
+export interface GetAllDevicesResponse {
+  devices: Device[]
+}
+
 export interface DevicesInfoUpdateMessage {
   devices: Device[]
 }

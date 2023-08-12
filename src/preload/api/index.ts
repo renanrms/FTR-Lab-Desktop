@@ -5,6 +5,7 @@ import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
   ExportMeasurementsRequest,
+  GetAllDevicesResponse,
   GetAllMeasurementsResponse,
   GetAppStartTimeResponse,
   MeasurementUpdateMessage,
@@ -20,6 +21,10 @@ export const api = {
     },
   },
   devices: {
+    async getAll(request: void): Promise<GetAllDevicesResponse> {
+      return await ipcRenderer.invoke(CHANNELS.DEVICES.INFO.GET_ALL, request)
+    },
+
     onDevicesInfoUpdate(
       callback: (
         event: IpcRendererEvent,

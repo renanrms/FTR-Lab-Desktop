@@ -6,12 +6,14 @@ import path from 'path'
 import { appStartTime } from '@main/constants/appStartTime'
 import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { getMainWindow } from '@main/utils/getMainWindow'
 import { CHANNELS } from '@shared/constants/channels'
 import { Sensor } from '@shared/types/Device'
 import {
   CloseDeviceConnectionRequest,
   ExportMeasurementsRequest,
+  GetAllDevicesResponse,
   GetAllMeasurementsResponse,
   GetAppStartTimeResponse,
   OpenDeviceConnectionRequest,
@@ -25,6 +27,16 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       console.log(`<= ${CHANNELS.APP.GET_START_TIME}`)
       return {
         appStartTime,
+      }
+    },
+  )
+
+  ipcMain.handle(
+    CHANNELS.DEVICES.INFO.GET_ALL,
+    async (event, request: void): Promise<GetAllDevicesResponse> => {
+      console.log(`<= ${CHANNELS.DEVICES.INFO.GET_ALL}`)
+      return {
+        devices: await findAllDevices(),
       }
     },
   )
