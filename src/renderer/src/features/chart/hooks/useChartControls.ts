@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export function useChartControls() {
-  const [showPoints, setShowPoints] = useState(true)
+  const [showPoints, setShowPoints] = useState(false)
   const [showLines, setShowLines] = useState(true)
 
   const showPointsHandleClick = () => {
