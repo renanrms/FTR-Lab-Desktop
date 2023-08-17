@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { defaultDisplayedTimeRange } from '@renderer/features/chart/constants/defaultDisplayedTimeRange'
 import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { transformToRelativeTime } from '../utils/transformToRelativeTime'
@@ -21,6 +22,17 @@ export function useMeasurements() {
           ]?.concat([measurement]) || [measurement]
         })
 
+      Object.entries(receivedMeasurements).forEach(
+        ([sensorId, sensorMeasurements]) => {
+          // Filtra para manter apenas as medições mais recentes
+          receivedMeasurements[sensorId] = sensorMeasurements.filter(
+            (measurement, _, array) =>
+              array[array.length - 1].timestamp - measurement.timestamp <
+              defaultDisplayedTimeRange,
+          )
+        },
+      )
+
       setSensorMeasurements(receivedMeasurements)
     })
 
@@ -31,8 +43,6 @@ export function useMeasurements() {
         params.measurements
           .map(transformToRelativeTime)
           .forEach((measurement) => {
-            console.log(measurement)
-
             receivedMeasurements[measurement.sensorId] = receivedMeasurements[
               measurement.sensorId
             ]?.concat([measurement]) || [measurement]
@@ -41,12 +51,21 @@ export function useMeasurements() {
         setSensorMeasurements((state) => {
           const newState = { ...state }
 
-          Object.keys(receivedMeasurements).forEach((sensorId) => {
-            newState[sensorId] =
-              newState[sensorId]?.concat(receivedMeasurements[sensorId]) ||
-              receivedMeasurements[sensorId]
-            newState[sensorId]?.sort((a, b) => a.timestamp - b.timestamp)
-          })
+          Object.entries(receivedMeasurements).forEach(
+            ([sensorId, sensorMeasurements]) => {
+              newState[sensorId] =
+                newState[sensorId]?.concat(sensorMeasurements) ||
+                sensorMeasurements
+              newState[sensorId]?.sort((a, b) => a.timestamp - b.timestamp)
+
+              // Filtra para manter apenas as medições mais recentes
+              newState[sensorId] = newState[sensorId]?.filter(
+                (measurement, _, array) =>
+                  array[array.length - 1].timestamp - measurement.timestamp <
+                  defaultDisplayedTimeRange,
+              )
+            },
+          )
 
           return newState
         })

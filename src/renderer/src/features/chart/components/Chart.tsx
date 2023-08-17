@@ -112,7 +112,12 @@ export function Chart(props: ChartProps) {
           >
             <Label value={props.XAxis.name} offset={0} position="bottom" />
           </XAxis>
-          <YAxis dataKey={props.YAxis.key}>
+          <YAxis
+            dataKey={props.YAxis.key}
+            // domain={([dataMin, dataMax]) => {
+            //   return [dataMin, dataMax]
+            // }}
+          >
             <Label
               value={props.YAxis.name}
               angle={-90}
@@ -131,6 +136,7 @@ export function Chart(props: ChartProps) {
             data={props.data}
             name={props.YAxis.name}
             dot={chartControls.showPoints}
+            strokeWidth={2}
             strokeDasharray={chartControls.showLines ? undefined : '0 5'}
             stroke="var(--md-ref-palette-primary50)"
             fill="var(--md-ref-palette-primary70)"
