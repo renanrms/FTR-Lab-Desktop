@@ -14,17 +14,17 @@ export function createHandleData(
     console.log(`<< ${id} | Data (${data.length} bytes)`)
     // console.log(data.toString('utf-8'))
 
+    let messages: string[] = []
+
+    // Seria interessante proteger o buffer com um lock.
     connection.buffer += data.toString('utf-8')
+    messages = connection.buffer.split(/\n{1,2}/)
+    connection.buffer = messages.pop() || ''
 
-    const messages = connection.buffer.split(/\n{1,2}/)
-    connection.buffer = ''
+    messages = messages.filter((message) => message.length > 0)
 
-    for (const [index, message] of messages.entries()) {
-      if (index < messages.length) {
-        if (message) await handleDeviceMessage(message, id)
-      } else {
-        connection.buffer = message
-      }
+    for (const message of messages) {
+      await handleDeviceMessage(message, id)
     }
   }
 }
