@@ -33,17 +33,21 @@ export function useMeasurements() {
 
           Object.entries(receivedMeasurements).forEach(
             ([sensorId, sensorMeasurements]) => {
-              newState[sensorId] =
-                newState[sensorId]?.concat(sensorMeasurements) ||
-                sensorMeasurements
-              newState[sensorId]?.sort((a, b) => a.timestamp - b.timestamp)
+              let newSensorState = newState[sensorId]
+              newSensorState =
+                newSensorState?.concat(sensorMeasurements) || sensorMeasurements
+              newSensorState?.sort((a, b) => a.timestamp - b.timestamp)
 
               // Filtra para manter apenas as medições mais recentes
-              newState[sensorId] = newState[sensorId]?.filter(
-                (measurement, _, array) =>
-                  array[array.length - 1].timestamp - measurement.timestamp <
-                  defaultDisplayedTimeRange,
+              const thresholdTimestamp = Math.floor(
+                newSensorState.at(-1)!.timestamp - defaultDisplayedTimeRange,
               )
+              const startIndex = newSensorState.findIndex(
+                (measurement) => measurement.timestamp > thresholdTimestamp,
+              )
+              newSensorState = newSensorState.slice(startIndex)
+
+              newState[sensorId] = newSensorState
             },
           )
 
