@@ -9,6 +9,7 @@ import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { getMainWindow } from '@main/utils/getMainWindow'
+import { transformToRelativeTime } from '@main/utils/transformToRelativeTime'
 import { CHANNELS } from '@shared/constants/channels'
 import { Sensor } from '@shared/types/Device'
 import {
@@ -113,7 +114,9 @@ export function configureIpcHandlers(devicesController: DevicesController) {
               },
               order: [['timestamp', 'ASC']],
             })
-          ).map((measurementM) => measurementM.dataValues)
+          ).map((measurementM) =>
+            transformToRelativeTime(measurementM.dataValues),
+          )
 
           return [sensor.id, sensorMeasurements]
         }),
