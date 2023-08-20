@@ -111,12 +111,13 @@ export class DevicesController {
           value,
         }))
 
-        await MeasurementModel.bulkCreate(records)
-
         sendMeasurementUpdate({
           measurements: records,
           deviceId,
         })
+
+        // Insere os dados no banco de forma síncrona para garantir que fiquem em ordem.
+        await MeasurementModel.bulkCreate(records)
       }
     } catch (error) {
       console.log(error)
