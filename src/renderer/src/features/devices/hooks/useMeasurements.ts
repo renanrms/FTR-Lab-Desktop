@@ -10,31 +10,11 @@ export function useMeasurements() {
     useState<MeasurementsBySensor>({})
 
   useEffect(() => {
-    window.api.measurements.getAll().then(async ({ measurements }) => {
-      const receivedMeasurements: { [x: string]: Measurement[] } = {}
-
-      measurements
-        .map(transformToRelativeTime)
-        .sort((a, b) => a.timestamp - b.timestamp)
-        .forEach((measurement) => {
-          receivedMeasurements[measurement.sensorId] = receivedMeasurements[
-            measurement.sensorId
-          ]?.concat([measurement]) || [measurement]
-        })
-
-      Object.entries(receivedMeasurements).forEach(
-        ([sensorId, sensorMeasurements]) => {
-          // Filtra para manter apenas as medições mais recentes
-          receivedMeasurements[sensorId] = sensorMeasurements.filter(
-            (measurement, _, array) =>
-              array[array.length - 1].timestamp - measurement.timestamp <
-              defaultDisplayedTimeRange,
-          )
-        },
-      )
-
-      setSensorMeasurements(receivedMeasurements)
-    })
+    window.api.measurements
+      .findLastByDevice({ timeRange: defaultDisplayedTimeRange })
+      .then(({ measurementsBySensor }) => {
+        setSensorMeasurements(measurementsBySensor)
+      })
 
     const removeListener = window.api.measurements.onUpdate(
       async (event, params) => {

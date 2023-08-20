@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import { dialog, ipcMain, app } from 'electron'
 import fs from 'fs'
 import path from 'path'
+import { Op } from 'sequelize'
 
 import { appStartTime } from '@main/constants/appStartTime'
 import { DevicesController } from '@main/controllers/DevicesController'
@@ -13,6 +14,8 @@ import { Sensor } from '@shared/types/Device'
 import {
   CloseDeviceConnectionRequest,
   ExportMeasurementsRequest,
+  FindAllMeasurementsByDeviceRequest,
+  FindAllMeasurementsByDeviceResponse,
   GetAllDevicesResponse,
   GetAllMeasurementsResponse,
   GetAppStartTimeResponse,
@@ -76,6 +79,54 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       )
       return {
         measurements,
+      }
+    },
+  )
+
+  ipcMain.handle(
+    CHANNELS.MEASUREMENTS.FIND_LAST_BY_DEVICE,
+    async (
+      event,
+      request: FindAllMeasurementsByDeviceRequest,
+    ): Promise<FindAllMeasurementsByDeviceResponse> => {
+      console.log(`<= ${CHANNELS.MEASUREMENTS.FIND_LAST_BY_DEVICE}`)
+
+      const sensors: Sensor[] = (await SensorModel.findAll()).map(
+        (model) => model.dataValues,
+      )
+
+      const measurements = await Promise.all(
+        sensors.map(async (sensor): Promise<[string, Measurement[]]> => {
+          const maxTimestamp: number = await MeasurementModel.max('timestamp', {
+            where: {
+              sensorId: sensor.id,
+            },
+          })
+
+          const sensorMeasurements: Measurement[] = (
+            await MeasurementModel.findAll({
+              where: {
+                sensorId: sensor.id,
+                timestamp: {
+                  [Op.gte]: maxTimestamp - request.timeRange,
+                },
+              },
+              order: [['timestamp', 'ASC']],
+            })
+          ).map((measurementM) => measurementM.dataValues)
+
+          return [sensor.id, sensorMeasurements]
+        }),
+      )
+
+      const measurementsBySensor = Object.fromEntries(
+        measurements.filter(
+          ([sensorId, sensorMeasurements]) => sensorMeasurements.length !== 0,
+        ),
+      )
+
+      return {
+        measurementsBySensor,
       }
     },
   )

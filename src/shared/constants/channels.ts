@@ -16,6 +16,7 @@ export const CHANNELS = {
   MEASUREMENTS: {
     UPDATE: 'measurements:update',
     GET_ALL: 'measurements:get-all',
+    FIND_LAST_BY_DEVICE: 'measurements:find-last-by-device',
     DELETE_ALL: 'measurements:delete-all',
     EXPORT: 'measurements:export',
   },
