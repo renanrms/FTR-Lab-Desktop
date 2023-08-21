@@ -69,6 +69,7 @@ export class DevicesController {
       {
         where: {
           available: true,
+          connected: false,
           updatedAt: {
             [Op.lt]: new Date(Date.now() - tolerance * 1000),
           },
