@@ -22,5 +22,27 @@ export function useChartControls() {
     }
   }
 
-  return { showPoints, showLines, showPointsHandleClick, showLinesHandleClick }
+  const [showExpandedY, setShowExpandedY] = useState(false)
+  const [ShowFromOriginY, setShowFromOriginY] = useState(true)
+
+  const showExpandedYHandleClick = () => {
+    setShowExpandedY(!showExpandedY)
+    setShowFromOriginY(!ShowFromOriginY)
+  }
+
+  const ShowFromOriginYHandleClick = () => {
+    setShowFromOriginY(!ShowFromOriginY)
+    setShowExpandedY(!showExpandedY)
+  }
+
+  return {
+    showPoints,
+    showLines,
+    showPointsHandleClick,
+    showLinesHandleClick,
+    showExpandedY,
+    ShowFromOriginY,
+    showExpandedYHandleClick,
+    ShowFromOriginYHandleClick,
+  }
 }
