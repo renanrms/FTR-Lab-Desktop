@@ -1,1 +1,1 @@
-export const defaultDisplayedTimeRange = 10
+export const defaultDisplayedTimeRange = 8
