@@ -1,7 +1,11 @@
 import { Device, SensorId } from './Device'
-import { Measurement } from './Measurement'
+import { Measurement, MeasurementsBySensor } from './Measurement'
 
 // Comunicação partindo do processo Main
+
+export interface GetAllDevicesResponse {
+  devices: Device[]
+}
 
 export interface DevicesInfoUpdateMessage {
   devices: Device[]
@@ -28,6 +32,13 @@ export interface CloseDeviceConnectionRequest {
 
 export interface GetAllMeasurementsResponse {
   measurements: Measurement[]
+}
+
+export interface FindAllMeasurementsByDeviceResponse {
+  measurementsBySensor: MeasurementsBySensor
+}
+export interface FindAllMeasurementsByDeviceRequest {
+  timeRange: number
 }
 
 export interface UpdateDeviceSettingsRequest {

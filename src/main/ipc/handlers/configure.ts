@@ -2,16 +2,22 @@ import { format } from 'date-fns'
 import { dialog, ipcMain, app } from 'electron'
 import fs from 'fs'
 import path from 'path'
+import { Op } from 'sequelize'
 
 import { appStartTime } from '@main/constants/appStartTime'
 import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
+import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { getMainWindow } from '@main/utils/getMainWindow'
+import { transformToRelativeTime } from '@main/utils/transformToRelativeTime'
 import { CHANNELS } from '@shared/constants/channels'
 import { Sensor } from '@shared/types/Device'
 import {
   CloseDeviceConnectionRequest,
   ExportMeasurementsRequest,
+  FindAllMeasurementsByDeviceRequest,
+  FindAllMeasurementsByDeviceResponse,
+  GetAllDevicesResponse,
   GetAllMeasurementsResponse,
   GetAppStartTimeResponse,
   OpenDeviceConnectionRequest,
@@ -25,6 +31,16 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       console.log(`<= ${CHANNELS.APP.GET_START_TIME}`)
       return {
         appStartTime,
+      }
+    },
+  )
+
+  ipcMain.handle(
+    CHANNELS.DEVICES.INFO.GET_ALL,
+    async (event, request: void): Promise<GetAllDevicesResponse> => {
+      console.log(`<= ${CHANNELS.DEVICES.INFO.GET_ALL}`)
+      return {
+        devices: await findAllDevices(),
       }
     },
   )
@@ -64,6 +80,56 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       )
       return {
         measurements,
+      }
+    },
+  )
+
+  ipcMain.handle(
+    CHANNELS.MEASUREMENTS.FIND_LAST_BY_DEVICE,
+    async (
+      event,
+      request: FindAllMeasurementsByDeviceRequest,
+    ): Promise<FindAllMeasurementsByDeviceResponse> => {
+      console.log(`<= ${CHANNELS.MEASUREMENTS.FIND_LAST_BY_DEVICE}`)
+
+      const sensors: Sensor[] = (await SensorModel.findAll()).map(
+        (model) => model.dataValues,
+      )
+
+      const measurements = await Promise.all(
+        sensors.map(async (sensor): Promise<[string, Measurement[]]> => {
+          const maxTimestamp: number = await MeasurementModel.max('timestamp', {
+            where: {
+              sensorId: sensor.id,
+            },
+          })
+
+          const sensorMeasurements: Measurement[] = (
+            await MeasurementModel.findAll({
+              where: {
+                sensorId: sensor.id,
+                timestamp: {
+                  [Op.gte]: maxTimestamp - request.timeRange,
+                },
+              },
+              order: [['timestamp', 'ASC']],
+            })
+          ).map((measurementM) =>
+            transformToRelativeTime(measurementM.dataValues),
+          )
+
+          return [sensor.id, sensorMeasurements]
+        }),
+      )
+
+      const measurementsBySensor = Object.fromEntries(
+        measurements.filter(
+          ([sensorId, sensorMeasurements]) => sensorMeasurements.length !== 0,
+        ),
+      )
+
+      return {
+        measurementsBySensor,
       }
     },
   )

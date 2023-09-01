@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { defaultDisplayedTimeRange } from '@renderer/features/chart/constants/defaultDisplayedTimeRange'
 import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { transformToRelativeTime } from '../utils/transformToRelativeTime'
@@ -9,20 +10,11 @@ export function useMeasurements() {
     useState<MeasurementsBySensor>({})
 
   useEffect(() => {
-    window.api.measurements.getAll().then(async ({ measurements }) => {
-      const receivedMeasurements: { [x: string]: Measurement[] } = {}
-
-      measurements
-        .map(transformToRelativeTime)
-        .sort((a, b) => a.timestamp - b.timestamp)
-        .forEach((measurement) => {
-          receivedMeasurements[measurement.sensorId] = receivedMeasurements[
-            measurement.sensorId
-          ]?.concat([measurement]) || [measurement]
-        })
-
-      setSensorMeasurements(receivedMeasurements)
-    })
+    window.api.measurements
+      .findLastByDevice({ timeRange: defaultDisplayedTimeRange })
+      .then(({ measurementsBySensor }) => {
+        setSensorMeasurements(measurementsBySensor)
+      })
 
     const removeListener = window.api.measurements.onUpdate(
       async (event, params) => {
@@ -31,8 +23,6 @@ export function useMeasurements() {
         params.measurements
           .map(transformToRelativeTime)
           .forEach((measurement) => {
-            console.log(measurement)
-
             receivedMeasurements[measurement.sensorId] = receivedMeasurements[
               measurement.sensorId
             ]?.concat([measurement]) || [measurement]
@@ -41,12 +31,25 @@ export function useMeasurements() {
         setSensorMeasurements((state) => {
           const newState = { ...state }
 
-          Object.keys(receivedMeasurements).forEach((sensorId) => {
-            newState[sensorId] =
-              newState[sensorId]?.concat(receivedMeasurements[sensorId]) ||
-              receivedMeasurements[sensorId]
-            newState[sensorId]?.sort((a, b) => a.timestamp - b.timestamp)
-          })
+          Object.entries(receivedMeasurements).forEach(
+            ([sensorId, sensorMeasurements]) => {
+              let newSensorState = newState[sensorId]
+              newSensorState =
+                newSensorState?.concat(sensorMeasurements) || sensorMeasurements
+              newSensorState?.sort((a, b) => a.timestamp - b.timestamp)
+
+              // Filtra para manter apenas as medições mais recentes
+              const thresholdTimestamp = Math.floor(
+                newSensorState.at(-1)!.timestamp - defaultDisplayedTimeRange,
+              )
+              const startIndex = newSensorState.findIndex(
+                (measurement) => measurement.timestamp > thresholdTimestamp,
+              )
+              newSensorState = newSensorState.slice(startIndex)
+
+              newState[sensorId] = newSensorState
+            },
+          )
 
           return newState
         })

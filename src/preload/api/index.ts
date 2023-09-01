@@ -5,6 +5,9 @@ import {
   CloseDeviceConnectionRequest,
   DevicesInfoUpdateMessage,
   ExportMeasurementsRequest,
+  FindAllMeasurementsByDeviceRequest,
+  FindAllMeasurementsByDeviceResponse,
+  GetAllDevicesResponse,
   GetAllMeasurementsResponse,
   GetAppStartTimeResponse,
   MeasurementUpdateMessage,
@@ -20,6 +23,10 @@ export const api = {
     },
   },
   devices: {
+    async getAll(request: void): Promise<GetAllDevicesResponse> {
+      return await ipcRenderer.invoke(CHANNELS.DEVICES.INFO.GET_ALL, request)
+    },
+
     onDevicesInfoUpdate(
       callback: (
         event: IpcRendererEvent,
@@ -48,6 +55,15 @@ export const api = {
   measurements: {
     async getAll(request: void): Promise<GetAllMeasurementsResponse> {
       return await ipcRenderer.invoke(CHANNELS.MEASUREMENTS.GET_ALL, request)
+    },
+
+    async findLastByDevice(
+      request: FindAllMeasurementsByDeviceRequest,
+    ): Promise<FindAllMeasurementsByDeviceResponse> {
+      return await ipcRenderer.invoke(
+        CHANNELS.MEASUREMENTS.FIND_LAST_BY_DEVICE,
+        request,
+      )
     },
 
     async deleteAll(request: void): Promise<void> {

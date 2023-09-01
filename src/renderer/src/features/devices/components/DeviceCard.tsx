@@ -21,7 +21,7 @@ export function DeviceCard(props: DeviceCardProps) {
     <div
       className={twMerge(
         'w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col justify-between bg-neutral-100 dark:bg-background text-on-background',
-        !props.device.available && 'opacity-60',
+        !props.device.available && !props.device.connected && 'opacity-60',
       )}
     >
       <div className="h-8 flex items-center">
@@ -54,7 +54,10 @@ export function DeviceCard(props: DeviceCardProps) {
             connectionMutation.mutate(props.device)
           }}
           checked={!!props.device.connected}
-          disabled={!props.device.available || connectionMutation.isLoading}
+          disabled={
+            (!props.device.available && !props.device.connected) ||
+            connectionMutation.isLoading
+          }
         />
         {props.device.battery && <BatteryIndicator {...props.device.battery} />}
       </div>

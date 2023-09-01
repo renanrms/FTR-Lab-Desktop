@@ -1,8 +1,8 @@
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
-// import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
+import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
-// import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
+import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
 import IconButton from '@mui/material/IconButton'
 import {
   CartesianGrid,
@@ -58,6 +58,30 @@ export function Chart(props: ChartProps) {
             />
           </IconButton>
         </div> */}
+        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-4">
+          <IconButton onClick={chartControls.ShowFromOriginYHandleClick}>
+            <VerticalAlignBottomRoundedIcon
+              sx={{
+                fontSize: '22px',
+                transform: 'rotate(180deg)',
+                color: chartControls.ShowFromOriginY
+                  ? 'var(--md-ref-palette-primary60)'
+                  : 'currentcolor',
+              }}
+            />
+          </IconButton>
+
+          <IconButton onClick={chartControls.showExpandedYHandleClick}>
+            <ExpandRoundedIcon
+              sx={{
+                fontSize: '22px',
+                color: chartControls.showExpandedY
+                  ? 'var(--md-ref-palette-primary60)'
+                  : 'currentcolor',
+              }}
+            />
+          </IconButton>
+        </div>
         <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-6">
           <IconButton onClick={chartControls.showPointsHandleClick}>
             <ScatterPlotRoundedIcon
@@ -112,7 +136,16 @@ export function Chart(props: ChartProps) {
           >
             <Label value={props.XAxis.name} offset={0} position="bottom" />
           </XAxis>
-          <YAxis dataKey={props.YAxis.key}>
+          <YAxis
+            dataKey={props.YAxis.key}
+            domain={
+              chartControls.showExpandedY
+                ? ([dataMin, dataMax]) => {
+                    return [dataMin, dataMax]
+                  }
+                : undefined
+            }
+          >
             <Label
               value={props.YAxis.name}
               angle={-90}
@@ -131,6 +164,7 @@ export function Chart(props: ChartProps) {
             data={props.data}
             name={props.YAxis.name}
             dot={chartControls.showPoints}
+            strokeWidth={2}
             strokeDasharray={chartControls.showLines ? undefined : '0 5'}
             stroke="var(--md-ref-palette-primary50)"
             fill="var(--md-ref-palette-primary70)"

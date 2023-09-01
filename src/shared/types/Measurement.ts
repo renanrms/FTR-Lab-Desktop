@@ -1,10 +1,10 @@
 import { SensorId } from './Device'
 
-export interface DeviceMeasurement {
-  sensorIndex: string
-  timestamp: number
-  value: any
-}
+export type DeviceMeasurement = [
+  sensorIndex: string,
+  timestamp: number,
+  value: number,
+]
 
 export interface Measurement {
   sensorId: string

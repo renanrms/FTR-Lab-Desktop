@@ -4,11 +4,9 @@ import path from 'node:path'
 
 import { DevicesController } from './controllers/DevicesController'
 import { createWindow } from './createWindow'
-import { findAllDevices } from './database/queries/findAllDevices'
 import { resetAllDevicesStates } from './database/resetAllDevicesStates'
 import { syncDatabase } from './database/syncDatabase'
 import { configureIpcHandlers } from './ipc/handlers/configure'
-import { sendDevicesInfoUpdate } from './ipc/services/sendDevicesInfoUpdate'
 
 const devicesController = new DevicesController()
 
@@ -34,12 +32,6 @@ app.whenReady().then(() => {
   })
 
   createWindow()
-
-  setTimeout(async () => {
-    sendDevicesInfoUpdate({
-      devices: await findAllDevices(),
-    })
-  }, 2000)
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

@@ -4,5 +4,9 @@ import { MeasurementUpdateMessage } from '@shared/types/ipc'
 import { sendIpcMessage } from '../sendIpcMessage'
 
 export function sendMeasurementUpdate(message: MeasurementUpdateMessage) {
-  sendIpcMessage(CHANNELS.MEASUREMENTS.UPDATE, message)
+  sendIpcMessage(
+    CHANNELS.MEASUREMENTS.UPDATE,
+    message,
+    `${message.measurements.length} measurements from ${message.deviceId}`,
+  )
 }

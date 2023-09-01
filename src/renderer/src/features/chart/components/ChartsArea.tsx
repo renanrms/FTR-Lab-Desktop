@@ -17,18 +17,19 @@ export function ChartsArea(props: ChartsAreaProps) {
       }}
     >
       {props.devices
-        .map((device) => device.sensors)
+        .map((device) =>
+          device.sensors.filter(
+            (sensor) => device.connected || props.sensorMeasurements[sensor.id],
+          ),
+        )
         .flat()
-        .map(
-          (sensor) =>
-            props.sensorMeasurements[sensor.id] && (
-              <ChartContainer
-                sensor={sensor}
-                measurements={props.sensorMeasurements[sensor.id]!}
-                key={sensor.id}
-              ></ChartContainer>
-            ),
-        )}
+        .map((sensor) => (
+          <ChartContainer
+            sensor={sensor}
+            measurements={props.sensorMeasurements[sensor.id]!}
+            key={sensor.id}
+          ></ChartContainer>
+        ))}
     </main>
   )
 }
