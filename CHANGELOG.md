@@ -5,7 +5,7 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
-## [0.7.0] - 2023-08-31
+## [0.7.0] - 2023-09-01
 
 ### Adicionado
 
