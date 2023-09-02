@@ -9,7 +9,7 @@ import {
   FindAllMeasurementsByDeviceResponse,
   GetAllDevicesResponse,
   GetAllMeasurementsResponse,
-  GetAppStartTimeResponse,
+  GetAppInfoResponse,
   MeasurementUpdateMessage,
   OpenDeviceConnectionRequest,
   UpdateDeviceSettingsRequest,
@@ -18,8 +18,8 @@ import {
 // Custom APIs for renderer
 export const api = {
   app: {
-    getStartTime(): Promise<GetAppStartTimeResponse> {
-      return ipcRenderer.invoke(CHANNELS.APP.GET_START_TIME)
+    getInfo(): Promise<GetAppInfoResponse> {
+      return ipcRenderer.invoke(CHANNELS.APP.GET_INFO)
     },
   },
   devices: {

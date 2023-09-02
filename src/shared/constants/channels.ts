@@ -1,6 +1,6 @@
 export const CHANNELS = {
   APP: {
-    GET_START_TIME: 'app:get-start-time',
+    GET_INFO: 'app:get-info',
   },
   DEVICES: {
     INFO: {

@@ -2,7 +2,7 @@ import { RemoteInfo } from 'dgram'
 import Mdns from 'multicast-dns'
 import { Op } from 'sequelize'
 
-import { appStartTime } from '@main/constants/appStartTime'
+import { startTime } from '@main/constants/startTime'
 import { DeviceModel, MeasurementModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
 import { sendDevicesInfoUpdate } from '@main/ipc/services/sendDevicesInfoUpdate'
@@ -108,7 +108,7 @@ export class DevicesController {
       if (measurements) {
         const records = measurements.map(([sensorIndex, timestamp, value]) => ({
           sensorId: `${deviceId}:${sensorIndex}`,
-          timestamp: device.timeSynced ? timestamp : timestamp + appStartTime,
+          timestamp: device.timeSynced ? timestamp : timestamp + startTime,
           value,
         }))
 
