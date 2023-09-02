@@ -10,13 +10,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 ### Adicionado
 
 - Botões de ajuste vertical do gráfico.
-- Movimentação da janela te tempo do gráfico, exibindo apenas as medições mais recentes.
+- Movimentação da janela de tempo do gráfico, exibindo apenas as medições mais recentes.
 - Adicionou-se este CHANGELOG.
 
 ### Corrigido
 
 - Correção de falha na segmentação das mensagens do dispositivo.
-- Correção de bug: algumas vezes o app abria sem a informação dos dispositivos.
+- Correção de bug: algumas vezes o app abria sem a informação dos dispositivos armazenados.
 
 ### Alterado
 
