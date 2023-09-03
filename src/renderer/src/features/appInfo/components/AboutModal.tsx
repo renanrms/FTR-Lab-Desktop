@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { Modal, Tabs } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
+import { IconButton, Modal, Tabs } from '@mui/material'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 
@@ -25,7 +26,7 @@ export function AboutModal(props: AboutModalProps) {
       open={props.open}
       onClose={props.onClose}
     >
-      <div className="flex flex-col items-center min-w-fit min-h-[420px] w-[700px] h-fit pt-4 pb-8 px-8 bg-background dark:bg-neutral-20 rounded-xl text-on-background">
+      <div className="relative flex flex-col items-center min-w-fit min-h-[420px] w-[700px] h-fit bg-background dark:bg-neutral-20 rounded-lg text-on-background">
         <Box
           className="flex justify-center w-full mb-4"
           sx={{ borderBottom: 1, borderColor: 'divider' }}
@@ -36,10 +37,25 @@ export function AboutModal(props: AboutModalProps) {
               setValue(newValue)
             }}
           >
-            <Tab label="Sobre" value="about" />
-            <Tab label="Instruções de uso" value="instructions" />
+            <Tab
+              label="Sobre"
+              value="about"
+              sx={{ fontSize: '1rem', textTransform: 'none' }}
+            />
+            <Tab
+              label="Instruções de Uso"
+              value="instructions"
+              sx={{ fontSize: '1rem', textTransform: 'none' }}
+            />
           </Tabs>
         </Box>
+        <IconButton
+          className="top-1.5 right-1.5"
+          sx={{ position: 'absolute' }}
+          onClick={props.onClose}
+        >
+          <CloseIcon sx={{ fontSize: '20px' }} />
+        </IconButton>
         <TabPanel className="m-8" value={value} index="about">
           <div className="text-4xl font-medium select-none text-primary-50 dark:text-primary-80">
             FTRLab
