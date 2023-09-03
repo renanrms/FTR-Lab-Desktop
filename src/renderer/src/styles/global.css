@@ -1,10 +1,9 @@
-@import url('../theme/styles/theme.css');
+@import url("../theme/styles/theme.css");
 
 @tailwind base;
 @tailwind utilities;
 @tailwind components;
 
-
-html {
-  overflow: hidden;
+::selection {
+  background: var(--md-sys-color-secondary-container);
 }
