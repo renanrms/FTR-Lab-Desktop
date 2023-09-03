@@ -25,7 +25,7 @@ export function AboutModal(props: AboutModalProps) {
       open={props.open}
       onClose={props.onClose}
     >
-      <div className="flex flex-col items-center min-w-fit min-h-[400px] w-[700px] h-[70%] pt-4 pb-8 px-8 bg-background dark:bg-neutral-20 rounded-xl text-on-background">
+      <div className="flex flex-col items-center min-w-fit min-h-[420px] w-[700px] h-fit pt-4 pb-8 px-8 bg-background dark:bg-neutral-20 rounded-xl text-on-background">
         <Box
           className="flex justify-center w-full mb-4"
           sx={{ borderBottom: 1, borderColor: 'divider' }}
@@ -41,13 +41,13 @@ export function AboutModal(props: AboutModalProps) {
           </Tabs>
         </Box>
         <TabPanel className="m-8" value={value} index="about">
-          <div className="text-4xl select-none text-primary-50 dark:text-primary-80">
+          <div className="text-4xl font-medium select-none text-primary-50 dark:text-primary-80">
             FTRLab
           </div>
-          <div className="mt-2 text-xl">
+          <div className="mt-1 text-lg">
             {appInfo.version}
             <a
-              className="underline ml-2 hover:text-tertiary-50 hover:dark:text-tertiary-80"
+              className="underline ml-2 hover:text-primary-50 hover:dark:text-primary-80"
               rel="noreferrer"
               target="_blank"
               href={`https://github.com/renanrms/FTRLab-desktop/releases/tag/v${appInfo.version}`}
@@ -55,7 +55,7 @@ export function AboutModal(props: AboutModalProps) {
               Novidades
             </a>
           </div>
-          <div className="w-[32rem] mt-8 text-justify">
+          <div className="w-[32rem] mt-8">
             O FTRLab foi desenvolvido como Trabalho de Conclusão de Curso de
             Engenharia Eletrônica e de Computação na Universidade Federal do Rio
             de Janeiro.
@@ -79,7 +79,7 @@ export function AboutModal(props: AboutModalProps) {
             <span className="ml-2">
               Favorite-nos no{' '}
               <a
-                className="underline hover:text-tertiary-50 hover:dark:text-tertiary-80"
+                className="underline hover:text-primary-50 hover:dark:text-primary-80"
                 rel="noreferrer"
                 target="_blank"
                 href={`https://github.com/renanrms/FTRLab-desktop`}
