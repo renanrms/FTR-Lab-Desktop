@@ -4,9 +4,13 @@ import { Modal, Tabs } from '@mui/material'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 
+import GithubIconDark from '@renderer/assets/github-icon-dark.svg'
+import GithubIconLight from '@renderer/assets/github-icon-light.svg'
 import { TabPanel } from '@renderer/components/ui/TabPanel'
+import { preferredColorScheme } from '@renderer/theme/muiTheme'
 
 import { appInfo } from '../constants/appInfo'
+
 interface AboutModalProps {
   open: boolean
   onClose: () => void
@@ -43,7 +47,7 @@ export function AboutModal(props: AboutModalProps) {
           <div className="mt-2 text-xl">
             {appInfo.version}
             <a
-              className="underline ml-2 hover:text-primary-50 hover:dark:text-primary-80"
+              className="underline ml-2 hover:text-tertiary-50 hover:dark:text-tertiary-80"
               rel="noreferrer"
               target="_blank"
               href={`https://github.com/renanrms/FTRLab-desktop/releases/tag/v${appInfo.version}`}
@@ -56,15 +60,33 @@ export function AboutModal(props: AboutModalProps) {
             Engenharia Eletrônica e de Computação na Universidade Federal do Rio
             de Janeiro.
           </div>
-          <div className="mt-4">
-            <a
-              className="mt-8 underline hover:text-primary-50 hover:dark:text-primary-80"
-              rel="noreferrer"
-              target="_blank"
-              href={`https://github.com/renanrms/FTRLab-desktop`}
-            >
-              Informações sobre o software
-            </a>
+          <div className="mt-8 flex items-center">
+            {preferredColorScheme === 'dark' ? (
+              <img
+                className="inline"
+                width={22}
+                src={GithubIconDark}
+                alt="Github dark icon"
+              />
+            ) : (
+              <img
+                className="inline"
+                width={22}
+                src={GithubIconLight}
+                alt="Github light icon"
+              />
+            )}
+            <span className="ml-2">
+              Favorite-nos no{' '}
+              <a
+                className="underline hover:text-tertiary-50 hover:dark:text-tertiary-80"
+                rel="noreferrer"
+                target="_blank"
+                href={`https://github.com/renanrms/FTRLab-desktop`}
+              >
+                Github
+              </a>
+            </span>
           </div>
         </TabPanel>
         <TabPanel value={value} index="instructions">
