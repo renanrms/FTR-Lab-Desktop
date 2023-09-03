@@ -12,12 +12,12 @@ import { preferredColorScheme } from '@renderer/theme/muiTheme'
 
 import { appInfo } from '../constants/appInfo'
 
-interface AboutModalProps {
+interface HelpModalProps {
   open: boolean
   onClose: () => void
 }
 
-export function AboutModal(props: AboutModalProps) {
+export function HelpModal(props: HelpModalProps) {
   const [value, setValue] = useState('about')
 
   return (

@@ -4,10 +4,10 @@ import { useState } from 'react'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 // import DeviceHubOutlinedIcon from '@mui/icons-material/DeviceHubOutlined'
 // import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
+import HelpRoundedIcon from '@mui/icons-material/HelpRounded'
 import IconButton from '@mui/material/IconButton'
 
-import { AboutModal } from '@renderer/features/appInfo/components/AboutModal'
+import { HelpModal } from '@renderer/features/appInfo/components/HelpModal'
 
 interface HeaderProps {
   clearMeasurements: () => Promise<void>
@@ -47,10 +47,10 @@ export function Header(props: HeaderProps) {
             setAboutDialogIsOpen(!aboutDialogIsOpen)
           }}
         >
-          <MoreVertOutlinedIcon />
+          <HelpRoundedIcon />
         </IconButton>
       </div>
-      <AboutModal
+      <HelpModal
         open={aboutDialogIsOpen}
         onClose={() => {
           setAboutDialogIsOpen(false)
