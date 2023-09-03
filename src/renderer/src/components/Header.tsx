@@ -1,10 +1,10 @@
 // import AddchartOutlinedIcon from '@mui/icons-material/AddchartOutlined'
 import { useState } from 'react'
 
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 // import DeviceHubOutlinedIcon from '@mui/icons-material/DeviceHubOutlined'
 // import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded'
+import { Button } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
 import { HelpModal } from '@renderer/features/appInfo/components/HelpModal'
@@ -14,7 +14,7 @@ interface HeaderProps {
 }
 
 export function Header(props: HeaderProps) {
-  const [aboutDialogIsOpen, setAboutDialogIsOpen] = useState(false)
+  const [helpDialogIsOpen, setHelpDialogIsOpen] = useState(false)
 
   return (
     <header
@@ -35,25 +35,39 @@ export function Header(props: HeaderProps) {
         {/* <IconButton style={{ color: 'var(--md-ref-palette-primary100)' }}>
           <DownloadOutlinedIcon />
         </IconButton> */}
-        <IconButton
-          style={{ color: 'var(--md-ref-palette-primary100)' }}
+        <Button
+          variant="outlined"
+          className="mr-8"
           onClick={props.clearMeasurements}
+          sx={{
+            color: 'white',
+            marginRight: '32px',
+            paddingX: '1.5rem',
+            // backgroundColor:
+            // preferredColorScheme === 'dark' ? '#6665' : '#0005',
+            borderRadius: '2rem',
+            backgroundColor: '#fff3',
+            ':hover': {
+              backgroundColor: '#fff5',
+            },
+            textTransform: 'capitalize',
+          }}
         >
-          <DeleteOutlinedIcon />
-        </IconButton>
+          Apagar medidas
+        </Button>
         <IconButton
           style={{ color: 'var(--md-ref-palette-primary100)' }}
           onClick={() => {
-            setAboutDialogIsOpen(!aboutDialogIsOpen)
+            setHelpDialogIsOpen(!helpDialogIsOpen)
           }}
         >
           <HelpRoundedIcon />
         </IconButton>
       </div>
       <HelpModal
-        open={aboutDialogIsOpen}
+        open={helpDialogIsOpen}
         onClose={() => {
-          setAboutDialogIsOpen(false)
+          setHelpDialogIsOpen(false)
         }}
       />
     </header>
