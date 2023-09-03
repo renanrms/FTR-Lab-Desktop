@@ -1,19 +1,12 @@
 import { createTheme } from '@mui/material/styles'
 
-function getPreferredColorScheme() {
-  if (window.matchMedia) {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark'
-    } else {
-      return 'light'
-    }
-  }
-  return 'light'
-}
+import { getPreferredColorScheme } from './getPreferredColorScheme'
 
-const theme = createTheme({
+export const preferredColorScheme = getPreferredColorScheme()
+
+export const theme = createTheme({
   palette: {
-    mode: getPreferredColorScheme(),
+    mode: preferredColorScheme,
     primary: {
       main: '#006c51',
     },
@@ -25,5 +18,3 @@ const theme = createTheme({
     },
   },
 })
-
-export default theme
