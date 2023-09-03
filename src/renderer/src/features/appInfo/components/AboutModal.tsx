@@ -25,8 +25,17 @@ export function AboutModal(props: AboutModalProps) {
       className="flex justify-center pt-20"
       open={props.open}
       onClose={props.onClose}
+      slotProps={{
+        backdrop: {
+          style: {
+            backdropFilter: 'blur(1px)',
+            backgroundColor:
+              preferredColorScheme === 'dark' ? '#6665' : '#0005',
+          },
+        },
+      }}
     >
-      <div className="relative flex flex-col items-center min-w-fit min-h-[420px] w-[700px] h-fit bg-background dark:bg-neutral-20 rounded-lg text-on-background">
+      <div className="relative flex flex-col items-center min-w-fit min-h-[420px] w-[700px] h-fit bg-background dark:bg-neutral-10 rounded-lg text-on-background">
         <Box
           className="flex justify-center w-full mb-4"
           sx={{ borderBottom: 1, borderColor: 'divider' }}
@@ -57,7 +66,7 @@ export function AboutModal(props: AboutModalProps) {
           <CloseIcon sx={{ fontSize: '20px' }} />
         </IconButton>
         <TabPanel className="m-8" value={value} index="about">
-          <div className="text-4xl font-medium select-none text-primary-50 dark:text-primary-80">
+          <div className="text-4xl font-medium select-none text-primary-50 dark:text-primary-70">
             FTRLab
           </div>
           <div className="mt-1 text-lg">
