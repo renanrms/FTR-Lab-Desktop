@@ -1,3 +1,4 @@
+import { deviceOrderingPriority } from '@renderer/features/devices/utils/deviceOrderingPriority'
 import { Device } from '@shared/types/Device'
 
 import { DeviceCard } from '../features/devices/components/DeviceCard'
@@ -14,9 +15,11 @@ export function Sidebar(props: SidebarProps) {
         gridArea: 'aside',
       }}
     >
-      {props.devices.map((device, index) => (
-        <DeviceCard device={device} key={index}></DeviceCard>
-      ))}
+      {props.devices
+        .sort((a, b) => deviceOrderingPriority(a) - deviceOrderingPriority(b))
+        .map((device, index) => (
+          <DeviceCard device={device} key={index}></DeviceCard>
+        ))}
     </aside>
   )
 }
