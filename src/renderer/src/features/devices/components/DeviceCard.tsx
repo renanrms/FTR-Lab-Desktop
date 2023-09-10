@@ -4,12 +4,14 @@ import PauseIcon from '@mui/icons-material/PauseOutlined'
 import PlayIcon from '@mui/icons-material/PlayArrowOutlined'
 import { Button, Tooltip } from '@mui/material'
 import { useMutation } from '@tanstack/react-query'
+import { DotIcon } from 'lucide-react'
 import { twMerge } from 'tailwind-merge'
 
 import { quantities } from '@renderer/constants/quantities'
 import { Device } from '@shared/types/Device'
 
 import { toggleConnection } from '../services/toggleConnection'
+import { deviceToStatusText } from '../utils/deviceToStatusText'
 import { formatDeviceId } from '../utils/formatDeviceId'
 import { BatteryIndicator } from './BatteryIndicator'
 
@@ -24,12 +26,29 @@ export function DeviceCard(props: DeviceCardProps) {
     <div
       className={twMerge(
         'relative w-full min-h-[180px] p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col items-start justify-between bg-neutral-100 dark:bg-background text-on-background',
-        !props.device.available && !props.device.connected && 'opacity-60',
+        !props.device.reachable && 'opacity-60',
       )}
     >
       <div className="w-full flex items-center justify-between">
-        <div>
+        <div className="flex items-start">
           <p className="grow text-md">{props.device.name}</p>
+          <Tooltip title={deviceToStatusText(props.device)}>
+            <DotIcon
+              className={twMerge(
+                'ml-1',
+                props.device.connected
+                  ? 'text-primary-70'
+                  : props.device.available
+                  ? 'text-tertiary-70'
+                  : props.device.reachable
+                  ? 'text-warning-70'
+                  : 'text-neutral-70',
+              )}
+              strokeWidth={8}
+              size={16}
+              absoluteStrokeWidth
+            />
+          </Tooltip>
         </div>
 
         <div className="flex gap-0.5">
