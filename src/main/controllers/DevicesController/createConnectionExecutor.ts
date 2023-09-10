@@ -45,7 +45,12 @@ export function createConnectionExecutor(
           createHandleData(id, connection, handleDeviceMessage),
         )
         connection.socket.on('close', async (hadError) => {
-          await device.update({ connected: false, available: !hadError })
+          // TODO: Revisar a ideia de colocar como indisponível/inalcançável quando ocorre um erro na finalização da conexão. Suspeito que é isso que faz o dispositivo ficas indisponível por um curto período de tempo.
+          await device.update({
+            connected: false,
+            available: !hadError,
+            reachable: !hadError,
+          })
           sendDevicesInfoUpdate({
             devices: await findAllDevices(),
           })

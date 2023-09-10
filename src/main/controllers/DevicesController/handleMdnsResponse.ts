@@ -32,6 +32,7 @@ export async function handleMdnsResponse(
     id: deviceId,
     name: txtAnswerData.name,
     battery: txtAnswerData.battery,
+    reachable: true,
     available: txtAnswerData.available,
     timeSynced: txtAnswerData.timeSynced,
     network: {

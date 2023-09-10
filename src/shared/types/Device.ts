@@ -11,6 +11,7 @@ export interface Sensor {
 export interface Device {
   id: string
   name?: string
+  reachable: boolean
   available?: boolean
   connected?: boolean
   timeSynced: boolean

@@ -65,10 +65,9 @@ export class DevicesController {
    */
   async updateDevicesAvailability(tolerance: number = 120) {
     const [affectedCount] = await DeviceModel.update(
-      { available: false },
+      { available: false, reachable: false },
       {
         where: {
-          available: true,
           connected: false,
           updatedAt: {
             [Op.lt]: new Date(Date.now() - tolerance * 1000),

@@ -14,6 +14,10 @@ export const DeviceModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    reachable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
     available: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
