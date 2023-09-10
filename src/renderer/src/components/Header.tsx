@@ -36,27 +36,13 @@ export function Header(props: HeaderProps) {
           <DownloadOutlinedIcon />
         </IconButton> */}
         <Button
-          variant="outlined"
-          className="mr-8"
+          className="mr-8 px-6 rounded-full capitalize text-white bg-white/20 hover:bg-white/30"
           onClick={props.clearMeasurements}
-          sx={{
-            color: 'white',
-            marginRight: '32px',
-            paddingX: '1.5rem',
-            // backgroundColor:
-            // preferredColorScheme === 'dark' ? '#6665' : '#0005',
-            borderRadius: '2rem',
-            backgroundColor: '#fff3',
-            ':hover': {
-              backgroundColor: '#fff5',
-            },
-            textTransform: 'capitalize',
-          }}
         >
           Apagar medidas
         </Button>
         <IconButton
-          style={{ color: 'var(--md-ref-palette-primary100)' }}
+          className="text-white"
           onClick={() => {
             setHelpDialogIsOpen(!helpDialogIsOpen)
           }}
