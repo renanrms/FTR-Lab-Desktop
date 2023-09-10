@@ -105,7 +105,11 @@ export function Chart(props: ChartProps) {
             />
           </IconButton>
         </div>
-        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center">
+
+        <div
+          className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center"
+          title="Exportar medidas"
+        >
           <IconButton
             onClick={() => {
               window.api.measurements.export({
