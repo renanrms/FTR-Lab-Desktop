@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 // import DeviceHubOutlinedIcon from '@mui/icons-material/DeviceHubOutlined'
 // import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined'
+import { DeleteOutlined as DeleteIcon } from '@mui/icons-material'
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded'
 import { Button } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
@@ -38,6 +39,7 @@ export function Header(props: HeaderProps) {
         <Button
           className="mr-8 px-6 rounded-full capitalize text-white bg-white/20 hover:bg-white/30"
           onClick={props.clearMeasurements}
+          startIcon={<DeleteIcon />}
         >
           Apagar medidas
         </Button>
