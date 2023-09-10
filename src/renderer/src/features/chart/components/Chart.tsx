@@ -3,7 +3,7 @@ import ExpandRoundedIcon from '@mui/icons-material/ExpandRounded'
 import ScatterPlotRoundedIcon from '@mui/icons-material/ScatterPlotRounded'
 import ShowChartRoundedIcon from '@mui/icons-material/ShowChartRounded'
 import VerticalAlignBottomRoundedIcon from '@mui/icons-material/VerticalAlignBottomRounded'
-import IconButton from '@mui/material/IconButton'
+import { Button, IconButton } from '@mui/material'
 import {
   CartesianGrid,
   Label,
@@ -46,86 +46,84 @@ export function Chart(props: ChartProps) {
                 fontSize: '22px',
                 transform: 'rotate(-90deg)',
               }}
-            />
-          </IconButton>
+              />
+            </IconButton>
 
-          <IconButton>
+            <IconButton>
             <ExpandRoundedIcon
-              sx={{
+            sx={{
                 fontSize: '22px',
                 transform: 'rotate(90deg)',
               }}
             />
           </IconButton>
         </div> */}
-        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-4">
+        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-6">
           <IconButton onClick={chartControls.ShowFromOriginYHandleClick}>
             <VerticalAlignBottomRoundedIcon
-              sx={{
-                fontSize: '22px',
-                transform: 'rotate(180deg)',
-                color: chartControls.ShowFromOriginY
-                  ? 'var(--md-ref-palette-primary60)'
-                  : 'currentcolor',
-              }}
+              className={twMerge(
+                'rotate-180',
+                chartControls.ShowFromOriginY
+                  ? 'text-primary-60 dark:text-primary-70'
+                  : 'dark:text-neutral-80',
+              )}
+              color="inherit"
+              sx={{ fontSize: '22px' }}
             />
           </IconButton>
 
           <IconButton onClick={chartControls.showExpandedYHandleClick}>
             <ExpandRoundedIcon
-              sx={{
-                fontSize: '22px',
-                color: chartControls.showExpandedY
-                  ? 'var(--md-ref-palette-primary60)'
-                  : 'currentcolor',
-              }}
+              className={twMerge(
+                chartControls.showExpandedY
+                  ? 'text-primary-60 dark:text-primary-70'
+                  : 'dark:text-neutral-80',
+              )}
+              color="inherit"
+              sx={{ fontSize: '22px' }}
             />
           </IconButton>
         </div>
         <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-6">
           <IconButton onClick={chartControls.showPointsHandleClick}>
             <ScatterPlotRoundedIcon
-              sx={{
-                fontSize: '22px',
-                color: chartControls.showPoints
-                  ? 'var(--md-ref-palette-primary60)'
-                  : 'currentcolor',
-              }}
+              className={twMerge(
+                chartControls.showPoints
+                  ? 'text-primary-60 dark:text-primary-70'
+                  : 'dark:text-neutral-80',
+              )}
+              color="inherit"
+              sx={{ fontSize: '22px' }}
             />
           </IconButton>
 
           <IconButton onClick={chartControls.showLinesHandleClick}>
             <ShowChartRoundedIcon
-              sx={{
-                fontSize: '22px',
-                color: chartControls.showLines
-                  ? 'var(--md-ref-palette-primary60)'
-                  : 'currentcolor',
-              }}
+              className={twMerge(
+                chartControls.showLines
+                  ? 'text-primary-60 dark:text-primary-70'
+                  : 'dark:text-neutral-80',
+              )}
+              sx={{ fontSize: '22px' }}
             />
           </IconButton>
         </div>
 
-        <div
-          className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center"
+        <Button
+          variant="outlined"
+          className="h-[40px] rounded-full capitalize border bg-neutral-98 dark:bg-neutral-20 border-neutral-95 hover:bg-neutral-95 dark:hover:bg-neutral-30 text-primary-60 dark:text-primary-70 dark:border-neutral-30"
           title="Exportar medidas"
+          onClick={() => {
+            window.api.measurements.export({
+              sensorId: props.sensor.id,
+            })
+          }}
         >
-          <IconButton
-            onClick={() => {
-              window.api.measurements.export({
-                sensorId: props.sensor.id,
-              })
-            }}
-          >
-            <DownloadOutlinedIcon
-              sx={{
-                fontSize: '22px',
-                color: 'currentcolor',
-              }}
-            />
-          </IconButton>
-        </div>
+          <DownloadOutlinedIcon sx={{ fontSize: '22px' }} />
+          <span className="mx-2">Exportar</span>
+        </Button>
       </div>
+
       <ResponsiveContainer width="100%" height="100%" debounce={20}>
         <LineChart
           width={200}

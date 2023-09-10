@@ -7,7 +7,6 @@ import { useMutation } from '@tanstack/react-query'
 import { twMerge } from 'tailwind-merge'
 
 import { quantities } from '@renderer/constants/quantities'
-import { preferredColorScheme } from '@renderer/theme/muiTheme'
 import { Device } from '@shared/types/Device'
 
 import { toggleConnection } from '../services/toggleConnection'
@@ -92,25 +91,19 @@ export function DeviceCard(props: DeviceCardProps) {
 
       <div className="w-full h-8 flex justify-center items-center">
         <Button
-          className="text-primary-90 backdrop-opacity-20"
-          variant={preferredColorScheme === 'dark' ? 'outlined' : 'outlined'}
+          className={twMerge(
+            'rounded-full px-4 py-1 capitalize',
+            props.device.connected && 'dark:text-error-90',
+            props.device.available &&
+              !props.device.connected &&
+              'dark:text-primary-90',
+          )}
+          variant={'outlined'}
           color={props.device.connected ? 'error' : 'primary'}
           onClick={() => {
             connectionMutation.mutate(props.device)
           }}
           startIcon={props.device.connected ? <PauseIcon /> : <PlayIcon />}
-          sx={{
-            paddingX: '16px',
-            paddingY: '4px',
-            borderRadius: '2rem',
-            backgroundColor: props.device.connected ? '#d32f2f0a' : '#0087670d',
-            ':hover': {
-              backgroundColor: props.device.connected
-                ? '#d32f2f14'
-                : '#00876718',
-            },
-            textTransform: 'capitalize',
-          }}
           disabled={
             (!props.device.available && !props.device.connected) ||
             connectionMutation.isLoading
