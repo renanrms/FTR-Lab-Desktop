@@ -1,4 +1,4 @@
-import { getQuantityName } from '@renderer/utils/getQuantityName'
+import { quantities } from '@renderer/constants/quantities'
 import { Sensor } from '@shared/types/Device'
 import { Measurement } from '@shared/types/Measurement'
 
@@ -12,11 +12,15 @@ interface ChartContainerProps {
 export function ChartContainer(props: ChartContainerProps) {
   // Obter o sensor
 
+  const quantity = quantities[props.sensor.quantity]
+
   const serie = {
     XAxis: { key: 'timestamp', name: 'Tempo (s)' },
     YAxis: {
       key: 'value',
-      name: getQuantityName(props.sensor.quantity, true),
+      name: quantity
+        ? `${quantity.name} (${quantity.defaultUnit.symbol})`
+        : props.sensor.quantity,
     },
     data: props.measurements,
   }
