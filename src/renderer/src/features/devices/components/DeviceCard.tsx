@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { twMerge } from 'tailwind-merge'
 
 import { quantities } from '@renderer/constants/quantities'
+import { preferredColorScheme } from '@renderer/theme/muiTheme'
 import { Device } from '@shared/types/Device'
 
 import { toggleConnection } from '../services/toggleConnection'
@@ -91,6 +92,8 @@ export function DeviceCard(props: DeviceCardProps) {
 
       <div className="w-full h-8 flex justify-center items-center">
         <Button
+          className="text-primary-90 backdrop-opacity-20"
+          variant={preferredColorScheme === 'dark' ? 'outlined' : 'outlined'}
           color={props.device.connected ? 'error' : 'primary'}
           onClick={() => {
             connectionMutation.mutate(props.device)
@@ -100,11 +103,11 @@ export function DeviceCard(props: DeviceCardProps) {
             paddingX: '16px',
             paddingY: '4px',
             borderRadius: '2rem',
-            backgroundColor: props.device.connected ? '#00000010' : '#00876717',
+            backgroundColor: props.device.connected ? '#d32f2f0a' : '#0087670d',
             ':hover': {
               backgroundColor: props.device.connected
-                ? '#00000018'
-                : '#00876722',
+                ? '#d32f2f14'
+                : '#00876718',
             },
             textTransform: 'capitalize',
           }}

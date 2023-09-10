@@ -34,12 +34,12 @@ export function Chart(props: ChartProps) {
   return (
     <div
       className={twMerge(
-        'p-4 pb-16 shadow border-2 border-secondary-90 dark:border-primary-50 bg-neutral-100 rounded-lg',
+        'p-4 pb-16 shadow border-2 border-secondary-90 dark:border-primary-30 bg-neutral-100 dark:bg-[#00000070] rounded-lg',
         props.className,
       )}
     >
       <div className="mb-2 ml-20 flex items-center">
-        {/* <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-4">
+        {/* <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-4">
           <IconButton>
             <VerticalAlignBottomRoundedIcon
               sx={{
@@ -58,7 +58,7 @@ export function Chart(props: ChartProps) {
             />
           </IconButton>
         </div> */}
-        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-4">
+        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-4">
           <IconButton onClick={chartControls.ShowFromOriginYHandleClick}>
             <VerticalAlignBottomRoundedIcon
               sx={{
@@ -82,7 +82,7 @@ export function Chart(props: ChartProps) {
             />
           </IconButton>
         </div>
-        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center mr-6">
+        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center mr-6">
           <IconButton onClick={chartControls.showPointsHandleClick}>
             <ScatterPlotRoundedIcon
               sx={{
@@ -105,7 +105,7 @@ export function Chart(props: ChartProps) {
             />
           </IconButton>
         </div>
-        <div className="rounded-full bg-neutral-98 border border-neutral-95 flex items-center">
+        <div className="rounded-full bg-neutral-98 dark:bg-neutral-20 border border-neutral-95 dark:border-neutral-30 flex items-center">
           <IconButton
             onClick={() => {
               window.api.measurements.export({
@@ -113,7 +113,12 @@ export function Chart(props: ChartProps) {
               })
             }}
           >
-            <DownloadOutlinedIcon sx={{ fontSize: '22px' }} />
+            <DownloadOutlinedIcon
+              sx={{
+                fontSize: '22px',
+                color: 'currentcolor',
+              }}
+            />
           </IconButton>
         </div>
       </div>
@@ -154,6 +159,7 @@ export function Chart(props: ChartProps) {
             />
           </YAxis>
           <Tooltip
+            labelClassName="text-neutral-20"
             labelFormatter={(label: number, payload) =>
               `t: ${label.toFixed(6)}`
             }
