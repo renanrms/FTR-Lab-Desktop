@@ -14,5 +14,5 @@ export function BatteryIndicator(props: BatteryIconProps) {
         : 'var(--md-sys-color-error)'
       : 'var(--md-sys-color-on-surface-variant)'
 
-  return <Icon sx={{ color }} />
+  return <Icon sx={{ fontSize: '20px', color }} />
 }
