@@ -1,7 +1,7 @@
-import GithubIconDark from '@renderer/assets/github-icon-dark.svg'
-import GithubIconLight from '@renderer/assets/github-icon-light.svg'
 import { preferredColorScheme } from '@renderer/theme/muiTheme'
 
+import GithubIconDark from '../../assets/github-icon-dark.svg'
+import GithubIconLight from '../../assets/github-icon-light.svg'
 import { appInfo } from '../../constants/appInfo'
 
 export function About() {
