@@ -1,8 +1,12 @@
 import { createTheme } from '@mui/material/styles'
 
-const theme = createTheme({
+import { getPreferredColorScheme } from './getPreferredColorScheme'
+
+export const preferredColorScheme = getPreferredColorScheme()
+
+export const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: preferredColorScheme,
     primary: {
       main: '#006c51',
     },
@@ -14,5 +18,3 @@ const theme = createTheme({
     },
   },
 })
-
-export default theme

@@ -3,6 +3,6 @@
  *
  * Importar esta constante no processo renderer causará erros.
  */
-export const appStartTime = Math.floor(
+export const startTime = Math.floor(
   (process.getCreationTime() || Date.now()) / 1000,
 )

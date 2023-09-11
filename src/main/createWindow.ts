@@ -6,8 +6,8 @@ export function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    minWidth: 662,
-    minHeight: 434,
+    minWidth: 800,
+    minHeight: 680,
     show: false,
     autoHideMenuBar: true,
     backgroundColor: '#FBFDF9',

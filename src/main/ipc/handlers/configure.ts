@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { Op } from 'sequelize'
 
-import { appStartTime } from '@main/constants/appStartTime'
+import { startTime } from '@main/constants/startTime'
 import { DevicesController } from '@main/controllers/DevicesController'
 import { MeasurementModel, SensorModel } from '@main/database/models'
 import { findAllDevices } from '@main/database/queries/findAllDevices'
@@ -19,18 +19,22 @@ import {
   FindAllMeasurementsByDeviceResponse,
   GetAllDevicesResponse,
   GetAllMeasurementsResponse,
-  GetAppStartTimeResponse,
+  GetAppInfoResponse,
   OpenDeviceConnectionRequest,
 } from '@shared/types/ipc'
 import { Measurement } from '@shared/types/Measurement'
 
 export function configureIpcHandlers(devicesController: DevicesController) {
   ipcMain.handle(
-    CHANNELS.APP.GET_START_TIME,
-    async (event, request: void): Promise<GetAppStartTimeResponse> => {
-      console.log(`<= ${CHANNELS.APP.GET_START_TIME}`)
+    CHANNELS.APP.GET_INFO,
+    async (event, request: void): Promise<GetAppInfoResponse> => {
+      console.log(`<= ${CHANNELS.APP.GET_INFO}`)
       return {
-        appStartTime,
+        appInfo: {
+          startTime,
+          name: app.getName(),
+          version: app.getVersion(),
+        },
       }
     },
   )
@@ -171,7 +175,7 @@ export function configureIpcHandlers(devicesController: DevicesController) {
         .sort((a, b) => a.timestamp - b.timestamp)
         .map(
           (measurement) =>
-            `${(measurement.timestamp - appStartTime).toFixed(6)}, ${
+            `${(measurement.timestamp - startTime).toFixed(6)}, ${
               measurement.value
             }`,
         )

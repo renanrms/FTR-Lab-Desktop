@@ -1,4 +1,4 @@
-import { appStartTime } from '@renderer/constants/appStartTime'
+import { appInfo } from '@renderer/features/general/constants/appInfo'
 import { Measurement } from '@shared/types/Measurement'
 
 /**
@@ -9,6 +9,6 @@ import { Measurement } from '@shared/types/Measurement'
 export function transformToRelativeTime(measurement: Measurement) {
   return {
     ...measurement,
-    timestamp: measurement.timestamp - appStartTime,
+    timestamp: measurement.timestamp - appInfo.startTime,
   }
 }

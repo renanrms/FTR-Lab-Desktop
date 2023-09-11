@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
-import { defaultDisplayedTimeRange } from '@renderer/features/chart/constants/defaultDisplayedTimeRange'
+import { defaultDisplayedTimeRange } from '@renderer/features/measurements/constants/defaultDisplayedTimeRange'
 import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
-import { transformToRelativeTime } from '../utils/transformToRelativeTime'
+import { transformToRelativeTime } from '../../devices/utils/transformToRelativeTime'
 
 export function useMeasurements() {
   const [sensorMeasurements, setSensorMeasurements] =
