@@ -4,9 +4,9 @@ import { Header } from './components/Header'
 import { ReactQueryProvider } from './components/providers/ReactQueryProvider'
 import { ThemeProvider } from './components/providers/ThemeProvider'
 import { Sidebar } from './components/Sidebar'
-import { ChartsArea } from './features/chart/components/ChartsArea'
 import { useDevices } from './features/devices/hooks/useDevices'
-import { useMeasurements } from './features/devices/hooks/useMeasurements'
+import { ChartsArea } from './features/measurements/components/ChartsArea'
+import { useMeasurements } from './features/measurements/hooks/useMeasurements'
 
 export function App() {
   const devices = useDevices()
