@@ -1,4 +1,4 @@
-import { appInfo } from '@renderer/features/appInfo/constants/appInfo'
+import { appInfo } from '@renderer/features/general/constants/appInfo'
 import { Measurement } from '@shared/types/Measurement'
 
 /**

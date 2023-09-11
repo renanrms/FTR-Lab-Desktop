@@ -8,7 +8,7 @@ import HelpRoundedIcon from '@mui/icons-material/HelpRounded'
 import { Button } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
-import { HelpModal } from '@renderer/features/appInfo/components/HelpModal'
+import { HelpModal } from '@renderer/features/general/components/HelpModal'
 
 interface HeaderProps {
   clearMeasurements: () => Promise<void>
