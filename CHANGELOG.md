@@ -5,6 +5,23 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.8.0] - 2023-09-10
+
+### Adicionado
+
+- Modal de Ajuda.
+- Informações sobre o App e link para as novidades da versão instalada.
+- Instruções de uso do programa.
+- Instruções de configuração do dispositivo.
+
+### Alterado
+
+- Nome do App adicionado no título da janela.
+- Dispositivos são exibidos em ordem.
+- Botões da interface foram tornados mais explícitos e compreensíveis.
+- Cards de apresentação dos dispositivo foram reformulados.
+- Melhora estilos no modo dark.
+
 ## [0.7.0] - 2023-09-01
 
 ### Adicionado
