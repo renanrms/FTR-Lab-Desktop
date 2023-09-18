@@ -1,3 +1,5 @@
+import { Led } from './Led'
+
 export function DeviceInstructions() {
   return (
     <div className="my-6 px-4 w-full flex flex-col gap-4">
@@ -17,34 +19,35 @@ export function DeviceInstructions() {
         style={{ listStyleType: 'decimal' }}
       >
         <li className="ml-8 mt-1">
-          Pressione o botão de Reiniciar e aguarde o LED começar a piscar.
+          <Led /> Pressione o botão de Reiniciar e aguarde o LED começar a
+          piscar.
         </li>
         <li className="ml-8 mt-1">
-          Se o LED piscar lentamente (0,5 segundo ON, seguido de 0,5 segundo
-          OFF), está no modo de configuração pois não conhece nenhuma rede WiFi
-          do local. Utilize o Aplicativo de celular ESP TOUCH para configurar.
-          Você deverá conectar seu celular na rede desejada, abrir o aplicativo,
-          digitar a senha da rede e apertar o botão para configurar.
+          <Led tOn={500} tOff={500} /> Se o LED piscar lentamente, está no modo
+          de configuração pois não conhece nenhuma rede WiFi do local. Utilize o
+          Aplicativo de celular ESP TOUCH para configurar. Você deverá conectar
+          seu celular na rede desejada, abrir o aplicativo, digitar a senha da
+          rede e apertar o botão para configurar.
         </li>
         <li className="ml-8 mt-1">
-          Se o LED piscar rapidamente (Fica ON, passa pelo estado OFF por um
-          curto intervalo de tempo), está sincronizando seu relógio, o que
-          demora no máximo 90 segundos, mas tipicamente menos de 10 segundos.
-          Aguarde.
+          <Led tOn={1940} tOff={60} /> Se o LED piscar apagando rapidamente,
+          está sincronizando seu relógio, o que demora no máximo 90 segundos,
+          mas tipicamente menos de 10 segundos. Aguarde.
         </li>
         <li className="ml-8 mt-1">
-          Se o LED ficar ON de forma constante, está funcionando conectado à
-          rede configurada. Conecte o computador à mesma rede. Verifique se
-          existem redes WiFi de gerações diferentes com o mesmo nome (como WiFi
-          2.4GHz e 5GHz). Nestes casos os dois sistemas podem não conseguir se
-          comunicar.
+          <Led startOn /> Se o LED ficar ON de forma constante, está funcionando
+          conectado à rede configurada. Conecte o computador à mesma rede.
+          Verifique se existem redes WiFi de gerações diferentes com o mesmo
+          nome (como WiFi 2.4GHz e 5GHz). Nestes casos os dois sistemas podem
+          não conseguir se comunicar.
         </li>
         <li className="ml-8 mt-1">
-          Se o LED ficar ON de forma constante, mas você deseja configurar uma
-          nova rede, mantenha o botão de configuração pressionado e pressione o
-          botão de reiniciar, enquanto isso. Pare de segurar o botão de
-          configuração quando dispositivo entrar no modo de configuração. Tendo
-          feito isso você pode seguir novamente do passo 2 em diante.
+          <Led startOn /> Se o LED ficar ON de forma constante, mas você deseja
+          configurar uma nova rede, mantenha o botão de configuração pressionado
+          e pressione o botão de reiniciar, enquanto isso. Pare de segurar o
+          botão de configuração quando dispositivo entrar no modo de
+          configuração. Tendo feito isso você pode seguir novamente do passo 2
+          em diante.
         </li>
       </ol>
     </div>
