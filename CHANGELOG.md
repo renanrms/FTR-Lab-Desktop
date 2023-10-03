@@ -5,6 +5,16 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.8.1] - 2023-10-03
+
+### Alterado
+
+- Melhoria nas instruções de configuração do dispositivo, mostrando os possíveis padrões de piscar do LED para facilitar identificação.
+
+### Corrigido
+
+- Corrigido problema de build no Windows.
+
 ## [0.8.0] - 2023-09-10
 
 ### Adicionado

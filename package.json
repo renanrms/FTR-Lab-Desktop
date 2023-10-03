@@ -1,7 +1,7 @@
 {
   "name": "ftrlab",
   "productName": "FTRLab",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Uma aplicação desktop para um sistema de aquisição de dados em física experimental",
   "main": "./out/main/index.js",
   "author": {
