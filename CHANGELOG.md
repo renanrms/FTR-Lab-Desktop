@@ -5,6 +5,12 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.9.0] - 2023-10-24
+
+### Adicionado
+
+- Controle da janela de tempo para o experimento. Agora são exportadas apenas as medidas mais recentes, na janela de tempo definida. O intervalo de medidas exibidas segue o tamanho da janela até um limite máximo para evitar lentidão na renderização.
+
 ## [0.8.1] - 2023-10-03
 
 ### Alterado
