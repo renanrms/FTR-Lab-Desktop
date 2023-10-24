@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 
-import { defaultDisplayedTimeRange } from '@renderer/features/measurements/constants/defaultDisplayedTimeRange'
+import { maxDisplayedTimeRange } from '@renderer/features/measurements/constants/maxDisplayedTimeRange'
 import { Measurement, MeasurementsBySensor } from '@shared/types/Measurement'
 
 import { transformToRelativeTime } from '../../devices/utils/transformToRelativeTime'
 
-export function useMeasurements() {
+export function useMeasurements(timeRange: number) {
   const [sensorMeasurements, setSensorMeasurements] =
     useState<MeasurementsBySensor>({})
 
   useEffect(() => {
+    const displayedTimeRange =
+      timeRange <= maxDisplayedTimeRange ? timeRange : maxDisplayedTimeRange
     window.api.measurements
-      .findLastByDevice({ timeRange: defaultDisplayedTimeRange })
+      .findLastByDevice({
+        timeRange: displayedTimeRange,
+      })
       .then(({ measurementsBySensor }) => {
         setSensorMeasurements(measurementsBySensor)
       })
@@ -40,7 +44,7 @@ export function useMeasurements() {
 
               // Filtra para manter apenas as medições mais recentes
               const thresholdTimestamp = Math.floor(
-                newSensorState.at(-1)!.timestamp - defaultDisplayedTimeRange,
+                newSensorState.at(-1)!.timestamp - displayedTimeRange,
               )
               const startIndex = newSensorState.findIndex(
                 (measurement) => measurement.timestamp > thresholdTimestamp,
@@ -57,7 +61,7 @@ export function useMeasurements() {
     )
 
     return removeListener
-  }, [])
+  }, [timeRange])
 
   const clearMeasurements = async () => {
     await window.api.measurements.deleteAll()

@@ -1,10 +1,14 @@
-import { devicePriorityCompare } from '@renderer/features/devices/utils/deviceOrderingPriority'
-import { Device } from '@shared/types/Device'
+import { Dispatch, SetStateAction } from 'react'
 
-import { DeviceCard } from '../features/devices/components/DeviceCard'
+import { DeviceCard } from '@renderer/features/devices/components/DeviceCard'
+import { devicePriorityCompare } from '@renderer/features/devices/utils/deviceOrderingPriority'
+import { ControlCard } from '@renderer/features/measurements/components/ControlCard'
+import { Device } from '@shared/types/Device'
 
 interface SidebarProps {
   devices: Array<Device>
+  timeRange: number
+  setTimeRange: Dispatch<SetStateAction<number>>
 }
 
 export function Sidebar(props: SidebarProps) {
@@ -15,8 +19,13 @@ export function Sidebar(props: SidebarProps) {
         gridArea: 'aside',
       }}
     >
-      {props.devices.sort(devicePriorityCompare).map((device, index) => (
-        <DeviceCard device={device} key={index}></DeviceCard>
+      <ControlCard
+        timeRange={props.timeRange}
+        setTimeRange={props.setTimeRange}
+      />
+
+      {props.devices.sort(devicePriorityCompare).map((device) => (
+        <DeviceCard device={device} key={device.id}></DeviceCard>
       ))}
     </aside>
   )
