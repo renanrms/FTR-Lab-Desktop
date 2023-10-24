@@ -161,23 +161,30 @@ export function configureIpcHandlers(devicesController: DevicesController) {
       const sensor: Sensor = (await SensorModel.findByPk(request.sensorId))
         ?.dataValues
 
+      const maxTimestamp: number = await MeasurementModel.max('timestamp', {
+        where: {
+          sensorId: sensor.id,
+        },
+      })
+
       const measurements: Measurement[] = (
         await MeasurementModel.findAll({
           where: {
-            sensorId: request.sensorId,
+            sensorId: sensor.id,
+            timestamp: {
+              [Op.gte]: maxTimestamp - request.timeRange,
+            },
           },
+          order: [['timestamp', 'ASC']],
         })
-      ).map((model) => model.dataValues)
+      ).map((measurementM) => transformToRelativeTime(measurementM.dataValues))
 
       const fileHeader = `t, ${sensor.quantity}`
 
       const fileBody = measurements
-        .sort((a, b) => a.timestamp - b.timestamp)
         .map(
           (measurement) =>
-            `${(measurement.timestamp - startTime).toFixed(6)}, ${
-              measurement.value
-            }`,
+            `${measurement.timestamp.toFixed(6)}, ${measurement.value}`,
         )
         .join('\n')
 

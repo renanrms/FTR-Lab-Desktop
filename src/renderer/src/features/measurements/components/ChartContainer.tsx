@@ -7,6 +7,7 @@ import { Chart } from './Chart'
 interface ChartContainerProps {
   sensor: Sensor
   measurements: Measurement[]
+  timeRange: number
 }
 
 export function ChartContainer(props: ChartContainerProps) {
@@ -32,6 +33,7 @@ export function ChartContainer(props: ChartContainerProps) {
       YAxis={serie.YAxis}
       data={serie.data}
       sensor={props.sensor}
+      timeRange={props.timeRange}
     ></Chart>
   )
 }

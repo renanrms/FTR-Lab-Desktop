@@ -6,6 +6,7 @@ import { ChartContainer } from './ChartContainer'
 interface ChartsAreaProps {
   devices: Device[]
   sensorMeasurements: MeasurementsBySensor
+  timeRange: number
 }
 
 export function ChartsArea(props: ChartsAreaProps) {
@@ -28,6 +29,7 @@ export function ChartsArea(props: ChartsAreaProps) {
             sensor={sensor}
             measurements={props.sensorMeasurements[sensor.id]!}
             key={sensor.id}
+            timeRange={props.timeRange}
           ></ChartContainer>
         ))}
     </main>

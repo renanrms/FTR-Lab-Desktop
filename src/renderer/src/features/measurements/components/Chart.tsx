@@ -26,6 +26,7 @@ interface ChartProps {
   YAxis: { key: string; name: string }
   data: Object[]
   sensor: Sensor
+  timeRange: number
 }
 
 export function Chart(props: ChartProps) {
@@ -116,6 +117,7 @@ export function Chart(props: ChartProps) {
           onClick={() => {
             window.api.measurements.export({
               sensorId: props.sensor.id,
+              timeRange: props.timeRange,
             })
           }}
         >

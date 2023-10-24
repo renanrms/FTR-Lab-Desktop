@@ -51,4 +51,5 @@ export interface UpdateDeviceSettingsRequest {
 
 export interface ExportMeasurementsRequest {
   sensorId: SensorId
+  timeRange: number
 }
