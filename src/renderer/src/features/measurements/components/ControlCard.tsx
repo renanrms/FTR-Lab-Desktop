@@ -22,7 +22,7 @@ export function ControlCard(props: ControlCardProps) {
         step={0.1}
         min={1}
         max={Math.log2(24 * 60 * 60)}
-        valueLabelFormat={(value) => `${value}s`}
+        valueLabelFormat={(value) => `${value} s`}
         valueLabelDisplay="auto"
         scale={(value) => Math.floor(2 ** value)}
         value={Math.log2(props.timeRange)}

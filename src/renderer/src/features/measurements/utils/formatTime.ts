@@ -4,9 +4,9 @@ export function formatTime(t: number) {
   const seconds = Math.floor((t - 3600 * hours - 60 * minutes) % 60)
 
   if (hours > 0) {
-    return `${hours}h ${minutes}m ${seconds}s`
+    return `${hours}h ${minutes}min`
   } else if (minutes > 0) {
-    return `${minutes}m ${seconds}s`
+    return `${minutes}min ${seconds}s`
   } else {
     return `${seconds}s`
   }
