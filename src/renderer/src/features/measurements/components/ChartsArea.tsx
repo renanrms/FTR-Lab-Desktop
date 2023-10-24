@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import { Device } from '@shared/types/Device'
 import { MeasurementsBySensor } from '@shared/types/Measurement'
 
@@ -9,7 +7,6 @@ interface ChartsAreaProps {
   devices: Device[]
   sensorMeasurements: MeasurementsBySensor
   timeRange: number
-  setTimeRange: Dispatch<SetStateAction<number>>
 }
 
 export function ChartsArea(props: ChartsAreaProps) {
@@ -32,6 +29,7 @@ export function ChartsArea(props: ChartsAreaProps) {
             sensor={sensor}
             measurements={props.sensorMeasurements[sensor.id]!}
             key={sensor.id}
+            timeRange={props.timeRange}
           ></ChartContainer>
         ))}
     </main>

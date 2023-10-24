@@ -37,7 +37,6 @@ export function App() {
             devices={devices}
             sensorMeasurements={sensorMeasurements}
             timeRange={timeRange}
-            setTimeRange={setTimeRange}
           ></ChartsArea>
         </div>
       </ThemeProvider>
