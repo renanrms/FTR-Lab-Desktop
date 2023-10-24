@@ -13,10 +13,7 @@ interface ControlCardProps {
 export function ControlCard(props: ControlCardProps) {
   return (
     <div className="w-full p-4 mb-4 border border-neutral-90 dark:border-neutral-30 rounded-md flex flex-col items-start justify-between bg-neutral-100 dark:bg-background text-on-background">
-      <p className="mb-1">
-        Janela de tempo:{' '}
-        <span className="text-sm">{formatTime(props.timeRange)}</span>
-      </p>
+      <p className="mb-1">Janela de tempo: {formatTime(props.timeRange)}</p>
       <Slider
         defaultValue={maxDisplayedTimeRange}
         step={0.1}

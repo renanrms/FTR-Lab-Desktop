@@ -48,17 +48,18 @@ export function AppInstructions(props: AppInstructionsProps) {
         <p>
           Cada gráfico na tela possui um botão{' '}
           <span className="font-medium text-primary">Exportar</span> (3) para
-          gravar as medições em um arquivo. As medições serão exportadas com a
-          mesma referência de tempo usada no gráfico, ou seja, o momento em que
-          o programa foi aberto. Se houverem medidas anteriores, serão
-          exportadas com valores de tempo negativo.
+          gravar as medições em um arquivo. Os valores de tempo sempre tem como
+          referência o momento em que o software foi aberto, tanto no gráfico
+          como no arquivo. Se houverem medidas anteriores, serão exportadas com
+          valores de tempo negativo.
         </p>
         <p>
           Na barra superior há o botão{' '}
           <span className="font-medium text-primary">Apagar Medidas</span> (4)
-          casa deseje limpar os dados. Recomendamos apagar dados antes iniciar
-          uma tomada, caso contrário todos os dados anteriormente recebidos do
-          sensor serão salvos no arquivo. Além disso há o botão de{' '}
+          caso deseje limpar os dados. Com controle da{' '}
+          <span className="font-medium text-primary">Janela de medição</span>{' '}
+          também é possível configurar o tamanho do intervalo que deseja
+          exportar. Além disso, há o botão de{' '}
           <span className="font-medium text-primary">Ajuda</span> (5).
         </p>
       </div>
