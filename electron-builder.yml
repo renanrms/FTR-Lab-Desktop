@@ -33,7 +33,8 @@ linux:
     - deb
     # - snap
   # maintainer: electronjs.org
-  category: Utility
+  icon: build/icon.icns
+  category: "Education,Science,Physics,DataVisualization"
 appImage:
   artifactName: ${productName}-${version}.${ext}
 npmRebuild: false

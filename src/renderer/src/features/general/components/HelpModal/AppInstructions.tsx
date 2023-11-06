@@ -31,35 +31,27 @@ export function AppInstructions(props: AppInstructionsProps) {
         </p>
         <p>
           Cada dispositivo é mostrado como um card, com o nome e seu número de
-          identificação único na parte superior e os sensores incluídos. Há dois
-          elementos para interação principais:
-          <ul style={{ listStyleType: 'disc' }}>
-            <li className="ml-8 mt-1">
-              O indicador de status (1), um pequeno círculo que muda de cor de
-              acordo com o estado do dispositivo. Passando o mouse sobre ele
-              você verá o status (ex: conectado, ocupado, etc).
-            </li>
-            <li className="ml-8 mt-1">
-              O botão <span className="font-medium text-primary">Iniciar</span>{' '}
-              (2), que conecta ao dispositivo e inicia as medições.
-            </li>
-          </ul>
+          identificação único na parte superior e os sensores incluídos. O{' '}
+          <span className="font-medium text-primary">indicador de status</span>{' '}
+          (1) muda de cor de acordo com o estado do dispositivo. Passando o
+          mouse sobre ele você verá o status (ex: conectado, ocupado, etc). O
+          botão <span className="font-medium text-primary">Iniciar</span> (2),
+          que conecta ao dispositivo e inicia as medições.
         </p>
         <p>
           Cada gráfico na tela possui um botão{' '}
           <span className="font-medium text-primary">Exportar</span> (3) para
-          gravar as medições em um arquivo. As medições serão exportadas com a
-          mesma referência de tempo usada no gráfico, ou seja, o momento em que
-          o programa foi aberto. Se houverem medidas anteriores, serão
-          exportadas com valores de tempo negativo.
+          gravar as medições em um arquivo. Os valores de tempo sempre tem como
+          referência o momento em que o software foi aberto, tanto no gráfico
+          como no arquivo. Se houverem medidas anteriores, serão exportadas com
+          valores de tempo negativo.
         </p>
         <p>
-          Na barra superior há o botão{' '}
-          <span className="font-medium text-primary">Apagar Medidas</span> (4)
-          casa deseje limpar os dados. Recomendamos apagar dados antes iniciar
-          uma tomada, caso contrário todos os dados anteriormente recebidos do
-          sensor serão salvos no arquivo. Além disso há o botão de{' '}
-          <span className="font-medium text-primary">Ajuda</span> (5).
+          Você pode controlar os dados que deseja salvar/exportar utilizando o
+          controle da{' '}
+          <span className="font-medium text-primary">Janela de tempo</span> (4)
+          ou o botão{' '}
+          <span className="font-medium text-primary">Apagar Medidas</span> (5).
         </p>
       </div>
     </>

@@ -16,11 +16,11 @@ export function createWindow(): void {
       x: 20,
       y: 20,
     },
-    ...(process.platform === 'linux'
-      ? {
-          icon: path.join(__dirname, '../../build/icon.png'),
-        }
-      : {}),
+    // ...(process.platform === 'linux'
+    //   ? {
+    //       icon: path.join(__dirname, '../../build/icon.png'),
+    //     }
+    //   : {}),
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
       sandbox: false,

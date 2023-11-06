@@ -5,6 +5,20 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.9.1] - 2023-11-06
+
+### Adicionado
+
+- Adicionado ícone próprio da aplicação. Agora ícone também aparece no Linux.
+
+### Melhorado
+
+- Melhoria nas instruções do app, atualizando para explicar melhor o controle da janela de tempo.
+
+### Corrigido
+
+- Passa a armazenar a base de dados do programa na pasta destinada aos dados, de acordo com o sistema operacional, ao invés de salvar na pasta de instalação.
+
 ## [0.9.0] - 2023-10-24
 
 ### Adicionado
