@@ -31,19 +31,12 @@ export function AppInstructions(props: AppInstructionsProps) {
         </p>
         <p>
           Cada dispositivo é mostrado como um card, com o nome e seu número de
-          identificação único na parte superior e os sensores incluídos. Há dois
-          elementos para interação principais:
-          <ul style={{ listStyleType: 'disc' }}>
-            <li className="ml-8 mt-1">
-              O indicador de status (1), um pequeno círculo que muda de cor de
-              acordo com o estado do dispositivo. Passando o mouse sobre ele
-              você verá o status (ex: conectado, ocupado, etc).
-            </li>
-            <li className="ml-8 mt-1">
-              O botão <span className="font-medium text-primary">Iniciar</span>{' '}
-              (2), que conecta ao dispositivo e inicia as medições.
-            </li>
-          </ul>
+          identificação único na parte superior e os sensores incluídos. O{' '}
+          <span className="font-medium text-primary">indicador de status</span>{' '}
+          (1) muda de cor de acordo com o estado do dispositivo. Passando o
+          mouse sobre ele você verá o status (ex: conectado, ocupado, etc). O
+          botão <span className="font-medium text-primary">Iniciar</span> (2),
+          que conecta ao dispositivo e inicia as medições.
         </p>
         <p>
           Cada gráfico na tela possui um botão{' '}
@@ -54,13 +47,11 @@ export function AppInstructions(props: AppInstructionsProps) {
           valores de tempo negativo.
         </p>
         <p>
-          Na barra superior há o botão{' '}
-          <span className="font-medium text-primary">Apagar Medidas</span> (4)
-          caso deseje limpar os dados. Com controle da{' '}
-          <span className="font-medium text-primary">Janela de medição</span>{' '}
-          também é possível configurar o tamanho do intervalo que deseja
-          exportar. Além disso, há o botão de{' '}
-          <span className="font-medium text-primary">Ajuda</span> (5).
+          Você pode controlar os dados que deseja salvar/exportar utilizando o
+          controle da{' '}
+          <span className="font-medium text-primary">Janela de tempo</span> (4)
+          ou o botão{' '}
+          <span className="font-medium text-primary">Apagar Medidas</span> (5).
         </p>
       </div>
     </>
