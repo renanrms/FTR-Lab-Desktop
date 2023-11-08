@@ -16,7 +16,7 @@ export function ControlCard(props: ControlCardProps) {
       <p className="mb-1">Janela de tempo: {formatTime(props.timeRange)}</p>
       <Slider
         defaultValue={maxDisplayedTimeRange}
-        step={0.1}
+        step={0.025}
         min={1}
         max={Math.log2(24 * 60 * 60)}
         valueLabelFormat={(value) => `${value} s`}
