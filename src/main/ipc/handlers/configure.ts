@@ -177,7 +177,11 @@ export function configureIpcHandlers(devicesController: DevicesController) {
           },
           order: [['timestamp', 'ASC']],
         })
-      ).map((measurementM) => transformToRelativeTime(measurementM.dataValues))
+      ).map((measurementM, index, array) => ({
+        ...measurementM.dataValues,
+        timestamp:
+          measurementM.dataValues.timestamp - array[0].dataValues.timestamp,
+      }))
 
       const fileHeader = `t, ${sensor.quantity}`
 
