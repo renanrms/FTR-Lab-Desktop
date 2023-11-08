@@ -183,32 +183,53 @@ export function configureIpcHandlers(devicesController: DevicesController) {
           measurementM.dataValues.timestamp - array[0].dataValues.timestamp,
       }))
 
-      const fileHeader = `t, ${sensor.quantity}`
-
-      const fileBody = measurements
-        .map(
-          (measurement) =>
-            `${measurement.timestamp.toFixed(6)}, ${measurement.value}`,
-        )
-        .join('\n')
-
-      const fileContent = [fileHeader, fileBody].join('\n')
-
       dialog
         .showSaveDialog(getMainWindow(), {
           title: 'Exportar medições',
           defaultPath: path.join(
             app.getPath('documents'),
-            `${format(new Date(), 'yyyyMMdd_HHmmss')}_${sensor.quantity}.csv`,
+            `${format(new Date(), 'yyyyMMdd_HHmmss')}_${sensor.quantity}.dat`,
           ),
 
           filters: [
+            { name: 'Arquivos DAT', extensions: ['dat'] },
             { name: 'Arquivos CSV', extensions: ['csv'] },
             { name: 'Todos os Arquivos', extensions: ['*'] },
           ],
         })
         .then((result) => {
           if (!result.canceled && result.filePath) {
+            let fileHeader
+            let fileBody
+
+            const extension = result.filePath.split('.').at(-1)
+
+            if (extension === 'csv') {
+              fileHeader = `t, ${sensor.quantity}`
+
+              fileBody = measurements
+                .map(
+                  (measurement) =>
+                    `${measurement.timestamp.toFixed(6)}, ${measurement.value}`,
+                )
+                .join('\n')
+            } else {
+              fileHeader = `t\t${sensor.quantity}`
+
+              fileBody = measurements
+                .map(
+                  (measurement) =>
+                    `${measurement.timestamp.toFixed(6).replace('.', ',')}\t${(
+                      measurement.value as number
+                    )
+                      .toString()
+                      .replace('.', ',')}`,
+                )
+                .join('\n')
+            }
+
+            const fileContent = [fileHeader, fileBody].join('\n')
+
             fs.writeFile(result.filePath, fileContent, (err) => {
               if (err) {
                 console.error('Erro ao salvar o arquivo:', err)
