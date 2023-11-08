@@ -1,7 +1,7 @@
 {
   "name": "ftrlab",
   "productName": "FTRLab",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Sistema de aquisição de dados em tempo real para experimentos didáticos",
   "main": "./out/main/index.js",
   "author": {
