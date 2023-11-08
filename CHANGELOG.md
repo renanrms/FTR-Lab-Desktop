@@ -5,6 +5,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/spec/v2.0.0.html).
 
+## [0.9.2] - 2023-11-08
+
+### Melhorado
+
+- Agora a exportação por padrão é um arquivo `.dat` no formato que o QtiPlot importa por padrão. Alterando a extensão para `.csv` os dados são exportados no formato CSV.
+
+- Os dados são exportados com tempo inicial igual a zero, evitando os valores de tempo referenciados no instante de abertura do programa.
+
 ## [0.9.1] - 2023-11-06
 
 ### Adicionado

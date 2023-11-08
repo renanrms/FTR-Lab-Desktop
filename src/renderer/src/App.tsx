@@ -8,11 +8,10 @@ import { ThemeProvider } from './components/providers/ThemeProvider'
 import { Sidebar } from './components/Sidebar'
 import { useDevices } from './features/devices/hooks/useDevices'
 import { ChartsArea } from './features/measurements/components/ChartsArea'
-import { maxDisplayedTimeRange } from './features/measurements/constants/maxDisplayedTimeRange'
 import { useMeasurements } from './features/measurements/hooks/useMeasurements'
 
 export function App() {
-  const [timeRange, setTimeRange] = useState<number>(maxDisplayedTimeRange)
+  const [timeRange, setTimeRange] = useState<number>(45)
   const devices = useDevices()
   const { sensorMeasurements, clearMeasurements } = useMeasurements(timeRange)
 
